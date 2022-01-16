@@ -13,7 +13,7 @@ A new Flutter project.
 
 1. Presentation Folder -> this folder will contain all the code for screen UI (in Presentation/Screen Folder) and some common widgets (under Presentation/Widgets Folder).
 
-2. Buisness_Logic Folder -> This Folder all the logical components of our application. BLOC will be used for state management purpose.
+2. Buisness_Logic Folder -> This Folder will have all the logical components of our application. BLOC will be used for state management purpose.
 
 3. Data Folder -> This Folder contains Data_Provider, Models and Repositories as subFolder.
   
@@ -29,12 +29,12 @@ A new Flutter project.
 
 ## Local Clone Setup
 
---> After Cloning this repo into your local system
---> Create a branch from master and switch into it - git checkout -b your-name/feature-name (eg: git checkout -b sahil/building_HomeScreen)
---> it needs to be kept in your mind no code should be commited on the master branch.
---> do your work in your feature branch.
---> once done, add all changes using this command --> git add .
---> then run: git commit -m "short description of your work"
---> git push origin master
---> Create a PR
+- After Cloning this repo into your local system
+- Create a branch from master and switch into it - git checkout -b your-name/feature-name (eg: git checkout -b sahil/building_HomeScreen)
+- it needs to be kept in your mind no code should be commited on the master branch.
+- do your work in your feature branch.
+- once done, add all changes using this command --> git add .
+- then run: git commit -m "short description of your work"
+- git push origin master
+- Create a PR
 
