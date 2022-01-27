@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mock_tradex/Presentation/Screens/exchange_screen.dart';
 
 class Frontpage extends StatefulWidget {
   const Frontpage({Key? key}) : super(key: key);
@@ -7,6 +8,7 @@ class Frontpage extends StatefulWidget {
 }
 
 class _FrontpageState extends State<Frontpage> {
+ 
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -15,10 +17,7 @@ class _FrontpageState extends State<Frontpage> {
       'Code for quick buy',
       style: optionStyle,
     ),
-    Text(
-      'Code for Exchange',
-      style: optionStyle,
-    ),
+    ExchangeScreen(),
     Text(
       'Code for Orders',
       style: optionStyle,
