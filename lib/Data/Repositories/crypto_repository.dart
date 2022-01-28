@@ -4,7 +4,7 @@ import 'package:mock_tradex/Data/Data_Provider/coingecko_api.dart';
 import 'package:mock_tradex/Data/Models/crypto.dart';
 
 class CryptoRepository {
-  Future<List<Crypto>> getCryptoCoins() async {
+  static Future<List<Crypto>> getCryptoCoins() async {
     final Response response = await CryptoDataProvider.fetchCoins();
     final data = jsonDecode(response.body);
 
