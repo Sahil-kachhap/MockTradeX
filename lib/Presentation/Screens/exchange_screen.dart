@@ -12,13 +12,12 @@ class ExchangeScreen extends StatefulWidget {
 }
 
 class _ExchangeScreenState extends State<ExchangeScreen> {
-  CryptoRepository cryptoRepository = CryptoRepository();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.indigoAccent,
+        backgroundColor: Color(0xff151d27),
         body: FutureBuilder<List<Crypto>>(
-            future: cryptoRepository.getCryptoCoins(),
+            future: CryptoRepository.getCryptoCoins(),
             builder: (context, snapshot) {
               final cryptos = snapshot.data;
 
@@ -52,8 +51,9 @@ class _ExchangeScreenState extends State<ExchangeScreen> {
             cryptoName: coin.name,
             cryptoSymbol: coin.symbol,
             currentPrice: coin.currentPrice.toString(),
-            priceChange: coin.priceChangePercentage24h.toString(),
+            priceChange: coin.priceChangePercentage24h,
             imageUrl: coin.image,
+            index: index,
           );
         },
       );

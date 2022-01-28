@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:mock_tradex/Presentation/Screens/exchange_screen.dart';
+import 'package:mock_tradex/constants.dart';
 
 class Frontpage extends StatefulWidget {
   const Frontpage({Key? key}) : super(key: key);
@@ -8,7 +10,6 @@ class Frontpage extends StatefulWidget {
 }
 
 class _FrontpageState extends State<Frontpage> {
- 
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -37,7 +38,7 @@ class _FrontpageState extends State<Frontpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.indigoAccent,
+      backgroundColor: Color(0xff151d27),
       appBar: AppBar(
         centerTitle: true,
         leading: IconButton(
@@ -55,37 +56,47 @@ class _FrontpageState extends State<Frontpage> {
         title: const Text(
           'MockTradeX',
         ),
-        backgroundColor: Colors.indigo,
+        backgroundColor: kAppBarColour,
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        iconSize: 24.5,
+        type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.bubble_chart),
+            icon: Icon(
+              Icons.bubble_chart,
+            ),
             label: 'Quick Buy',
-            backgroundColor: Colors.indigo,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
+            icon: Icon(
+              Icons.business,
+            ),
             label: 'Exchange',
-            backgroundColor: Colors.indigo,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
+            icon: Icon(
+              Icons.school,
+            ),
             label: 'Orders',
-            backgroundColor: Colors.indigo,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
+            icon: Icon(
+              Icons.school,
+            ),
             label: 'Funds',
-            backgroundColor: Colors.indigo,
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: kBottomBarTextActive,
+        unselectedItemColor: kBottomBarTextinActive,
         onTap: _onItemTapped,
+        selectedIconTheme: IconThemeData(color: kBottomBarTextActive),
+        unselectedIconTheme: IconThemeData(color: kBottomBarTextinActive),
+        backgroundColor: kBottomBarColor,
       ),
     );
   }
