@@ -74,11 +74,16 @@ class _ExchangeScreenState extends State<ExchangeScreen> {
 
           return CryptoTile(
             cryptoName: coin.name,
-            cryptoSymbol: coin.symbol,
+            cryptoSymbol: coin.symbol!.toUpperCase(),
             currentPrice: coin.currentPrice.toString(),
             priceChange: coin.priceChangePercentage24h,
             imageUrl: coin.image,
             index: index,
+            low_24h: coin.low_24h,
+            high_24h: coin.high_24h,
+            totalVolume: coin.totalVolume,
+
+
           );
         },
       );

@@ -4,7 +4,7 @@ import 'package:mock_tradex/Data/Models/crypto.dart';
 
 class CryptoDataProvider{
  
-  static final BaseUrl = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=volume_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24h";
+  static final BaseUrl = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=volume_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24h";
 
   static Future<http.Response> fetchCoins() async{
      final url = Uri.parse(BaseUrl);
