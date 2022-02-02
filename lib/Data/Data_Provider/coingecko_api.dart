@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:mock_tradex/Data/Models/crypto.dart';
 
 class CryptoDataProvider{
  
@@ -7,8 +9,8 @@ class CryptoDataProvider{
   static Future<http.Response> fetchCoins() async{
      final url = Uri.parse(BaseUrl);
      final http.Response cryptoResponse = await http.get(url);
-     return cryptoResponse;
- /*    final data = jsonDecode(cryptoResponse.body);
+    return cryptoResponse;
+  /*   final data = jsonDecode(cryptoResponse.body);
 
      List<Crypto> coins = [];
 
@@ -19,6 +21,6 @@ class CryptoDataProvider{
 
     for(var i in coins){
       print("${i.symbol}\n");
-    }*/
+    } */
   }
 }

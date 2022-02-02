@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mock_tradex/Data/Models/crypto.dart';
@@ -12,12 +13,35 @@ class ExchangeScreen extends StatefulWidget {
 }
 
 class _ExchangeScreenState extends State<ExchangeScreen> {
+  final StreamController<List<Crypto>> _streamController = StreamController<List<Crypto>>();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _streamController.close();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+   Timer.periodic(const Duration(seconds: 40), (timer){
+      addToStream();
+    });
+    super.initState();
+  }
+
+  Future<void> addToStream() async{
+    List<Crypto> cryptoList = await CryptoRepository.getCryptoCoins();
+    _streamController.sink.add(cryptoList);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xff151d27),
-        body: FutureBuilder<List<Crypto>>(
-            future: CryptoRepository.getCryptoCoins(),
+        body: StreamBuilder<List<Crypto>>(
+            stream: _streamController.stream,
             builder: (context, snapshot) {
               final cryptos = snapshot.data;
 
@@ -39,7 +63,8 @@ class _ExchangeScreenState extends State<ExchangeScreen> {
                   color: Colors.white,
                 ),
               );
-            }));
+            })
+        );
   }
 
   Widget _buildCryptoTiles(List<Crypto>? cryptos) => ListView.builder(
