@@ -9,6 +9,7 @@ class CryptoTile extends StatelessWidget {
   final double? priceChange;
   final String? imageUrl;
   final int? index;
+  final IconButton? icon;
 
   const CryptoTile(
       {Key? key,
@@ -17,8 +18,12 @@ class CryptoTile extends StatelessWidget {
       this.currentPrice,
       this.priceChange,
       this.imageUrl,
-      this.index})
+      this.index,
+        this.icon
+        })
       : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +80,17 @@ class CryptoTile extends StatelessWidget {
                           color: Color(0xFF596777)
                       ),
                     ),
+
                   ],
                 ),
+
+                //changed by sahil
+
+                Container(
+
+                  child: icon,
+                )
+                //changed by sahil
               ],
             ),
             Row(
