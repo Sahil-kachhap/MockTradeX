@@ -39,7 +39,9 @@ class _FrontpageState extends State<Frontpage> {
         leading: IconButton(
           icon: const Icon(Icons.settings),
           tooltip: 'Settings',
-          onPressed: () {},
+          onPressed: () {
+
+          },
         ),
         actions: <Widget>[
           IconButton(

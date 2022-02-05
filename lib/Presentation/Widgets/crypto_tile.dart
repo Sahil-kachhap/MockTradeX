@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mock_tradex/constants.dart';
@@ -13,14 +14,14 @@ class CryptoTile extends StatelessWidget {
 
   const CryptoTile(
       {Key? key,
-      this.cryptoName,
-      this.cryptoSymbol,
-      this.currentPrice,
-      this.priceChange,
-      this.imageUrl,
-      this.index,
+        this.cryptoName,
+        this.cryptoSymbol,
+        this.currentPrice,
+        this.priceChange,
+        this.imageUrl,
+        this.index,
         this.icon
-        })
+      })
       : super(key: key);
 
 
@@ -67,8 +68,8 @@ class CryptoTile extends StatelessWidget {
                         Text(
                           '/INR',
                           style: kTickerTextStyle.copyWith(
-                            fontSize: 10,
-                          color: Color(0xFF596777)
+                              fontSize: 10,
+                              color: Color(0xFF596777)
                           ),
                         )
                       ],
