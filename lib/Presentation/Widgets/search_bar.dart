@@ -70,12 +70,7 @@ class SearchUser extends SearchDelegate{
               priceChange: coin.priceChangePercentage24h,
               imageUrl: coin.image,
               index: index,
-              icon:
-              IconButton(icon: Icon(Icons.add_box_sharp,
-                color: Colors.amber,),
-                onPressed: (){
-                  Navigator.pop(context);
-                },),
+
             ),
           ],
 

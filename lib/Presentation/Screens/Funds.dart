@@ -14,226 +14,221 @@ class _FundsState extends State<Funds> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      backgroundColor: Color(0xff2B3242),
+      backgroundColor: kbackgroundColor,
 
       body: Column(
 
         children: [
           Container(
-            padding: EdgeInsets.only(bottom: 50,top: 10,left: 10),
-            height: 138,
-            child: Column(
-              children: [
-                Row(
-
-                  children: [
-
-                    Icon(Icons.animation,
-                      color: Color(0xffF0F1F4),
-                    size: 25,),
-                     SizedBox(
-                       width: 15,
-                     ),
-                    Text('Total Assets in INR'
-                    ,style: TextStyle(color: Color(0xffF0F1F4),
-                      fontSize: 20),),
-                    SizedBox(width: 80),
-                    Text('2300.00',style: TextStyle(color: Color(0xffF0F1F4),
-                        fontSize: 20))
-                  ],
-                ),
-
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Color(0xff3C4353),
-                    onPrimary: Colors.white,
-                    shadowColor: Colors.white,
-                    //elevation: 3,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    minimumSize: Size(150, 40), //////// HERE
-                  ),
-                  onPressed: () {
-
-                    setState(() {
-                      x=x+20;
-                    });
-                  },
-                  child: SizedBox(
-                    width: 100,
+              padding: EdgeInsets.only(top: 10,left: 10),
+              height: 138,
+              child: Column(
+                children: [
+                  Expanded(
                     child: Row(
+
                       children: [
-                        Icon(Icons.assignment_returned_outlined,
-                        color: Colors.white,
-                        size: 20,),
-                        SizedBox(width: 5,),
-                        Text('Deposit'),
+
+                        Container(
+                          child: Icon(
+                            Icons.animation,
+                            size: 20.0,
+                            color: kBottomBarTextActive,
+                            
+                          ),
+                          padding: EdgeInsets.all(10.0),
+                          margin: EdgeInsets.fromLTRB(0, 5.0, 0, 0.0),
+                          decoration: BoxDecoration(
+                            color: kFundTileColor,
+                            borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                          ),
+                        ),
+                         SizedBox(
+                           width: 15,
+                         ),
+                        Text('Total Assets in INR'
+                        ,style: kTickerTextStyle),
+                        SizedBox(width: 100),
+                        Text('2300.00',style: kTickerTextStyle)
                       ],
                     ),
                   ),
-                )
-              ],
+                    SizedBox(
+                      height: 20,
+                    ),
+                //  Color(0xff3C4353),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.black,
+                      //onPrimary: Colors.white,
+                     // shadowColor: Colors.white,
+                      //elevation: 3,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      minimumSize: Size(150, 40), //////// HERE
+                    ),
+                    onPressed: () {
+
+                      setState(() {
+                        x=x+20;
+                        //Navigator.push(context, MaterialPageRoute(builder: ))
+                      });
+                    },
+                    child: SizedBox(
+                      width: 100,
+                      child: Row(
+                        children: [
+                          Icon(Icons.assignment_returned_outlined,
+                          color: Colors.white,
+                          size: 20,),
+                          SizedBox(width: 5,),
+                          Text('Deposit'),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              //color: Color(0xff1A1E29),
             ),
-            //color: Color(0xff1A1E29),
+          Container(
+
+             margin: EdgeInsets.only(top: 18,left: 18,right: 18,bottom: 30),
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            ),
+
+             child: Center(
+               child: Column(
+
+                 children: [
+
+                   Text(
+                     x.toString(),style: TextStyle(
+                       fontSize: 25.0,
+                       color: Color(0xffF0F1F4)
+                   ),),
+
+                   Text(
+
+                     'TOTAL PORTFOLIO VALUE',style: kTickerTextStyle),
+                   SizedBox(
+                     height: 10,
+                   ),
+                   Container(
+                     decoration: BoxDecoration(
+                       border: Border(
+                         bottom: Divider.createBorderSide(context, color:Colors.blue, width: 0.5),
+                       ),
+                     ),
+                   ),
+                   SizedBox(
+                     height: 15,
+                   )
+
+                 ],
+               ),
+             ),
+           ),
+            //  color: Color(0xff191D28),
+         Container(
+           padding: EdgeInsets.only(left: 25,right: 25),
+           child: Row(
+             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+             children: [
+               Text('Assests',style: kTickerTextStyle,),
+               Text('Prices',style: kTickerTextStyle,),
+               Text('Holdings',style: kTickerTextStyle,),
+             ],
+           ),
+         ),
+          SizedBox(
+            height: 10,
           ),
           Expanded(
             child: Container(
-             
-              child: Card(
-                color: Color(0xff191D28),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20)
-                  )
-                ),
-                child: Column(
+             decoration: BoxDecoration(
+               color: kbackgroundColor,
+               borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10)),
+             ),
 
-                  children: [
+             //padding: EdgeInsets.only(left: 5,right: 5),
+              child:ListView(
+                   children: [
 
-                    Container(
-                      height: 150,
-                      child: Card(
+                   Container(
+             height: 80,
 
-                       margin: EdgeInsets.only(top: 18,left: 18,right: 18,bottom: 18),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        color: Color(0xff09B198),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Text(
-                                x.toString(),style: TextStyle(
-                                  fontSize: 40.0,
-                                color: Color(0xffF0F1F4)
-                                ),),
+               child:Text('Bitcoin'),
+                     width: double.infinity,
+                     decoration: BoxDecoration(
+                       color: kFundTileColor,
 
-                              const Text(
-                                'TOTAL PORTFOLIO VALUE',style: TextStyle(
-                                  fontSize: 20.0,
-                                  color: Color(0xffF0F1F4)
-                              ),),
-                              Container(
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                    bottom: Divider.createBorderSide(context, color:Colors.white60, width: 0.5),
-                                            ),
-                                        ),
-                              )
-
-                            ],
-                          ),
-                        ),
-                      ),
-
-                    ),
-                    Expanded(
-                      child: Container(
-                        padding: EdgeInsets.only(left: 15,right: 15),
-                        child: ListView(
-
-                          children: [
-                            SizedBox(
-                              height:100,
-
-                              child: Card(
-                                color: Color(0xff262C38),
-                                shadowColor: Color(0xff262C38),
-
-                              ),
-                            ),
-                            SizedBox(
-                              height:100,
-
-                              child: Card(
-                                color: Color(0xff262C38),
-                                shadowColor: Color(0xff262C38),
-
-                              ),
-                            ),
-                            SizedBox(
-                              height:100,
-
-                              child: Card(
-                                color: Color(0xff262C38),
-                                shadowColor: Color(0xff262C38),
-
-                              ),
-                            ),
-                            SizedBox(
-                              height:100,
-
-                              child: Card(
-                                color: Color(0xff262C38),
-                                shadowColor: Color(0xff262C38),
-                                //conatins item of card
-                                child: Container(
-                                  padding: EdgeInsets.all(5),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.only(left: 30),
-                                        child: Row(
-
-                                          children: [
-                                            Icon(Icons.ac_unit_sharp,
-                                            size: 15,
-                                            color: Colors.white,),
-                                            SizedBox(
-                                              width: 10,),
-                                            Text('BIT COIN',style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15,
-
-                                            ),)
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(height: 2,),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Text('Total',style: TextStyle(color: Colors.white,fontSize: 15),),
-                                          Text('Available',style: TextStyle(color: Colors.white,fontSize: 15),),
-                                          Text('In Orders',style: TextStyle(color: Colors.white,fontSize: 15),),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Text('0.0001',style: TextStyle(color: Colors.white,fontSize: 15),),
-                                          Text('0.0002',style: TextStyle(color: Colors.white,fontSize: 15),),
-                                          Text('0.0003',style: TextStyle(color: Colors.white,fontSize: 15),),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ),
-                            ), SizedBox(
-                              height:100,
-
-                              child: Card(
-                                color: Color(0xff262C38),
-                                shadowColor: Color(0xff262C38),
-
-                              ),
-                            )
-                          ],
-                        )
-                      ),
-                    )
+                       border: Border(
+                         bottom: Divider.createBorderSide(context, color:Colors.black, width: 1.5),
+                       ),
+                     ),
+             ),
 
 
-                  ],
+               Container(
+               height: 80,
 
-                ),
-              ),
+               child:Text('Bitcoin'),
+                 width: double.infinity,
+                 decoration: BoxDecoration(
+                   //color: Color(0xff191D28),
+                   color: kFundTileColor,
+                   border: Border(
+                     bottom: Divider.createBorderSide(context, color:Colors.black, width: 1.5),
+                   ),
+                 ),
+               ),
+               Container(
+               height: 80,
+               //color: Color(0xff191D28),
+                    child:Text('Bitcoin'),
+                 width: double.infinity,
+                 decoration: BoxDecoration(
+                  // color: Color(0xff191D28),
+                   color:kFundTileColor,
+                   border: Border(
+                     bottom: Divider.createBorderSide(context, color:Colors.black, width: 1.5),
+                   ),
+                 ),
+                   ),
+    Container(
+    height: 80,
+   // color: Color(0xff191D28),
+    child:Text('Bitcoin'),
+      width: double.infinity,
+      decoration: BoxDecoration(
+       // color: Color(0xff191D28),
+        color: kFundTileColor,
+        border: Border(
+            bottom: Divider.createBorderSide(context, color:Colors.black, width: 1.5),
+        ),
+      ),
+    ),
+    Container(
+    height: 80,
+    //color: Color(0xff191D28),
+    child:Text('Bitcoin'),
+      width: double.infinity,
+      decoration: BoxDecoration(
+       // color: Color(0xff191D28),
+        color: kFundTileColor,
+        border: Border(
+            bottom: Divider.createBorderSide(context, color:Colors.black, width: 1.5),
+        ),
+      ),
+    )
+             ],
+             )
             ),
-
-
           ),
         ],
       ),

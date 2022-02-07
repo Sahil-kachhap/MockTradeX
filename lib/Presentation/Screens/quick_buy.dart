@@ -18,13 +18,13 @@ class _QuickbuyState extends State<Quickbuy> {
 
 
     return Scaffold(
-
+     backgroundColor: Color(0xff1a202c),
       body: Column(
 
         children: [
           SizedBox(height: 54, child:
               Scaffold(
-
+                   //backgroundColor: Color(0xff1a202c),
                 appBar: AppBar(
                   backgroundColor: kBottomBarColor,
                    title: Text('Search and Add'),

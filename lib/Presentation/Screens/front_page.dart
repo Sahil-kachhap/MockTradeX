@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mock_tradex/Presentation/Screens/Funds.dart';
 import 'package:mock_tradex/Presentation/Screens/exchange_screen.dart';
 import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
+import 'package:mock_tradex/constants.dart';
 
 class Frontpage extends StatefulWidget {
   const Frontpage({Key? key}) : super(key: key);
@@ -53,7 +54,7 @@ class _FrontpageState extends State<Frontpage> {
         title: const Text(
           'MockTradeX',
         ),
-        backgroundColor: Colors.indigo,
+        backgroundColor: Color(0xff1a202c),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -63,26 +64,26 @@ class _FrontpageState extends State<Frontpage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.bubble_chart),
             label: 'Quick Buy',
-            backgroundColor: Colors.indigo,
+            backgroundColor: Color(0xff1a202c),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
             label: 'Exchange',
-            backgroundColor: Colors.indigo,
+            backgroundColor: Color(0xff1a202c),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
             label: 'Orders',
-            backgroundColor: Colors.indigo,
+            backgroundColor: Color(0xff1a202c),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
             label: 'Funds',
-            backgroundColor: Colors.indigo,
+            backgroundColor: Color(0xff1a202c),
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: kBottomBarTextActive,
         onTap: _onItemTapped,
       ),
     );
