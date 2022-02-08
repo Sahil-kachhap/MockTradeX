@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:mock_tradex/Presentation/Screens/graph_page.dart';
 import 'package:mock_tradex/constants.dart';
@@ -9,7 +11,7 @@ class CryptoTile extends StatelessWidget {
   final String? currentPrice;
   final double? priceChange;
   final String? imageUrl;
-  final int? index;
+   final int? index;
   final double? high_24h;
   final double? low_24h;
   final double? totalVolume;
@@ -17,14 +19,15 @@ class CryptoTile extends StatelessWidget {
 
   const CryptoTile(
       {Key? key,
-      this.cryptoName,
-      this.cryptoSymbol,
-      this.currentPrice,
-      this.priceChange,
-      this.imageUrl,
-      this.index,
-      this.high_24h,
-      this.low_24h,
+        this.cryptoName,
+        this.cryptoSymbol,
+        this.currentPrice,
+        this.priceChange,
+        this.imageUrl,
+        this.index,
+        this.high_24h,
+
+        this.low_24h,
         this.totalVolume,})
       : super(key: key);
 

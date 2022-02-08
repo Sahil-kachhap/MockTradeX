@@ -19,3 +19,5 @@ const kTickerSubTextStyle =
     TextStyle(color: Color(0xFF596777), fontWeight: FontWeight.bold);
 const kBuyBox =
     TextStyle(color: Color(0xFFEAECEF), fontWeight: FontWeight.bold);
+const kbackgroundColor=Color(0xff0f1c2d);
+const kFundTileColor=Color(0xff212c3e);
