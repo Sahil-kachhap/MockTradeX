@@ -51,10 +51,14 @@ class _QuickbuyState extends State<Quickbuy> {
                       children: <Widget>[
                         Expanded(child:  Container()),
                         const TabBar(
+                          indicatorColor: kBottomBarTextActive,
+                          indicatorSize: TabBarIndicatorSize.label,
                           tabs: [ Text('WatchList 1',style: TextStyle(
                             height: 2,
 
-                          ),),
+                          ),
+
+                          ),
 
 
                             Text('Watchlist 2',

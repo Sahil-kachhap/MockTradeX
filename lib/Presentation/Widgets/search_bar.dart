@@ -3,6 +3,7 @@ import 'package:lottie/lottie.dart';
 import 'package:mock_tradex/Data/Models/crypto.dart';
 import 'package:mock_tradex/Data/Repositories/crypto_repository.dart';
 import 'package:mock_tradex/Data/Repositories/search_repository.dart';
+import 'package:mock_tradex/constants.dart';
 import 'crypto_tile.dart';
 class SearchUser extends SearchDelegate{
   @override
@@ -27,39 +28,46 @@ class SearchUser extends SearchDelegate{
   @override
   Widget buildResults(BuildContext context) {
 
-    return Container(
-      child: FutureBuilder<List<Crypto>>(
-        //changed
-          future: SearchRepository.getCryptoSearch(query: query),
-          builder: (context, snapshot) {
-            final cryptos = snapshot.data;
+      return Container(
+       color: kbackgroundColor,
+        child: FutureBuilder<List<Crypto>>(
+          //changed
 
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasData) {
-                return _buildCryptoTiles(cryptos);
-              } else if (snapshot.hasError) {
-                return Center(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Lottie.asset('assets/error.json'),
-                        ]));
+            future: SearchRepository.getCryptoSearch(query: query),
+            builder: (context, snapshot) {
+              final cryptos = snapshot.data;
+
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasData) {
+                  return _buildCryptoTiles(cryptos);
+                } else if (snapshot.hasError) {
+                  return Center(
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Lottie.asset('assets/error.json'),
+                          ]));
+                }
               }
-            }
-            return const Center(
-              child: CircularProgressIndicator(
-                color: Colors.white,
-              ),
-            );
-          }),
-    );
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              );
+            }),
+      );
+
   }
   Widget _buildCryptoTiles(List<Crypto>? cryptos) => ListView.builder(
     itemCount: cryptos!.length,
     itemBuilder: (context, index) {
       final coin = cryptos[index];
-
+        if(query==""){
+          return Container(
+            color: kbackgroundColor,
+          );
+        }
       return
         Column(
           children: [

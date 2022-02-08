@@ -14,7 +14,8 @@ class SearchRepository{
     for (int i = 0; i < 100; i++) {
       Crypto coin = Crypto.fromJson(data[i]);
       String? s=coin.name;
-      if(s!.toLowerCase().contains(query.toLowerCase())){
+      String? st=coin.symbol;
+      if(s!.toLowerCase().contains(query.toLowerCase()) || st!.toLowerCase().contains(query.toLowerCase())){
         results.add(coin);
       }
     }
