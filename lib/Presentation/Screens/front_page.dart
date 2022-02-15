@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mock_tradex/Presentation/Screens/Funds.dart';
 import 'package:mock_tradex/Presentation/Screens/exchange_screen.dart';
 import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
+import 'package:mock_tradex/Presentation/Screens/sign_in.dart';
 import 'package:mock_tradex/constants.dart';
 
 class Frontpage extends StatefulWidget {
@@ -18,10 +19,7 @@ class _FrontpageState extends State<Frontpage> {
   static const List<Widget> _widgetOptions = <Widget>[
     Quickbuy(),
     ExchangeScreen(),
-    Text(
-      'Code for Orders',
-      style: optionStyle,
-    ),
+    SignIn(),
    Funds()
   ];
 
