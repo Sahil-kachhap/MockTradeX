@@ -22,7 +22,7 @@ class _QuickbuyState extends State<Quickbuy> {
       body: Column(
 
         children: [
-          SizedBox(height: 54, child:
+          SizedBox(height: 84, child:
               Scaffold(
                    //backgroundColor: Color(0xff1a202c),
                 appBar: AppBar(
@@ -39,7 +39,7 @@ class _QuickbuyState extends State<Quickbuy> {
                 ),
               )
           ),
-          SizedBox(height: 50,child: DefaultTabController(
+          SizedBox(height: 56,child: DefaultTabController(
             length: 2,
             child: Scaffold(
               appBar: PreferredSize(

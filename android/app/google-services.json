@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "317861398110",
+    "project_id": "mock-tradex",
+    "storage_bucket": "mock-tradex.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317861398110:android:c7b183f52af59443ff56cf",
+        "android_client_info": {
+          "package_name": "com.example.mock_tradex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "317861398110-toe3mu4uqckrqpl5o62s28hbk1ga2msj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXm1ZGAYO2yELiYxAiZVqyK62kZp1d-VI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "317861398110-toe3mu4uqckrqpl5o62s28hbk1ga2msj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

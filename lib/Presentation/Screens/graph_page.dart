@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mock_tradex/Presentation/Widgets/firebase.dart';
 import 'package:mock_tradex/constants.dart';
 import 'package:mock_tradex/Data/Repositories/graph_data.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mock_tradex/Presentation/Widgets/firebase.dart';
 import 'package:mock_tradex/Presentation/Widgets/buysell_box.dart'
+
     show BuySellBox;
 
 bool notificationIsSelected = false;
@@ -32,6 +36,9 @@ class GraphPage extends StatefulWidget {
 }
 
 class _GraphPageState extends State<GraphPage> {
+
+  final _firestore=FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,12 +77,19 @@ class _GraphPageState extends State<GraphPage> {
               padding: const EdgeInsets.only(right: 15),
               child: IconButton(
                 onPressed: () {
+                add obj=add();
+                 obj.helper();
+
                   setState(() {
+                    m.update(widget.cryptoName!, (value) => true);
                     isFavorite = !isFavorite;
+
                   });
                 },
+
                 icon: isFavorite
                     ? const Icon(
+
                         Icons.star_rounded,
                         color: Color(0xffe6b10b),
                         size: 26,
