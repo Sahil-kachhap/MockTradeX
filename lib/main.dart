@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mock_tradex/service_locator.dart';
 import 'Presentation/Screens/front_page.dart';
 
 void main() {
+  setup();
   runApp(const MyApp());
 }
 

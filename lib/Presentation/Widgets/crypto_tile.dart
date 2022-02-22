@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mock_tradex/Presentation/Screens/graph_page.dart';
 import 'package:mock_tradex/constants.dart';
@@ -31,7 +32,8 @@ class CryptoTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){Navigator.push(
+      onTap: (){
+        Navigator.push(
         context,
         MaterialPageRoute(builder: (context) =>  GraphPage(cryptoSymbol: cryptoSymbol,cryptoName: cryptoName,cryptoPrice: currentPrice,priceChange: priceChange,high_24h: high_24h,low_24h: low_24h,totalVolume: totalVolume,),),
       );},
@@ -58,7 +60,8 @@ class CryptoTile extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(14, 0, 12, 0),
                     child: CircleAvatar(
                       radius: 18.0,
-                      child: Image.network(imageUrl!),
+                      child: CachedNetworkImage(imageUrl: imageUrl!,  placeholder: (context, url) => const CircularProgressIndicator(),
+        errorWidget: (context, url, error) => const Icon(Icons.error),),
                     ),
                   ),
                   Column(

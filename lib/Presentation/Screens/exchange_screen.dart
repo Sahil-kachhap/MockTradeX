@@ -4,6 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:mock_tradex/Data/Models/crypto.dart';
 import 'package:mock_tradex/Data/Repositories/crypto_repository.dart';
 import 'package:mock_tradex/Presentation/Widgets/crypto_tile.dart';
+import 'package:mock_tradex/service_locator.dart';
 
 class ExchangeScreen extends StatefulWidget {
   const ExchangeScreen({Key? key}) : super(key: key);
@@ -13,35 +14,14 @@ class ExchangeScreen extends StatefulWidget {
 }
 
 class _ExchangeScreenState extends State<ExchangeScreen> {
-  final StreamController<List<Crypto>> _streamController = StreamController<List<Crypto>>();
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    _streamController.close();
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-   Timer.periodic(const Duration(seconds: 40), (timer){
-      addToStream();
-    });
-    super.initState();
-  }
-
-  Future<void> addToStream() async{
-    List<Crypto> cryptoList = await CryptoRepository.getCryptoCoins();
-    _streamController.sink.add(cryptoList);
-  }
+  final cryptoList = getItInstance<CryptoRepository>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xff151d27),
-        body: StreamBuilder<List<Crypto>>(
-            stream: _streamController.stream,
+        body: FutureBuilder<List<Crypto>>(
+            future: cryptoList.getCryptoCoins(),
             builder: (context, snapshot) {
               final cryptos = snapshot.data;
 
