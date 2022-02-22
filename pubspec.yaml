@@ -34,11 +34,16 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  google_fonts: ^2.2.0
+  google_fonts: '2.2.0'
   http: ^0.13.4
   lottie: ^1.2.1
+<<<<<<< HEAD
   cached_network_image: ^3.2.0
   get_it: ^7.2.0
+=======
+  material_floating_search_bar: ^0.3.6
+
+>>>>>>> 69e6c383454a58b5ef6104895a2e18800ac2477d
 
 dev_dependencies:
   flutter_test:
@@ -51,6 +56,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
   webview_flutter: ^3.0.0
+
 
 
 # For information on the generic Dart part of this file, see the

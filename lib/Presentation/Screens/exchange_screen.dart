@@ -21,7 +21,7 @@ class _ExchangeScreenState extends State<ExchangeScreen> {
     return Scaffold(
         backgroundColor: Color(0xff151d27),
         body: FutureBuilder<List<Crypto>>(
-            future: cryptoList.getCryptoCoins(),
+            future: CryptoRepository.getCryptoCoins(),
             builder: (context, snapshot) {
               final cryptos = snapshot.data;
 
@@ -59,9 +59,9 @@ class _ExchangeScreenState extends State<ExchangeScreen> {
             priceChange: coin.priceChangePercentage24h,
             imageUrl: coin.image,
             index: index,
-            low_24h: coin.low_24h,
-            high_24h: coin.high_24h,
-            totalVolume: coin.totalVolume,
+           // low_24h: coin.low_24h,
+          //  high_24h: coin.high_24h,
+           // totalVolume: coin.totalVolume,
 
 
           );

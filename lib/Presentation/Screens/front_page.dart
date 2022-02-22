@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+
+import 'package:mock_tradex/Presentation/Screens/Funds.dart';
 import 'package:mock_tradex/Presentation/Screens/exchange_screen.dart';
+import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
+import 'package:mock_tradex/Presentation/Screens/sign_in.dart';
+
 import 'package:mock_tradex/constants.dart';
 
 class Frontpage extends StatefulWidget {
@@ -9,23 +14,16 @@ class Frontpage extends StatefulWidget {
 }
 
 class _FrontpageState extends State<Frontpage> {
+
+ 
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Code for quick buy',
-      style: optionStyle,
-    ),
+    Quickbuy(),
     ExchangeScreen(),
-    Text(
-      'Code for Orders',
-      style: optionStyle,
-    ),
-    Text(
-      'Code for Funds',
-      style: optionStyle,
-    ),
+    SignIn(),
+   Funds()
   ];
 
   void _onItemTapped(int index) {
@@ -34,10 +32,11 @@ class _FrontpageState extends State<Frontpage> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff151d27),
+      backgroundColor: kAppBackgroundColour,
       appBar: AppBar(
         centerTitle: true,
         leading: IconButton(
@@ -59,46 +58,8 @@ class _FrontpageState extends State<Frontpage> {
         ),
         backgroundColor: kAppBarColour,
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        iconSize: 24.5,
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.bubble_chart,
-            ),
-            label: 'Quick Buy',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.business,
-            ),
-            label: 'Exchange',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.school,
-            ),
-            label: 'Orders',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.school,
-            ),
-            label: 'Funds',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: kBottomBarTextActive,
-        unselectedItemColor: kBottomBarTextinActive,
-        onTap: _onItemTapped,
-        selectedIconTheme: IconThemeData(color: kBottomBarTextActive),
-        unselectedIconTheme: IconThemeData(color: kBottomBarTextinActive),
-        backgroundColor: kBottomBarColor,
-      ),
+      body:Container(),
+
     );
   }
 }

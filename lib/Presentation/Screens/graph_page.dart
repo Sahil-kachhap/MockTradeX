@@ -247,10 +247,12 @@ class _GraphPageState extends State<GraphPage> {
                     SizedBox(
                       width: 10,
                     ),
-                    BuySellBox(
-                      boxText: 'SELL',
-                      boxColor: kSellButtonRed,
-                    ),
+
+                     BuySellBox(
+                        boxText: 'SELL',
+                        boxColor: kSellButtonRed,
+                      ),
+
                     SizedBox(
                       width: 15,
                     ),

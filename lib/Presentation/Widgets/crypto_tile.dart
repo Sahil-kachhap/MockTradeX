@@ -1,9 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mock_tradex/Presentation/Screens/graph_page.dart';
 import 'package:mock_tradex/constants.dart';
-
-
+// name too long or price too long overlow issue
 class CryptoTile extends StatelessWidget {
   final String? cryptoName;
   final String? cryptoSymbol;
@@ -15,31 +13,41 @@ class CryptoTile extends StatelessWidget {
   final double? low_24h;
   final double? totalVolume;
 
-
-  const CryptoTile(
-      {Key? key,
-      this.cryptoName,
-      this.cryptoSymbol,
-      this.currentPrice,
-      this.priceChange,
-      this.imageUrl,
-      this.index,
-      this.high_24h,
-      this.low_24h,
-        this.totalVolume,})
-      : super(key: key);
+  const CryptoTile({
+    Key? key,
+    this.cryptoName,
+    this.cryptoSymbol,
+    this.currentPrice,
+    this.priceChange,
+    this.imageUrl,
+    this.index,
+    this.high_24h,
+    this.low_24h,
+    this.totalVolume,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) =>  GraphPage(cryptoSymbol: cryptoSymbol,cryptoName: cryptoName,cryptoPrice: currentPrice,priceChange: priceChange,high_24h: high_24h,low_24h: low_24h,totalVolume: totalVolume,),),
-      );},
+          context,
+          MaterialPageRoute(
+            builder: (context) => GraphPage(
+              cryptoSymbol: cryptoSymbol,
+              cryptoName: cryptoName,
+              cryptoPrice: currentPrice,
+              priceChange: priceChange,
+              high_24h: high_24h,
+              low_24h: low_24h,
+              totalVolume: totalVolume,
+            ),
+          ),
+        );
+      },
       child: Container(
         height: 80,
-        color: (index!%2==0)?Color(0xff213047):Color(0xff212c3e),
+        color: (index! % 2 == 0) ? Color(0xff213047) : Color(0xff212c3e),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -48,7 +56,8 @@ class CryptoTile extends StatelessWidget {
               height: 0.5,
               decoration: BoxDecoration(
                 border: Border(
-                  bottom: Divider.createBorderSide(context, color:Colors.black, width: 0.5),
+                  bottom: Divider.createBorderSide(context,
+                      color: Colors.black, width: 0.5),
                 ),
               ),
             ),
@@ -86,9 +95,7 @@ class CryptoTile extends StatelessWidget {
                       Text(
                         cryptoName!,
                         style: kTickerTextStyle.copyWith(
-                            fontSize: 12,
-                            color: Color(0xFF596777)
-                        ),
+                            fontSize: 12, color: Color(0xFF596777)),
                       ),
                     ],
                   ),
@@ -98,16 +105,19 @@ class CryptoTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    '\$'+currentPrice.toString(),
+                    '\$' + currentPrice.toString(),
                     style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white, fontSize: 16),
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 16),
                   ),
                   SizedBox(
                     width: 10,
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: (priceChange! > 0) ? Color(0xff139b4d) : Colors.red,
+                      color:
+                          (priceChange! > 0) ? Color(0xff139b4d) : Colors.red,
                       borderRadius: BorderRadius.all(Radius.circular(3)),
                     ),
                     width: 72.0,
@@ -144,7 +154,8 @@ class CryptoTile extends StatelessWidget {
               width: double.infinity,
               decoration: BoxDecoration(
                 border: Border(
-                  left: Divider.createBorderSide(context, color:Colors.black, width: 1.5),
+                  left: Divider.createBorderSide(context,
+                      color: Colors.black, width: 1.5),
                 ),
               ),
             ),
