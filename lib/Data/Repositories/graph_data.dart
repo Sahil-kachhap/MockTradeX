@@ -57,7 +57,7 @@ class _GraphDataState extends State<GraphData> {
     return Container(
       child: WebView(
         backgroundColor: kGraphPageBackground,
-        initialUrl: 'about:blank',
+        initialUrl: 'http://google.com',
         javascriptMode: JavascriptMode.unrestricted,
         onWebViewCreated: (controller) {
           this.controller = controller;

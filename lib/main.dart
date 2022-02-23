@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'constants.dart';
-
 import 'package:mock_tradex/Presentation/Screens/exchange_screen.dart';
 import 'package:mock_tradex/Presentation/Screens/Funds.dart';
 import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mock_tradex/Data/Models/crypto.dart';
@@ -12,6 +13,7 @@ class ExchangeScreen extends StatefulWidget {
 }
 
 class _ExchangeScreenState extends State<ExchangeScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +41,8 @@ class _ExchangeScreenState extends State<ExchangeScreen> {
                   color: Colors.white,
                 ),
               );
-            }));
+            })
+        );
   }
 
   Widget _buildCryptoTiles(List<Crypto>? cryptos) => ListView.builder(

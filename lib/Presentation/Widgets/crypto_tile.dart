@@ -1,8 +1,8 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:mock_tradex/Presentation/Screens/graph_page.dart';
 import 'package:mock_tradex/constants.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
 // name too long or price too long overlow issue
 class CryptoTile extends StatelessWidget {
   final String? cryptoName;
@@ -71,7 +71,8 @@ class CryptoTile extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(14, 0, 12, 0),
                     child: CircleAvatar(
                       radius: 18.0,
-                      child: Image.network(imageUrl!),
+                      child: CachedNetworkImage(imageUrl: imageUrl!,  placeholder: (context, url) => const CircularProgressIndicator(),
+        errorWidget: (context, url, error) => const Icon(Icons.error),),
                     ),
                   ),
                   Column(
