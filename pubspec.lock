@@ -137,13 +137,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  get_it:
-    dependency: "direct main"
-    description:
-      name: get_it
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "7.2.0"
   google_fonts:
     dependency: "direct main"
     description:
@@ -421,11 +414,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
     version: "2.3.6"
-=======
-    version: "2.3.11"
->>>>>>> 69e6c383454a58b5ef6104895a2e18800ac2477d
   xdg_directories:
     dependency: transitive
     description:

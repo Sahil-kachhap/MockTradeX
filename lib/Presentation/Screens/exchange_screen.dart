@@ -4,7 +4,6 @@ import 'package:lottie/lottie.dart';
 import 'package:mock_tradex/Data/Models/crypto.dart';
 import 'package:mock_tradex/Data/Repositories/crypto_repository.dart';
 import 'package:mock_tradex/Presentation/Widgets/crypto_tile.dart';
-import 'package:mock_tradex/service_locator.dart';
 
 class ExchangeScreen extends StatefulWidget {
   const ExchangeScreen({Key? key}) : super(key: key);
@@ -14,7 +13,6 @@ class ExchangeScreen extends StatefulWidget {
 }
 
 class _ExchangeScreenState extends State<ExchangeScreen> {
-  final cryptoList = getItInstance<CryptoRepository>();
 
   @override
   Widget build(BuildContext context) {

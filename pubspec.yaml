@@ -37,13 +37,9 @@ dependencies:
   google_fonts: '2.2.0'
   http: ^0.13.4
   lottie: ^1.2.1
-<<<<<<< HEAD
   cached_network_image: ^3.2.0
-  get_it: ^7.2.0
-=======
   material_floating_search_bar: ^0.3.6
 
->>>>>>> 69e6c383454a58b5ef6104895a2e18800ac2477d
 
 dev_dependencies:
   flutter_test:
