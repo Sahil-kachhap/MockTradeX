@@ -61,7 +61,6 @@ class _ExchangeScreenState extends State<ExchangeScreen> {
           //  high_24h: coin.high_24h,
            // totalVolume: coin.totalVolume,
 
-
           );
         },
       );

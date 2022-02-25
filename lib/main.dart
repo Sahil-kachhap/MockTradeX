@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mock_tradex/Presentation/Screens/orders_screen.dart';
 import 'constants.dart';
 import 'package:mock_tradex/Presentation/Screens/exchange_screen.dart';
-import 'package:mock_tradex/Presentation/Screens/Funds.dart';
+import 'package:mock_tradex/Presentation/Screens/funds.dart';
 import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
 
 void main() {
@@ -13,10 +14,11 @@ class MyApp extends StatefulWidget {
   static const List<Widget> _widgetOptions = <Widget>[
     Quickbuy(),
     ExchangeScreen(),
-    Text(
+    OrderScreen(),
+    /* Text(
       'Code for Orders',
       style: optionStyle,
-    ),
+    ),*/
     Funds(),
   ];
 

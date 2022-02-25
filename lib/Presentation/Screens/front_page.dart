@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:mock_tradex/Presentation/Screens/Funds.dart';
+import 'package:mock_tradex/Presentation/Screens/funds.dart';
 import 'package:mock_tradex/Presentation/Screens/exchange_screen.dart';
 import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
 import 'package:mock_tradex/Presentation/Screens/sign_in.dart';
