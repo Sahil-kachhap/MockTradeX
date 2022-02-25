@@ -1,7 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mock_tradex/Presentation/Screens/exchange_screen.dart';
+import 'package:mock_tradex/Presentation/Screens/graph_page.dart';
 import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
 import 'package:mock_tradex/Presentation/Screens/sign_up.dart';
+import 'package:mock_tradex/Presentation/Screens/trade_screen.dart';
 import 'package:mock_tradex/constants.dart';
 
 class SignIn extends StatefulWidget {
@@ -12,6 +16,11 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+
+  late String email;
+  late String password;
+  final _auth=FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +34,7 @@ class _SignInState extends State<SignIn> {
           children: [
 
             Container(
-              margin: EdgeInsets.only(top: 20),
+              margin: EdgeInsets.only(top: 70),
 
               //padding: EdgeInsets.only(left: 50),
              height: 250,
@@ -47,6 +56,9 @@ class _SignInState extends State<SignIn> {
 
               margin: EdgeInsets.only(top: 10),
               child: TextField(
+                onChanged: (value){
+                   email=value;
+                },
                 style: TextStyle(color: Colors.blueAccent),
                 //scrollPadding: EdgeInsets.all(50),
 
@@ -71,7 +83,12 @@ class _SignInState extends State<SignIn> {
 
               margin: EdgeInsets.only(top: 10),
               child: TextField(
+                onChanged: (value){
+                  password=value;
+
+                },
               style: TextStyle(
+
                 color: Colors.blueAccent
               ),
 
@@ -116,14 +133,55 @@ class _SignInState extends State<SignIn> {
                            )
                        )
                    ),
-                   onPressed: () {
+                   onPressed: () async{
+                     try {
+                       final user = await _auth.signInWithEmailAndPassword(
+                           email: email, password: password);
+                       if(user!=null){
+                         Navigator.push(context, MaterialPageRoute(builder: (context) => ExchangeScreen()));
+                       }else{
 
-                   },
+                       }
+                     }
+                     catch(e){
+
+                     }
+                     },
                    child: Text('Log In',style: kTickerTextStyle),),
                  ),
 
              ],
            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  //color: Colors.blueAccent,
+                  height: 60,
+                  width: 120,
+                  child: TextButton(
+
+                    style: ButtonStyle(
+                      // padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                        backgroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent),
+                        // foregroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+
+                            )
+                        )
+                    ),
+                    onPressed: () async{
+                      _auth.signOut();
+                    },
+                    child: Text('Log Out',style: kTickerTextStyle),),
+                ),
+
+              ],
+            ),
             SizedBox(
               height: 80,
             ),

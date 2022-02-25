@@ -1,6 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mock_tradex/Presentation/Screens/sign_in.dart';
 import 'package:mock_tradex/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -10,11 +12,21 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+
+  late String email;
+  late String name;
+  late String password;
+  late String confirm;
+  final _auth=FirebaseAuth.instance;
+
+
+
   @override
 
 
   Widget build(BuildContext context) {
     return Scaffold(
+
          backgroundColor: Color(0xff1F1A30),
       body: SingleChildScrollView(
         child: Column(
@@ -38,6 +50,9 @@ class _SignUpState extends State<SignUp> {
 
               margin: EdgeInsets.only(top: 10),
               child: TextField(
+                onChanged: (value){
+                  name=value;
+                },
 
                 style: TextStyle(color: Colors.blueAccent),
                 //scrollPadding: EdgeInsets.all(50),
@@ -74,7 +89,9 @@ class _SignUpState extends State<SignUp> {
 
               margin: EdgeInsets.only(top: 10),
               child: TextField(
-
+                onChanged: (value){
+                  email=value;
+                },
                 style: TextStyle(color: Colors.blueAccent),
                 //scrollPadding: EdgeInsets.all(50),
 
@@ -109,6 +126,11 @@ class _SignUpState extends State<SignUp> {
 
               margin: EdgeInsets.only(top: 10),
               child: TextField(
+
+                onChanged: (value){
+                    password=value;
+                },
+
                 obscureText: true,
                 style: TextStyle(color: Colors.blueAccent),
                 //scrollPadding: EdgeInsets.all(50),
@@ -145,6 +167,10 @@ class _SignUpState extends State<SignUp> {
 
               margin: EdgeInsets.only(top: 10),
               child: TextField(
+                onChanged: (value){
+                    confirm=value;
+                },
+
                 obscureText: true,
 
                 style: TextStyle(color: Colors.blueAccent),
@@ -193,8 +219,17 @@ class _SignUpState extends State<SignUp> {
                             )
                         )
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      try {
+                        final user = await _auth.createUserWithEmailAndPassword(
+                            email: email, password: password);
+                        if(user!=null){
+                         Navigator.pop(context);
+                        }
+                      }
+                      catch(e){
 
+                      }
                     },
                     child: Text('Sign Up',style: kTickerTextStyle),),
                 ),

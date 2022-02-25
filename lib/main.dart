@@ -1,12 +1,27 @@
+// ignore_for_file: unused_local_variable
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mock_tradex/Presentation/Screens/orders_screen.dart';
+import 'package:mock_tradex/Presentation/Screens/sign_in.dart';
 import 'constants.dart';
+
+import 'package:mock_tradex/Presentation/Screens/graph_page.dart';
+import 'package:mock_tradex/Presentation/Widgets/firebase.dart';
+
 import 'package:mock_tradex/Presentation/Screens/exchange_screen.dart';
 import 'package:mock_tradex/Presentation/Screens/funds.dart';
 import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
 
-void main() {
+List<String>? l=[" "];
+List<String>? l1=[" "];
+int i=1;
+int k=1;
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -19,6 +34,7 @@ class MyApp extends StatefulWidget {
       'Code for Orders',
       style: optionStyle,
     ),*/
+    SignIn(),
     Funds(),
   ];
 
@@ -35,6 +51,43 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+  final _firestore = FirebaseFirestore.instance;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+   method();
+   method1();
+   Quickbuy();
+
+  }
+  void method() async{
+
+    var collection = FirebaseFirestore.instance.collection('favourite');
+    var querySnapshot = await collection.get();
+    for (var queryDocumentSnapshot in querySnapshot.docs) {
+      Map<String, dynamic> data = queryDocumentSnapshot.data();
+      String str=data.values.toString();
+
+        l?.insert(i, str);
+      i++;
+    }
+
+
+  //  print(l);
+
+  }
+  void method1()async{
+    var coll1= FirebaseFirestore.instance.collection('favourite1');
+    var querySnapshot1 = await coll1.get();
+    for (var queryDocumentSnapshot in querySnapshot1.docs) {
+      Map<String, dynamic> data = queryDocumentSnapshot.data();
+      String str=data.values.toString();
+
+      l1?.insert(k, str);
+      k++;
+    }
   }
 
 // This widget is the root of your application.

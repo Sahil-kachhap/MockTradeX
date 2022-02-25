@@ -3,6 +3,11 @@ import 'package:mock_tradex/Presentation/Screens/exchange_screen.dart';
 import 'package:mock_tradex/Presentation/Widgets/search_bar.dart';
 import 'package:mock_tradex/constants.dart';
 
+import 'package:mock_tradex/main.dart';
+import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+
+
 class Quickbuy extends StatefulWidget {
   const Quickbuy({Key? key}) : super(key: key);
 
@@ -16,65 +21,125 @@ class _QuickbuyState extends State<Quickbuy> {
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
 
-    return Scaffold(
-        backgroundColor: Color(0xff1a202c),
-        body: Column(children: [
-          SizedBox(
-              height: 54,
-              child: Scaffold(
-                //backgroundColor: Color(0xff1a202c),
-                appBar: AppBar(
-                  backgroundColor: kBottomBarColor,
-                  title: Text('Search and Add'),
-                  actions: [
-                    IconButton(
-                      icon: Icon(Icons.search),
-                      onPressed: () {
-                        showSearch(context: context, delegate: SearchUser());
-                      },
-                    )
-                  ],
-                ),
-              )),
-          SizedBox(
-            height: 50,
-            child: DefaultTabController(
-              length: 2,
-              child: Scaffold(
-                appBar: PreferredSize(
-                  preferredSize: Size.fromHeight(50),
-                  child: Container(
-                    color: kBottomBarColor,
-                    child: SafeArea(
-                      child: Column(
-                        children: <Widget>[
-                          Expanded(child: Container()),
-                          const TabBar(
-                            indicatorColor: kBottomBarTextActive,
-                            indicatorSize: TabBarIndicatorSize.label,
-                            tabs: [
-                              Text(
-                                'WatchList 1',
-                                style: TextStyle(
-                                  height: 2,
-                                ),
-                              ),
-                              Text(
-                                'Watchlist 2',
-                                style: TextStyle(
-                                  height: 2,
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
+
+
+
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+       backgroundColor: Color(0xff1a202c),
+          appBar: AppBar(
+
+            backgroundColor: kBottomBarColor,
+            title: Text('Search and Add'),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.search),
+                onPressed: (){
+                  showSearch(context: context, delegate: SearchUser());
+                },
+              )
+            ],
+
+            bottom: PreferredSize(
+              preferredSize: Size(50.0, 50.0),
+              child: TabBar(
+                indicatorColor: kBottomBarTextActive,
+                indicatorSize: TabBarIndicatorSize.label,
+                tabs:  [ Text('WatchList 1',style: TextStyle(
+                  height: 2,
+
+
+
+
+          ),),
+
+                Text('WatchList 1',style: TextStyle(
+                    height: 2,),),
+
+
+                    ]))),
+        body: TabBarView(
+          children: [
+            ListView.builder(
+              //shrinkWrap: true,
+              itemCount: l!.length,
+              itemBuilder: (context, index) {
+                return  Column(
+
+                  children: [
+                    ListTile(
+
+                        title: Text(l![index],
+                          style: TextStyle(
+
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.white
+                          ),),
+
+                    ),
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          left: Divider.createBorderSide(context,
+                              color: Colors.black, width: 1.5),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
+                  ],
+                );
+              },
             ),
-          ),
-        ]));
+            ListView.builder(
+              // shrinkWrap:true,
+              itemCount: l1!.length,
+
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    ListTile(
+                      title: Text(l1![index],
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.white
+                        ),),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          left: Divider.createBorderSide(context,
+                              color: Colors.black, width: 1.5),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+
+          ],
+        )
+
+
+
+
+
+
+
+  ),
+          );
+
+
   }
 }
+
+
+
+
+
+
+

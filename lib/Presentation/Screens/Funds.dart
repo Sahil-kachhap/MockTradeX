@@ -200,12 +200,11 @@ class _FundsState extends State<Funds> {
                           children: [
                             Padding(
                                 padding:
-                                    const EdgeInsets.fromLTRB(82, 8, 12, 0),
+                                const EdgeInsets.fromLTRB(82, 8, 12, 0),
                                 child: Text(
                                   '\$ 9278',
                                   style:
-                                      kTickerTextStyle.copyWith(fontSize: 18),
-                                )),
+                                      kTickerTextStyle.copyWith(fontSize: 18),),),
                             Container(
                               margin: EdgeInsets.only(top: 5, left: 68),
                               decoration: BoxDecoration(
@@ -247,8 +246,7 @@ class _FundsState extends State<Funds> {
                                 padding: const EdgeInsets.fromLTRB(55, 8, 3, 5),
                                 child: Text(
                                   '\$ 12039',
-                                  style:
-                                      kTickerTextStyle.copyWith(fontSize: 18),
+                                  style: kTickerTextStyle.copyWith(fontSize: 18),
                                 )),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(55, 0, 5, 0),
