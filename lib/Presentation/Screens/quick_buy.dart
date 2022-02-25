@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mock_tradex/Presentation/Screens/exchange_screen.dart';
 import 'package:mock_tradex/Presentation/Widgets/search_bar.dart';
 import 'package:mock_tradex/constants.dart';
+
 import 'package:mock_tradex/main.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+
+
 class Quickbuy extends StatefulWidget {
   const Quickbuy({Key? key}) : super(key: key);
 
@@ -15,7 +18,8 @@ class Quickbuy extends StatefulWidget {
 class _QuickbuyState extends State<Quickbuy> {
   @override
   Widget build(BuildContext context) {
-    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
 
 
 
@@ -42,25 +46,19 @@ class _QuickbuyState extends State<Quickbuy> {
               child: TabBar(
                 indicatorColor: kBottomBarTextActive,
                 indicatorSize: TabBarIndicatorSize.label,
-                tabs: [ Text('WatchList 1',style: TextStyle(
+                tabs:  [ Text('WatchList 1',style: TextStyle(
                   height: 2,
 
-                ),
-
-                ),
 
 
-                  Text('Watchlist 2',
-                    style: TextStyle(
-                      height: 2,
 
-                    ),)],
+          ),),
+
+                Text('WatchList 1',style: TextStyle(
+                    height: 2,),),
 
 
-              ),
-            ),
-
-          ),
+                    ]))),
         body: TabBarView(
           children: [
             ListView.builder(
@@ -127,9 +125,13 @@ class _QuickbuyState extends State<Quickbuy> {
         )
 
 
-        ),
-    );
 
+
+
+
+
+  ),
+          );
 
 
   }
