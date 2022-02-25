@@ -1,15 +1,22 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:mock_tradex/main.dart';
 import 'package:mock_tradex/Presentation/Widgets/firebase.dart';
 import 'package:mock_tradex/constants.dart';
 import 'package:mock_tradex/Data/Repositories/graph_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mock_tradex/Presentation/Widgets/firebase.dart';
 import 'package:mock_tradex/Presentation/Widgets/buysell_box.dart'
 
     show BuySellBox;
 
 bool notificationIsSelected = false;
+
 bool isFavorite = false;
+
 
 class GraphPage extends StatefulWidget {
   final String? cryptoSymbol;
@@ -36,12 +43,42 @@ class GraphPage extends StatefulWidget {
 }
 
 class _GraphPageState extends State<GraphPage> {
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  final _firestore=FirebaseFirestore.instance;
+  _demoFunc() async {
+    SharedPreferences prefs=await SharedPreferences.getInstance();
+    await prefs.setBool(widget.cryptoName!, true);
+  }
+  _demoRetrieve() async {
+    SharedPreferences prefs=await SharedPreferences.getInstance();
+    setState(() {
+       prefs.getBool(widget.cryptoName!)!;
+    });
+
+  }
+  _demoDelete() async {
+    SharedPreferences prefs=await SharedPreferences.getInstance();
+    prefs.remove(widget.cryptoName!);
+  }
+  _democheck() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey(widget.cryptoName!)) {
+      setState(() {
+        isFavorite=true;
+      });
+    }else{
+      setState(() {
+        isFavorite=false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+  _democheck();
+
     return Scaffold(
+
       backgroundColor: kGraphPageBackground,
       appBar: AppBar(
         backgroundColor: kGraphPageBackground,
@@ -73,32 +110,162 @@ class _GraphPageState extends State<GraphPage> {
                 ],
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.only(right: 15),
               child: IconButton(
+                  icon: isFavorite
+                      ?
+                  const Icon(
+                    Icons.star_rounded,
+                    color: Color(0xffe6b10b),
+                    size: 26,
+                  )
+                      :
+                  const Icon(
+                    Icons.star_outline_rounded,
+                    color: Color(0xFF596777),
+                    size: 25,
+                  ),
+
                 onPressed: () {
-                add obj=add();
-                 obj.helper();
 
                   setState(() {
-                    m.update(widget.cryptoName!, (value) => true);
-                    isFavorite = !isFavorite;
+
+                    // m.update(widget.cryptoName!, (value) => true);
+                    isFavorite=!isFavorite;
+
 
                   });
+                  isFavorite
+                      ?
+                  const Icon(
+                    Icons.star_rounded,
+                    color: Color(0xffe6b10b),
+                    size: 26,
+                  )
+                      :
+                  const Icon(
+                    Icons.star_outline_rounded,
+                    color: Color(0xFF596777),
+                    size: 25,
+                  );
+
+                  if(isFavorite){
+                    _demoFunc();
+
+
+
+                    showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        scrollable: true,
+                          backgroundColor: Colors.black45,
+                        content: Column(
+                          children: [
+                            GestureDetector(
+                              child: const ListTile(
+                                  title: Text('Watch List 1',style: TextStyle(
+                                    color: Colors.white,
+                                  ),)
+                              ),
+                              onTap: () {
+                                _firestore.collection('favourite').add({
+                                  'crypto':widget.cryptoName!,
+                                 // 'isfavorite':true,
+                                });
+                                l?.insert(i++, widget.cryptoName!);
+                                Navigator.pop(context);
+                              },
+
+                            ),
+                            GestureDetector(
+                              child: const ListTile(
+                                  title: Text('Watch List 2',style: TextStyle(
+                                    color: Colors.white,
+                                  ),)
+                              ),
+                              onTap: () {
+                                _firestore.collection('favourite1').add({
+                                  'crypto':widget.cryptoName!,
+                                 // 'isfavorite':true,
+                                });
+                                l1?.insert(k++, widget.cryptoName!);
+                                Navigator.pop(context);
+                              },
+
+                            ),
+
+                          ],
+                        ),
+
+                      ),
+                    );
+                    //  print(l);
+                  }else{
+                _demoDelete();
+                    showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        scrollable: true,
+                         backgroundColor: Colors.black45,
+                        content: Column(
+                          children: [
+                            GestureDetector(
+                              child: const ListTile(
+                                  title: Text('Watch List 1',style: TextStyle(
+                                    color: Colors.white,
+                                  ),)
+                              ),
+                              onTap: () {
+                                FirebaseFirestore.instance
+                                    .collection("favourite")
+                                    .where("crypto", isEqualTo : widget.cryptoName!)
+                                    .get().then((value){
+                                  value.docs.forEach((element) {
+                                    FirebaseFirestore.instance.collection("favourite").doc(element.id).delete().then((value){
+
+                                    });
+                                  });
+                                });
+                                l?.remove(widget.cryptoName!);
+                                Navigator.pop(context);
+                               // _demoDelete();
+                              },
+
+                            ),
+                            GestureDetector(
+                              child: const ListTile(
+                                  title: Text('Watch List 2',style: TextStyle(
+                                    color: Colors.white,
+                                  ),)
+                              ),
+                              onTap: () {
+                                FirebaseFirestore.instance
+                                    .collection("favourite1")
+                                    .where("crypto", isEqualTo : widget.cryptoName!)
+                                    .get().then((value){
+                                  value.docs.forEach((element) {
+                                    FirebaseFirestore.instance.collection("favourite1").doc(element.id).delete().then((value){
+
+                                    });
+                                  });
+                                });
+                                l1?.remove(widget.cryptoName!);
+                                Navigator.pop(context);
+                               // _demoDelete();
+                              },
+
+                            ),
+                          ],
+                        ),
+
+                      ),
+                    );
+                    // code not written for removing.
+                   }
                 },
 
-                icon: isFavorite
-                    ? const Icon(
-
-                        Icons.star_rounded,
-                        color: Color(0xffe6b10b),
-                        size: 26,
-                      )
-                    : const Icon(
-                        Icons.star_outline_rounded,
-                        color: Color(0xFF596777),
-                        size: 25,
-                      ),
               ),
             ),
           ],
