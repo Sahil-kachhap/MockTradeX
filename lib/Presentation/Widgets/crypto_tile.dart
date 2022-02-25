@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mock_tradex/Presentation/Screens/graph_page.dart';
 import 'package:mock_tradex/constants.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
+
 
 // name too long or price too long overlow issue
 class CryptoTile extends StatelessWidget {
@@ -28,8 +32,12 @@ class CryptoTile extends StatelessWidget {
     this.totalVolume,
   }) : super(key: key);
 
+
+
   @override
+
   Widget build(BuildContext context) {
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
