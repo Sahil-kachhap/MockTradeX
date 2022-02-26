@@ -1,11 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mock_tradex/Presentation/Screens/exchange_screen.dart';
-import 'package:mock_tradex/Presentation/Screens/graph_page.dart';
-import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
 import 'package:mock_tradex/Presentation/Screens/sign_up.dart';
-import 'package:mock_tradex/Presentation/Screens/trade_screen.dart';
 import 'package:mock_tradex/constants.dart';
 
 class SignIn extends StatefulWidget {
@@ -194,7 +190,7 @@ class _SignInState extends State<SignIn> {
                   Text('Do not have a account? ',style: kTickerTextStyle,),
                   GestureDetector(child: Text('Sign up',style: kTickerTextStyle.copyWith(color: Colors.blueAccent),),
                   onTap: (){
-                     Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
+                     Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUp()));
                   },)
                 ],
               ),

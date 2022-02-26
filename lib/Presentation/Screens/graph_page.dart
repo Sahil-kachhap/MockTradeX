@@ -1,17 +1,13 @@
 // ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:mock_tradex/main.dart';
-import 'package:mock_tradex/Presentation/Widgets/firebase.dart';
 import 'package:mock_tradex/constants.dart';
 import 'package:mock_tradex/Data/Repositories/graph_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:mock_tradex/Presentation/Widgets/firebase.dart';
 import 'package:mock_tradex/Presentation/Widgets/buysell_box.dart'
 
-    show BuySellBox;
+show BuySellBox;
 
 bool notificationIsSelected = false;
 
@@ -43,7 +39,7 @@ class GraphPage extends StatefulWidget {
 }
 
 class _GraphPageState extends State<GraphPage> {
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   _demoFunc() async {
     SharedPreferences prefs=await SharedPreferences.getInstance();

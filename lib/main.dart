@@ -1,16 +1,9 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mock_tradex/Presentation/Screens/orders_screen.dart';
 import 'package:mock_tradex/Presentation/Screens/sign_in.dart';
-import 'constants.dart';
-
-import 'package:mock_tradex/Presentation/Screens/graph_page.dart';
-import 'package:mock_tradex/Presentation/Widgets/firebase.dart';
-
 import 'package:mock_tradex/Presentation/Screens/exchange_screen.dart';
 import 'package:mock_tradex/Presentation/Screens/funds.dart';
 import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
@@ -26,18 +19,6 @@ void main() async{
 }
 
 class MyApp extends StatefulWidget {
-  static const List<Widget> _widgetOptions = <Widget>[
-    Quickbuy(),
-    ExchangeScreen(),
-    OrderScreen(),
-    /* Text(
-      'Code for Orders',
-      style: optionStyle,
-    ),*/
-    SignIn(),
-    Funds(),
-  ];
-
   const MyApp({Key? key}) : super(key: key);
 
   @override
@@ -45,21 +26,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-  final _firestore = FirebaseFirestore.instance;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
    method();
    method1();
-   Quickbuy();
+  const Quickbuy();
 
   }
   void method() async{
@@ -100,49 +73,7 @@ class _MyAppState extends State<MyApp> {
       ),
       debugShowCheckedModeBanner: false,
       title: 'MockTradeX',
-      home: Scaffold(
-        backgroundColor: kAppBackgroundColour,
-        body: Center(
-          child: MyApp._widgetOptions.elementAt(_selectedIndex),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          iconSize: 24.5,
-          type: BottomNavigationBarType.fixed,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.bubble_chart,
-              ),
-              label: 'Quick Buy',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.business,
-              ),
-              label: 'Exchange',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.school,
-              ),
-              label: 'Orders',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.school,
-              ),
-              label: 'Funds',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: kBottomBarTextActive,
-          unselectedItemColor: kBottomBarTextinActive,
-          onTap: _onItemTapped,
-          selectedIconTheme: IconThemeData(color: kBottomBarTextActive),
-          unselectedIconTheme: IconThemeData(color: kBottomBarTextinActive),
-          backgroundColor: kBottomBarColor,
-        ),
-      ),
+      home: const SignIn()
     );
   }
 }
