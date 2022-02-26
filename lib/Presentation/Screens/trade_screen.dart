@@ -39,18 +39,21 @@ class _OrderPageState extends State<OrderPage> {
       backgroundColor: kTradeScreenBackgroundColor,
       body: SingleChildScrollView(
         child: ConstrainedBox(
-        constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height-Scaffold.of(context).appBarMaxHeight!.toDouble(),),
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height -
+                Scaffold.of(context).appBarMaxHeight!.toDouble(),
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15.0, vertical: 15),
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 12),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 5, vertical: 12),
                       decoration: BoxDecoration(
                         color: kTradeScreenGreyBoxColor,
                         borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -74,8 +77,8 @@ class _OrderPageState extends State<OrderPage> {
                                     ),
                                   ),
                                   Container(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
                                     child: TextFormField(
                                       onChanged: ((val) {
                                         if (double.tryParse(val) != null)
@@ -84,14 +87,16 @@ class _OrderPageState extends State<OrderPage> {
                                           });
                                       }),
                                       controller: myPriceController,
-                                      textAlignVertical: TextAlignVertical.center,
+                                      textAlignVertical:
+                                          TextAlignVertical.center,
                                       textAlign: TextAlign.start,
                                       style: const TextStyle(
                                         fontSize: 20,
                                         color: kTickerWhite,
                                       ),
-                                      keyboardType: TextInputType.numberWithOptions(
-                                          decimal: true),
+                                      keyboardType:
+                                          TextInputType.numberWithOptions(
+                                              decimal: true),
                                       inputFormatters: [
                                         LengthLimitingTextInputFormatter(12),
                                         //max length of 12 characters
@@ -105,8 +110,8 @@ class _OrderPageState extends State<OrderPage> {
                                         contentPadding: EdgeInsets.all(10),
                                         isCollapsed: true,
                                         border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.all(Radius.circular(6)),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(6)),
                                         ),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
@@ -151,18 +156,19 @@ class _OrderPageState extends State<OrderPage> {
                                     ),
                                   ),
                                   Container(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
                                     child: TextFormField(
                                       controller: myAmountController,
                                       onChanged: ((val) {
                                         if (double.tryParse(val) != null)
                                           setState(() {
                                             amount = double.parse(val);
-                                            total=amount*price;
+                                            total = amount * price;
                                           });
                                       }),
-                                      textAlignVertical: TextAlignVertical.center,
+                                      textAlignVertical:
+                                          TextAlignVertical.center,
                                       textAlign: TextAlign.start,
                                       style: const TextStyle(
                                         fontSize: 20,
@@ -182,8 +188,8 @@ class _OrderPageState extends State<OrderPage> {
                                         contentPadding: EdgeInsets.all(10),
                                         isCollapsed: true,
                                         border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.all(Radius.circular(6)),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(6)),
                                         ),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
@@ -214,8 +220,8 @@ class _OrderPageState extends State<OrderPage> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -243,8 +249,8 @@ class _OrderPageState extends State<OrderPage> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -283,8 +289,8 @@ class _OrderPageState extends State<OrderPage> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 10),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -300,8 +306,8 @@ class _OrderPageState extends State<OrderPage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 20.0),
                           child: Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween, //setstate problem
+                            mainAxisAlignment: MainAxisAlignment
+                                .spaceBetween, //setstate problem
                             children: [
                               GestureDetector(
                                 onTap: () {
@@ -358,8 +364,8 @@ class _OrderPageState extends State<OrderPage> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -376,8 +382,8 @@ class _OrderPageState extends State<OrderPage> {
                           padding: const EdgeInsets.symmetric(vertical: 20.0),
                           child: Container(
                             width: double.infinity,
-                            padding:
-                                EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 12),
                             child: Text(
                               '${total.truncateToDouble()}',
                               style: TextStyle(
@@ -387,9 +393,11 @@ class _OrderPageState extends State<OrderPage> {
                             ),
                             decoration: BoxDecoration(
                               color: Colors.black,
-                              borderRadius: BorderRadius.all(Radius.circular(4)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(4)),
                               border: Border.all(
-                                  color: kTradeScreenGreyBoxColorTextFieldBorder),
+                                  color:
+                                      kTradeScreenGreyBoxColorTextFieldBorder),
                             ),
                           ),
                         ),
@@ -450,7 +458,6 @@ class _OrderPageState extends State<OrderPage> {
                   outerColor: Color(0xff286bdb),
                   innerColor: Color(0xffffffff),
                   sliderButtonIconPadding: 11,
-
                   sliderRotate: false,
                   height: 65,
                   sliderButtonIcon: Icon(
@@ -470,7 +477,6 @@ class _OrderPageState extends State<OrderPage> {
           ),
         ),
       ),
-      
     );
   }
 
@@ -525,7 +531,7 @@ class _ToggleContainerState extends State<ToggleContainer> {
           borderRadius: BorderRadius.all(Radius.circular(3)),
           border: Border.all(
             color: orderSelected[widget.index!]
-                ?Color(0xff286bdb)
+                ? Color(0xff286bdb)
                 : Color(0xff1f1f1f),
           )),
     );

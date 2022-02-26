@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mock_tradex/constants.dart';
+import 'package:mock_tradex/Presentation/Screens/deposit_screen.dart';
 
 class Funds extends StatefulWidget {
   const Funds({Key? key}) : super(key: key);
@@ -39,8 +40,10 @@ class _FundsState extends State<Funds> {
                   padding: EdgeInsets.only(right: 19),
                   child: Column(
                     children: [
-                      IconButton(
-                        onPressed: null,
+                       IconButton(
+                        onPressed: (){
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>Deposit_Screen()));
+                        },
                         icon: Icon(
                           Icons.add_box,
                           color: Color(0xFF596777),
