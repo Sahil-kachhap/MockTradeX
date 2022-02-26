@@ -7,7 +7,7 @@ import 'package:mock_tradex/Presentation/Screens/sign_in.dart';
 import 'package:mock_tradex/Presentation/Screens/exchange_screen.dart';
 import 'package:mock_tradex/Presentation/Screens/funds.dart';
 import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
-
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 List<String>? l=[" "];
 List<String>? l1=[" "];
 int i=1;
@@ -15,6 +15,7 @@ int k=1;
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  MobileAds.instance.initialize();
   runApp(const MyApp());
 }
 

@@ -43,6 +43,7 @@ dependencies:
   firebase_auth: ^3.3.7
   cloud_firestore: ^3.1.8
   shared_preferences: ^2.0.13
+  webview_flutter: ^3.0.1
 
 
 dev_dependencies:
@@ -55,7 +56,9 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
-  webview_flutter: ^3.0.0
+  google_mobile_ads: ^1.1.0
+  sleek_circular_slider: ^2.0.1
+
 
 
 
