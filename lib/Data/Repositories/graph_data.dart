@@ -31,7 +31,7 @@ class _GraphDataState extends State<GraphData> {
    new TradingView.widget(
        {
        "autosize": true,
-       "symbol": "BINANCE:${widget.cryptoSymbol}USDT",
+       "symbol": "BINANCE:${widget.cryptoSymbol}USD",  //usd global binance
        "timezone": "Asia/Kolkata",
        "theme": "dark",
        "style": "2",
