@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mock_tradex/Buisness_logic/Exchange/bloc/exchange_bloc.dart';
+import 'package:mock_tradex/Buisness_logic/exchange/exchange_bloc.dart';
 import 'package:mock_tradex/Data/Models/crypto.dart';
 import 'package:mock_tradex/Data/Repositories/crypto_repository.dart';
 import 'package:mock_tradex/Presentation/Widgets/crypto_tile.dart';
@@ -14,8 +14,6 @@ class ExchangeScreen extends StatefulWidget {
 }
 
 class _ExchangeScreenState extends State<ExchangeScreen> {
-  
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

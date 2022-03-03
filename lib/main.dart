@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mock_tradex/Data/Repositories/auth_repository.dart';
 import 'package:mock_tradex/Data/Repositories/crypto_repository.dart';
+import 'package:mock_tradex/Presentation/Screens/front_page.dart';
 import 'package:mock_tradex/Presentation/Screens/sign_in.dart';
 import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -66,7 +69,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
-      providers: [RepositoryProvider(create: (context) => CryptoRepository())],
+      providers: [
+        RepositoryProvider(create: (context) => CryptoRepository()),
+        RepositoryProvider(create: (context) => AuthRepository()),
+      ],
       child: MaterialApp(
           theme: ThemeData(
             primaryColor: Colors.deepPurpleAccent,
@@ -75,7 +81,18 @@ class _MyAppState extends State<MyApp> {
           ),
           debugShowCheckedModeBanner: false,
           title: 'MockTradeX',
-          home: const SignIn()),
+          home: StreamBuilder<User?>(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot){
+              if(snapshot.hasData){
+                return const Frontpage();
+              }
+
+              return const SignIn();
+            },
+          )
+         // const SignIn()
+      ),
     );
   }
 }
