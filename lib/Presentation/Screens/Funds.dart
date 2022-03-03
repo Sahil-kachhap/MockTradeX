@@ -24,7 +24,7 @@ class _FundsState extends State<Funds> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  padding: EdgeInsets.only(left: 25, top: 5),
+                  padding: const EdgeInsets.only(left: 25, top: 5),
                   child: Text(
                     'Portfolio',
                     style: kTickerTextStyle.copyWith(
@@ -33,12 +33,12 @@ class _FundsState extends State<Funds> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(right: 19),
+                  padding: const EdgeInsets.only(right: 19),
                   child: Column(
                     children: [
                        IconButton(
                         onPressed: (){
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>Deposit_Screen()));
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=> Deposit_Screen()));
                         },
                         icon: Icon(
                           Icons.add_box,
@@ -180,13 +180,13 @@ class _FundsState extends State<Funds> {
                     height: 80,
                     child: Row(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                       const Padding(
+                          padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
                           child: CircleAvatar(
                             backgroundColor: kFundTileColor,
                             radius: 18.0,
                             child: Icon(
-                              CupertinoIcons.bitcoin,
+                               CupertinoIcons.bitcoin,
                               size: 26,
                             ),
                           ),
@@ -209,8 +209,8 @@ class _FundsState extends State<Funds> {
                                   style:
                                       kTickerTextStyle.copyWith(fontSize: 18),),),
                             Container(
-                              margin: EdgeInsets.only(top: 5, left: 68),
-                              decoration: BoxDecoration(
+                              margin: const EdgeInsets.only(top: 5, left: 68),
+                              decoration: const BoxDecoration(
                                 color: Color(0xFF5CD096),
                                 //backgroundBlendMode: BlendMode.luminosity,
                                 borderRadius:

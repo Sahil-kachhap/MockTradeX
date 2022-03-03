@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mock_tradex/Presentation/Screens/funds.dart';
 import 'package:mock_tradex/Presentation/Screens/exchange_screen.dart';
 import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
 import 'package:mock_tradex/Presentation/Screens/sign_in.dart';
 import 'package:mock_tradex/constants.dart';
-
 import 'orders_screen.dart';
 
 class Frontpage extends StatefulWidget {
@@ -12,10 +12,6 @@ class Frontpage extends StatefulWidget {
     Quickbuy(),
     ExchangeScreen(),
     OrderScreen(),
-    /* Text(
-      'Code for Orders',
-      style: optionStyle,
-    ),*/
     Funds(),
   ];
   const Frontpage({Key? key}) : super(key: key);
@@ -24,7 +20,6 @@ class Frontpage extends StatefulWidget {
 }
 
 class _FrontpageState extends State<Frontpage> {
-
  
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
