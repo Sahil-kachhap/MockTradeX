@@ -1,11 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mock_tradex/Presentation/Screens/exchange_screen.dart';
-import 'package:mock_tradex/Presentation/Screens/graph_page.dart';
-import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mock_tradex/Buisness_logic/auth/bloc/auth_bloc.dart';
+import 'package:mock_tradex/Data/Repositories/auth_repository.dart';
+import 'package:mock_tradex/Presentation/Screens/front_page.dart';
 import 'package:mock_tradex/Presentation/Screens/sign_up.dart';
-import 'package:mock_tradex/Presentation/Screens/trade_screen.dart';
 import 'package:mock_tradex/constants.dart';
 
 class SignIn extends StatefulWidget {
@@ -16,191 +14,210 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-
-  late String email;
-  late String password;
-  final _auth=FirebaseAuth.instance;
+  String? email;
+  String? password;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.black,
-      body: SingleChildScrollView(
-        child: Column(
+    return BlocProvider(
+      create: (context) => AuthBloc(authRepository: RepositoryProvider.of<AuthRepository>(context)),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.black,
+        body: BlocConsumer<AuthBloc, AuthState>(
+          listener: (context, state) {
+            if (state is Authenticated) {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const Frontpage()));
+            }
 
-          crossAxisAlignment: CrossAxisAlignment.start,
+            if (state is AuthError) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(state.Error)));
+            }
+          },
+          builder: (context, state) {
+            if (state is Loading) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-          children: [
-
-            Container(
-              margin: EdgeInsets.only(top: 70),
-
-              //padding: EdgeInsets.only(left: 50),
-             height: 250,
-             width: 400,
-             // child: Text('Login',style: kTickerTextStyle.copyWith(fontSize: 24),),
-              child:Image.asset("assets/images signin.png"),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 35),
-            child: Text('Login',style: kTickerTextStyle.copyWith(fontSize: 25),),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 35,top: 10),
-              child: Text('Please Sign in to continue',style: kTickerSubTextStyle.copyWith(fontSize: 15, ),),
-            ),
-
-            Container(
-              padding: EdgeInsets.only(left: 35,right: 35,top: 10),
-
-              margin: EdgeInsets.only(top: 10),
-              child: TextField(
-                onChanged: (value){
-                   email=value;
-                },
-                style: TextStyle(color: Colors.blueAccent),
-                //scrollPadding: EdgeInsets.all(50),
-
-                decoration: InputDecoration(
-                 // disabledBorder: ,
-                  fillColor: Color(0xff363144),
-                  hoverColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blueAccent),
+            if (state is UnAuthenticated) {
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 70),
+                      //padding: EdgeInsets.only(left: 50),
+                      height: 250,
+                      width: 400,
+                      // child: Text('Login',style: kTickerTextStyle.copyWith(fontSize: 24),),
+                      child: Image.asset("assets/images signin.png"),
                     ),
-                    focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.blueAccent)),
-                 // border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blueAccent)),
-                  labelText: 'E-mail',
-                  hintText: 'E-mail',
-                    labelStyle: TextStyle(color: Colors.blueAccent),
-                    hintStyle: TextStyle(color: Colors.blueAccent)
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 35,right: 35,top: 10),
+                    Container(
+                      margin: const EdgeInsets.only(left: 35),
+                      child: Text(
+                        'Login',
+                        style: kTickerTextStyle.copyWith(fontSize: 25),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(left: 35, top: 10),
+                      child: Text(
+                        'Please Sign in to continue',
+                        style: kTickerSubTextStyle.copyWith(
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding:
+                          const EdgeInsets.only(left: 35, right: 35, top: 10),
+                      margin: const EdgeInsets.only(top: 10),
+                      child: TextField(
+                        onChanged: (value) {
+                          email = value;
+                        },
+                        style: const TextStyle(color: Colors.blueAccent),
+                        //scrollPadding: EdgeInsets.all(50),
 
-              margin: EdgeInsets.only(top: 10),
-              child: TextField(
-                onChanged: (value){
-                  password=value;
+                        decoration: const InputDecoration(
+                            // disabledBorder: ,
+                            fillColor: Color(0xff363144),
+                            hoverColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blueAccent),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.blueAccent)),
+                            // border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blueAccent)),
+                            labelText: 'E-mail',
+                            hintText: 'E-mail',
+                            labelStyle: TextStyle(color: Colors.blueAccent),
+                            hintStyle: TextStyle(color: Colors.blueAccent)),
+                      ),
+                    ),
+                    Container(
+                      padding:
+                          const EdgeInsets.only(left: 35, right: 35, top: 10),
+                      margin: const EdgeInsets.only(top: 10),
+                      child: TextField(
+                        onChanged: (value) {
+                          password = value;
+                        },
+                        style: const TextStyle(color: Colors.blueAccent),
 
-                },
-              style: TextStyle(
+                        //scrollPadding: EdgeInsets.all(50),
+                        obscureText: true,
+                        decoration: const InputDecoration(
 
-                color: Colors.blueAccent
-              ),
-
-                //scrollPadding: EdgeInsets.all(50),
-                obscureText: true,
-                decoration: InputDecoration(
-
-                  // disabledBorder: ,
-                  fillColor: Color(0xff363144),
-                  hoverColor: Colors.white,
-
-               focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.blueAccent)),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueAccent),
-                  ),
-                  labelText: 'Password',
-                    labelStyle: TextStyle(color: Colors.blueAccent),
-                  hintText: 'Password',
-                  hintStyle: TextStyle(color: Colors.blueAccent)
-                ),
-              ),
-            ),
-
-           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-             children: [
-               Container(
-                 margin: EdgeInsets.only(top: 40),
-                 //color: Colors.blueAccent,
-                 height: 60,
-                 width: 120,
-                 child: TextButton(
-
-                   style: ButtonStyle(
-                      // padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
-                       backgroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent),
-                     // foregroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent),
-                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                           RoundedRectangleBorder(
-                               borderRadius: BorderRadius.circular(18.0),
-
-                           )
-                       )
-                   ),
-                   onPressed: () async{
-                     try {
-                       final user = await _auth.signInWithEmailAndPassword(
-                           email: email, password: password);
-                       if(user!=null){
-                         Navigator.push(context, MaterialPageRoute(builder: (context) => ExchangeScreen()));
-                       }else{
-
-                       }
-                     }
-                     catch(e){
-
-                     }
-                     },
-                   child: Text('Log In',style: kTickerTextStyle),),
-                 ),
-
-             ],
-           ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: 20),
-                  //color: Colors.blueAccent,
-                  height: 60,
-                  width: 120,
-                  child: TextButton(
-
-                    style: ButtonStyle(
-                      // padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent),
-                        // foregroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-
-                            )
+                            // disabledBorder: ,
+                            fillColor: Color(0xff363144),
+                            hoverColor: Colors.white,
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.blueAccent)),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blueAccent),
+                            ),
+                            labelText: 'Password',
+                            labelStyle: TextStyle(color: Colors.blueAccent),
+                            hintText: 'Password',
+                            hintStyle: TextStyle(color: Colors.blueAccent)),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(top: 40),
+                          //color: Colors.blueAccent,
+                          height: 60,
+                          width: 120,
+                          child: TextButton(
+                            style: ButtonStyle(
+                                // padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.blueAccent),
+                                // foregroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent),
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ))),
+                            onPressed: () {
+                              BlocProvider.of<AuthBloc>(context)
+                                  .add(SignInRequested(email, password));
+                            },
+                            child:
+                                const Text('Log In', style: kTickerTextStyle),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(top: 20),
+                          //color: Colors.blueAccent,
+                          height: 60,
+                          width: 120,
+                          child: TextButton(
+                            style: ButtonStyle(
+                                // padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.blueAccent),
+                                // foregroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent),
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ))),
+                            onPressed: () {
+                              BlocProvider.of<AuthBloc>(context)
+                                  .add(SignOutRequested());
+                            },
+                            child:
+                                const Text('Log Out', style: kTickerTextStyle),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 80,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Do not have a account? ',
+                          style: kTickerTextStyle,
+                        ),
+                        GestureDetector(
+                          child: Text(
+                            'Sign up',
+                            style: kTickerTextStyle.copyWith(
+                                color: Colors.blueAccent),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SignUp()));
+                          },
                         )
-                    ),
-                    onPressed: () async{
-                      _auth.signOut();
-                    },
-                    child: Text('Log Out',style: kTickerTextStyle),),
+                      ],
+                    )
+                  ],
                 ),
-
-              ],
-            ),
-            SizedBox(
-              height: 80,
-            ),
-
-            Container(
-
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Do not have a account? ',style: kTickerTextStyle,),
-                  GestureDetector(child: Text('Sign up',style: kTickerTextStyle.copyWith(color: Colors.blueAccent),),
-                  onTap: (){
-                     Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
-                  },)
-                ],
-              ),
-            )
-
-          ],
+              );
+            }
+            return Container();
+          },
         ),
       ),
     );

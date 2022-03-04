@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mock_tradex/Presentation/Screens/exchange_screen.dart';
 import 'package:mock_tradex/Presentation/Widgets/search_bar.dart';
 import 'package:mock_tradex/constants.dart';
-
 import 'package:mock_tradex/main.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 
 class Quickbuy extends StatefulWidget {

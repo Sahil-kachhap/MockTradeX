@@ -1,17 +1,15 @@
 // ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
-import 'dart:convert';
+import 'package:mock_tradex/Presentation/Widgets/crypto_coin.dart';
+import 'package:mock_tradex/Presentation/Widgets/favorites.dart';
 import 'package:mock_tradex/main.dart';
-import 'package:mock_tradex/Presentation/Widgets/firebase.dart';
 import 'package:mock_tradex/constants.dart';
 import 'package:mock_tradex/Data/Repositories/graph_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:mock_tradex/Presentation/Widgets/firebase.dart';
 import 'package:mock_tradex/Presentation/Widgets/buysell_box.dart'
 
-    show BuySellBox;
+show BuySellBox;
 
 bool notificationIsSelected = false;
 
@@ -43,7 +41,8 @@ class GraphPage extends StatefulWidget {
 }
 
 class _GraphPageState extends State<GraphPage> {
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final Favorites _favorites = Favorites();
 
   _demoFunc() async {
     SharedPreferences prefs=await SharedPreferences.getInstance();
@@ -78,7 +77,6 @@ class _GraphPageState extends State<GraphPage> {
   _democheck();
 
     return Scaffold(
-
       backgroundColor: kGraphPageBackground,
       appBar: AppBar(
         backgroundColor: kGraphPageBackground,
@@ -129,7 +127,9 @@ class _GraphPageState extends State<GraphPage> {
                   ),
 
                 onPressed: () {
-
+                  Favorites _favorites = Favorites();
+                  CryptoCoin currency = CryptoCoin(widget.cryptoSymbol, widget.cryptoName, widget.cryptoPrice, widget.priceChange);
+                  print(currency);
                   setState(() {
 
                     // m.update(widget.cryptoName!, (value) => true);
@@ -153,9 +153,8 @@ class _GraphPageState extends State<GraphPage> {
 
                   if(isFavorite){
                     _demoFunc();
-
-
-
+                    _favorites.addFavorites(currency);
+                    
                     showDialog<String>(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
@@ -204,6 +203,7 @@ class _GraphPageState extends State<GraphPage> {
                     //  print(l);
                   }else{
                 _demoDelete();
+                _favorites.removeFavorites(currency);
                     showDialog<String>(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
@@ -262,7 +262,7 @@ class _GraphPageState extends State<GraphPage> {
 
                       ),
                     );
-                    // code not written for removing.
+                    // code not written for removing
                    }
                 },
 
