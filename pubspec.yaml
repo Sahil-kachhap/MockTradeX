@@ -59,7 +59,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
   google_mobile_ads: ^1.1.0
-  sleek_circular_slider: ^2.0.1
+
 
 
 

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mock_tradex/common.dart';
 import 'package:mock_tradex/constants.dart';
 import '/Presentation/Widgets/slide_act.dart';
+import 'package:mock_tradex/constants.dart';
 
 List<bool> orderSelected = [true, false, false, false];
 List<bool> percentSelected = [false, false, false, false];
 
 class OrderPage extends StatefulWidget {
-  final String? typeOfOrder;
+  final String? orderSide;
   const OrderPage({
     Key? key,
-    this.typeOfOrder,
+    this.orderSide,
   }) : super(key: key);
 
   @override
@@ -18,6 +20,13 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
+  Color? pageThemeColor;
+  @override
+  void initState() {
+     pageThemeColor=(orderSide == "BUY") ? Color(0xff286bdb) : Color(0xffef4006);
+    super.initState();
+  }
+
   @override
   double price = 0;
   double amount = 0;
@@ -30,6 +39,7 @@ class _OrderPageState extends State<OrderPage> {
     myAmountController.dispose();
     super.dispose();
   }
+
 
   Widget build(BuildContext context) {
     final GlobalKey<SlideActionState> _key = GlobalKey();
@@ -101,7 +111,7 @@ class _OrderPageState extends State<OrderPage> {
                                         FilteringTextInputFormatter.allow(
                                             RegExp(r'(^-?\d*\.?\d*)'))
                                       ],
-                                      cursorColor: Color(0xff2196f4),
+                                      cursorColor: pageThemeColor,
                                       cursorWidth: 2,
                                       enabled: true,
                                       decoration: const InputDecoration(
@@ -179,7 +189,7 @@ class _OrderPageState extends State<OrderPage> {
                                         FilteringTextInputFormatter.allow(
                                             RegExp(r'(^-?\d*\.?\d*)'))
                                       ],
-                                      cursorColor: Color(0xff2196f4),
+                                      cursorColor: pageThemeColor,
                                       cursorWidth: 2,
                                       enabled: true,
                                       decoration: const InputDecoration(
@@ -277,10 +287,10 @@ class _OrderPageState extends State<OrderPage> {
                             fontSize: kToggleBoxOrderPercentFontSize,
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(5)),
-                          selectedBorderColor: Color(0xff286bdb),
+                          selectedBorderColor: pageThemeColor,
                           isSelected: percentSelected,
                           color: Color(0xffd9d9d7),
-                          selectedColor: Color(0xff286bdb),
+                          selectedColor: pageThemeColor,
                           fillColor: Colors.black,
                         ),
                       ],
@@ -317,6 +327,7 @@ class _OrderPageState extends State<OrderPage> {
                                   text: 'Limit',
                                   index: 0,
                                   fontSize: kToggleBoxOrderTypeFontSize,
+                                  colorTheme: pageThemeColor,
                                 ),
                               ),
                               GestureDetector(
@@ -329,6 +340,7 @@ class _OrderPageState extends State<OrderPage> {
                                   text: 'Market',
                                   index: 1,
                                   fontSize: kToggleBoxOrderTypeFontSize,
+                                  colorTheme: pageThemeColor,
                                 ),
                               ),
                               GestureDetector(
@@ -341,6 +353,7 @@ class _OrderPageState extends State<OrderPage> {
                                   text: 'SL',
                                   index: 2,
                                   fontSize: kToggleBoxOrderTypeFontSize,
+                                  colorTheme: pageThemeColor,
                                 ),
                               ),
                               GestureDetector(
@@ -353,6 +366,7 @@ class _OrderPageState extends State<OrderPage> {
                                   text: 'SL-M',
                                   index: 3,
                                   fontSize: kToggleBoxOrderTypeFontSize,
+                                  colorTheme: pageThemeColor,
                                 ),
                               ),
                             ],
@@ -453,7 +467,7 @@ class _OrderPageState extends State<OrderPage> {
                   sliderButtonYOffset: 0,
                   text: 'SWIPE TO BUY',
                   textStyle: TextStyle(fontSize: 14, color: Colors.white),
-                  outerColor: Color(0xff286bdb),
+                  outerColor: pageThemeColor,
                   innerColor: Color(0xffffffff),
                   sliderButtonIconPadding: 11,
                   sliderRotate: false,
@@ -461,7 +475,7 @@ class _OrderPageState extends State<OrderPage> {
                   sliderButtonIcon: Icon(
                     Icons.chevron_right_rounded,
                     size: 36,
-                    color: Color(0xff4184f4),
+                    color: pageThemeColor,
                   ),
                   onSubmit: () {
                     Future.delayed(
@@ -499,11 +513,13 @@ class ToggleContainer extends StatefulWidget {
   final String? text;
   final int? index;
   final double? fontSize;
+  final Color? colorTheme;
   const ToggleContainer({
     Key? key,
     this.text,
     this.index,
     this.fontSize,
+    this.colorTheme
   }) : super(key: key);
 
   @override
@@ -519,7 +535,7 @@ class _ToggleContainerState extends State<ToggleContainer> {
         '${widget.text}',
         style: TextStyle(
           color: orderSelected[widget.index!]
-              ? Color(0xff286bdb)
+              ? widget.colorTheme!
               : Color(0xffd9d9d7),
           fontSize: widget.fontSize,
         ),
@@ -529,7 +545,7 @@ class _ToggleContainerState extends State<ToggleContainer> {
           borderRadius: BorderRadius.all(Radius.circular(3)),
           border: Border.all(
             color: orderSelected[widget.index!]
-                ? Color(0xff286bdb)
+                ? widget.colorTheme!
                 : Color(0xff1f1f1f),
           )),
     );

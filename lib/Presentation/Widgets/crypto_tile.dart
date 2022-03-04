@@ -6,7 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 
-
 // name too long or price too long overlow issue
 class CryptoTile extends StatelessWidget {
   final String? cryptoName;
@@ -32,12 +31,8 @@ class CryptoTile extends StatelessWidget {
     this.totalVolume,
   }) : super(key: key);
 
-
-
   @override
-
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -56,8 +51,9 @@ class CryptoTile extends StatelessWidget {
         );
       },
       child: Container(
+        width: MediaQuery.of(context).size.width,
         height: 80,
-        color: (index! % 2 == 0) ? Color(0xff213047) : Color(0xff212c3e),
+        color: Colors.black,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -72,93 +68,113 @@ class CryptoTile extends StatelessWidget {
               ),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(14, 0, 12, 0),
-                    child: CircleAvatar(
-                      radius: 18.0,
-                      child: CachedNetworkImage(imageUrl: imageUrl!,  placeholder: (context, url) => const CircularProgressIndicator(),
-        errorWidget: (context, url, error) => const Icon(Icons.error),),
+              Expanded(
+                flex: 1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(14, 0, 14, 0),
+                      child: CircleAvatar(
+                        radius: 20.0,
+                        backgroundColor: Colors.black,
+                        child: CachedNetworkImage(
+                          imageUrl: imageUrl!,
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        ),
+                      ),
                     ),
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+                    Flexible(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            cryptoSymbol!,
-                            style: kTickerTextStyle.copyWith(fontSize: 16),
-
+                          Row(
+                            children: [
+                              Text(
+                                cryptoSymbol!,
+                                style: kTickerTextStyle.copyWith(fontSize: 16),
+                              ),
+                              Text(
+                                '/INR',
+                                style: kTickerSubTextStyle.copyWith(
+                                  fontSize: 10,
+                                ),
+                              )
+                            ],
                           ),
                           Text(
-                            '/INR',
-                            style: kTickerSubTextStyle.copyWith(
-                              fontSize: 10,
-                            ),
-                          )
+                            cryptoName!,
+                            style: kTickerTextStyle.copyWith(
+                                fontSize: 12, color: Color(0xFF596777)),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            softWrap: false,
+                          ),
                         ],
                       ),
-                      Text(
-                        cryptoName!,
-                        style: kTickerTextStyle.copyWith(
-                            fontSize: 12, color: Color(0xFF596777)),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        '\$' + currentPrice.toString(),
+                        maxLines: 1,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 15),
                       ),
-                    ],
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    '\$' + currentPrice.toString(),
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 16),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color:
-                          (priceChange! > 0) ? Color(0xff139b4d) : Colors.red,
-                      borderRadius: BorderRadius.all(Radius.circular(3)),
                     ),
-                    width: 72.0,
-                    height: 32,
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          (priceChange! > 0)
-                              ? Icons.arrow_upward
-                              : Icons.arrow_downward,
-                          color: Colors.white,
-                          size: 12,
-                        ),
-                        Text(
-                          ' ' + priceChange!.toStringAsFixed(2) + '%',
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 11.5,
-                              color: Colors.white),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+
+                    const SizedBox(
+                      width: 10,
                     ),
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                ],
-              ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color:
+                            (priceChange! > 0) ? Color(0xff139b4d) : Colors.red,
+                        borderRadius: BorderRadius.all(Radius.circular(3)),
+                      ),
+                      width: 72.0,
+                      height: 32,
+                      padding: const EdgeInsets.all(5.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            (priceChange! > 0)
+                                ? Icons.arrow_upward
+                                : Icons.arrow_downward,
+                            color: Colors.white,
+                            size: 12,
+                          ),
+                          Text(
+                            ' ' + priceChange!.toStringAsFixed(2) + '%',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 11.5,
+                                color: Colors.white),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                  ],
+                ),
+              )
             ]),
             Container(
               width: double.infinity,

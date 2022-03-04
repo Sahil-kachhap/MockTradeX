@@ -3,7 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mock_tradex/constants.dart';
 
 class OrderScreen extends StatefulWidget {
-  const OrderScreen({Key? key}) : super(key: key);
+  const OrderScreen({Key? key,
+  }) : super(key: key);
 
   @override
   _OrderScreenState createState() => _OrderScreenState();

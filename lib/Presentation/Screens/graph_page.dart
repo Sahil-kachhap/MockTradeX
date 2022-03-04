@@ -41,6 +41,7 @@ class GraphPage extends StatefulWidget {
 }
 
 class _GraphPageState extends State<GraphPage> {
+
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final Favorites _favorites = Favorites();
 
