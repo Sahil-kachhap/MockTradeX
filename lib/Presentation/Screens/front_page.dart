@@ -50,6 +50,7 @@ class _FrontpageState extends State<Frontpage> {
           type: BottomNavigationBarType.fixed,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
+
               icon: Icon(
                 Icons.bubble_chart,
               ),

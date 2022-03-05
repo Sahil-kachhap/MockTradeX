@@ -36,9 +36,12 @@ class _FundsState extends State<Funds> {
                   padding: const EdgeInsets.only(right: 19),
                   child: Column(
                     children: [
-                       IconButton(
-                        onPressed: (){
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=> Deposit_Screen()));
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Deposit_Screen()));
                         },
                         icon: Icon(
                           Icons.add_box,
@@ -143,29 +146,43 @@ class _FundsState extends State<Funds> {
             ),
             //  color: Color(0xff191D28),
             Container(
-              padding: EdgeInsets.only(left: 25, right: 25),
+              padding: EdgeInsets.symmetric(horizontal: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Assests',
-                    style: kTickerTextStyle.copyWith(fontSize: 15),
+                  Expanded(
+                    flex: 6,
+                    child: Text(
+                      'Assests',
+                      style: kTickerTextStyle.copyWith(fontSize: 14),
+                    ),
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        'Prices',
-                        style: kTickerTextStyle.copyWith(fontSize: 15),
-                      ),
-                      //an alternative way to to change sized box.
-                      SizedBox(
-                        width: 65,
-                      ),
-                      Text(
-                        'Holdings',
-                        style: kTickerTextStyle.copyWith(fontSize: 15),
-                      ),
-                    ],
+
+                  Expanded(
+                    flex: 6,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Price',
+                          style: kTickerTextStyle.copyWith(fontSize: 14),
+                        ),
+                      ],
+                    ),
+                  ),
+                  //an alternative way to to change sized box.
+
+                  Expanded(
+                    flex: 6,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Holdings',
+                          style: kTickerTextStyle.copyWith(fontSize: 14),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -178,87 +195,109 @@ class _FundsState extends State<Funds> {
                 children: [
                   Container(
                     height: 80,
+                    padding: EdgeInsets.symmetric(horizontal: 8),
                     child: Row(
                       children: [
-                       const Padding(
-                          padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
-                          child: CircleAvatar(
-                            backgroundColor: kFundTileColor,
-                            radius: 18.0,
-                            child: Icon(
-                               CupertinoIcons.bitcoin,
-                              size: 26,
-                            ),
+                        Expanded(
+                          flex: 6,
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: kFundTileColor,
+                                radius: 18.0,
+                                child: Icon(
+                                  CupertinoIcons.bitcoin,
+                                  size: 26,
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  'Bitcoinnnnnnnnnnnnn',
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style:
+                                      kTickerTextStyle.copyWith(fontSize: 15),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
 
-                        Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 12, 0),
-                            child: Text(
-                              'Bitcoin',
-                              style: kTickerTextStyle.copyWith(fontSize: 18),
-                            )),
                         // box percentage
-                        Column(
-                          children: [
-                            Padding(
-                                padding:
-                                const EdgeInsets.fromLTRB(82, 8, 12, 0),
-                                child: Text(
-                                  '\$ 9278',
-                                  style:
-                                      kTickerTextStyle.copyWith(fontSize: 18),),),
-                            Container(
-                              margin: const EdgeInsets.only(top: 5, left: 68),
-                              decoration: const BoxDecoration(
-                                color: Color(0xFF5CD096),
-                                //backgroundBlendMode: BlendMode.luminosity,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(3)),
+                        Expanded(
+                          flex: 6,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '\$ 92788888',
+                                style: kTickerTextStyle.copyWith(fontSize: 18),
+                                maxLines: 1,
                               ),
-                              width: 55.0,
-                              height: 25,
-                              padding: const EdgeInsets.all(6.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    //make it center align.
-                                    Icons.arrow_downward,
-                                    color: Colors.green,
-                                    size: 10,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xFF5CD096),
+                                    //backgroundBlendMode: BlendMode.luminosity,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(3)),
                                   ),
-                                  Text(
-                                    '2.5 ' + '%',
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 10.5,
-                                        color: Colors.black),
-                                    textAlign: TextAlign.center,
+                                  width: 60.0,
+                                  height: 27,
+
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                                      textBaseline: TextBaseline.ideographic,
+                                      verticalDirection: VerticalDirection.down ,
+
+
+                                      children: [
+                                        Icon(
+                                          Icons.arrow_downward_outlined,
+                                          color: Color(0xff58a700),
+                                          size: 10,
+                                        ),
+                                        Text(
+                                          '12.55 ' + '%',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 10.5,
+                                              color: Colors.black),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
-                            //box percentage
-                          ],
+                              //box percentage
+                            ],
+                          ),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Padding(
-                                padding: const EdgeInsets.fromLTRB(55, 8, 3, 5),
-                                child: Text(
-                                  '\$ 12039',
+
+                        Expanded(
+                          flex: 6,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '\$ 1203999',
                                   style: kTickerTextStyle.copyWith(fontSize: 18),
-                                )),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(55, 0, 5, 0),
-                              child: Text(
-                                '2 BTC',
-                                style: kTickerTextStyle.copyWith(),
-                              ),
+                                ),
+                                Text(
+                                  '2999999 BTC',
+                                  style: kTickerTextStyle.copyWith(),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ],
                     ),
@@ -272,60 +311,60 @@ class _FundsState extends State<Funds> {
                       ),
                     ),
                   ),
-                  Container(
-                    height: 80,
-                    child: Text('Bitcoin'),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: kFundTileColor,
-                      border: Border(
-                        bottom: Divider.createBorderSide(context,
-                            color: kbackgroundColor, width: 1.5),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 80,
-                    //color: Color(0xff191D28),
-                    child: Text('Bitcoin'),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      // color: Color(0xff191D28),
-                      color: kFundTileColor,
-                      border: Border(
-                        bottom: Divider.createBorderSide(context,
-                            color: kbackgroundColor, width: 1.5),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 80,
-                    // color: Color(0xff191D28),
-                    child: Text('Bitcoin'),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      // color: Color(0xff191D28),
-                      color: kFundTileColor,
-                      border: Border(
-                        bottom: Divider.createBorderSide(context,
-                            color: kbackgroundColor, width: 1.5),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 80,
-                    //color: Color(0xff191D28),
-                    child: Text('Bitcoin'),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      // color: Color(0xff191D28),
-                      color: kFundTileColor,
-                      border: Border(
-                        bottom: Divider.createBorderSide(context,
-                            color: kbackgroundColor, width: 1.5),
-                      ),
-                    ),
-                  )
+                  // Container(
+                  //   height: 80,
+                  //   child: Text('Bitcoin'),
+                  //   width: double.infinity,
+                  //   decoration: BoxDecoration(
+                  //     color: kFundTileColor,
+                  //     border: Border(
+                  //       bottom: Divider.createBorderSide(context,
+                  //           color: kbackgroundColor, width: 1.5),
+                  //     ),
+                  //   ),
+                  // ),
+                  // Container(
+                  //   height: 80,
+                  //   //color: Color(0xff191D28),
+                  //   child: Text('Bitcoin'),
+                  //   width: double.infinity,
+                  //   decoration: BoxDecoration(
+                  //     // color: Color(0xff191D28),
+                  //     color: kFundTileColor,
+                  //     border: Border(
+                  //       bottom: Divider.createBorderSide(context,
+                  //           color: kbackgroundColor, width: 1.5),
+                  //     ),
+                  //   ),
+                  // ),
+                  // Container(
+                  //   height: 80,
+                  //   // color: Color(0xff191D28),
+                  //   child: Text('Bitcoin'),
+                  //   width: double.infinity,
+                  //   decoration: BoxDecoration(
+                  //     // color: Color(0xff191D28),
+                  //     color: kFundTileColor,
+                  //     border: Border(
+                  //       bottom: Divider.createBorderSide(context,
+                  //           color: kbackgroundColor, width: 1.5),
+                  //     ),
+                  //   ),
+                  // ),
+                  // Container(
+                  //   height: 80,
+                  //   //color: Color(0xff191D28),
+                  //   child: Text('Bitcoin'),
+                  //   width: double.infinity,
+                  //   decoration: BoxDecoration(
+                  //     // color: Color(0xff191D28),
+                  //     color: kFundTileColor,
+                  //     border: Border(
+                  //       bottom: Divider.createBorderSide(context,
+                  //           color: kbackgroundColor, width: 1.5),
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
             ),
