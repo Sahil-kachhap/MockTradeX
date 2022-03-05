@@ -10,9 +10,11 @@ List<bool> percentSelected = [false, false, false, false];
 
 class OrderPage extends StatefulWidget {
   final String? orderSide;
+  final Color? pageThemeColor;
   const OrderPage({
     Key? key,
     this.orderSide,
+    this.pageThemeColor,
   }) : super(key: key);
 
   @override
@@ -20,10 +22,8 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
-  Color? pageThemeColor;
   @override
   void initState() {
-     pageThemeColor=(orderSide == "BUY") ? Color(0xff286bdb) : Color(0xffef4006);
     super.initState();
   }
 
@@ -39,7 +39,6 @@ class _OrderPageState extends State<OrderPage> {
     myAmountController.dispose();
     super.dispose();
   }
-
 
   Widget build(BuildContext context) {
     final GlobalKey<SlideActionState> _key = GlobalKey();
@@ -111,7 +110,7 @@ class _OrderPageState extends State<OrderPage> {
                                         FilteringTextInputFormatter.allow(
                                             RegExp(r'(^-?\d*\.?\d*)'))
                                       ],
-                                      cursorColor: pageThemeColor,
+                                      cursorColor: widget.pageThemeColor,
                                       cursorWidth: 2,
                                       enabled: true,
                                       decoration: const InputDecoration(
@@ -189,7 +188,7 @@ class _OrderPageState extends State<OrderPage> {
                                         FilteringTextInputFormatter.allow(
                                             RegExp(r'(^-?\d*\.?\d*)'))
                                       ],
-                                      cursorColor: pageThemeColor,
+                                      cursorColor: widget.pageThemeColor,
                                       cursorWidth: 2,
                                       enabled: true,
                                       decoration: const InputDecoration(
@@ -287,10 +286,10 @@ class _OrderPageState extends State<OrderPage> {
                             fontSize: kToggleBoxOrderPercentFontSize,
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(5)),
-                          selectedBorderColor: pageThemeColor,
+                          selectedBorderColor:  widget.pageThemeColor,
                           isSelected: percentSelected,
                           color: Color(0xffd9d9d7),
-                          selectedColor: pageThemeColor,
+                          selectedColor:  widget.pageThemeColor,
                           fillColor: Colors.black,
                         ),
                       ],
@@ -327,7 +326,7 @@ class _OrderPageState extends State<OrderPage> {
                                   text: 'Limit',
                                   index: 0,
                                   fontSize: kToggleBoxOrderTypeFontSize,
-                                  colorTheme: pageThemeColor,
+                                  colorTheme:  widget.pageThemeColor,
                                 ),
                               ),
                               GestureDetector(
@@ -340,7 +339,7 @@ class _OrderPageState extends State<OrderPage> {
                                   text: 'Market',
                                   index: 1,
                                   fontSize: kToggleBoxOrderTypeFontSize,
-                                  colorTheme: pageThemeColor,
+                                  colorTheme:  widget.pageThemeColor,
                                 ),
                               ),
                               GestureDetector(
@@ -353,7 +352,7 @@ class _OrderPageState extends State<OrderPage> {
                                   text: 'SL',
                                   index: 2,
                                   fontSize: kToggleBoxOrderTypeFontSize,
-                                  colorTheme: pageThemeColor,
+                                  colorTheme:  widget.pageThemeColor,
                                 ),
                               ),
                               GestureDetector(
@@ -366,7 +365,7 @@ class _OrderPageState extends State<OrderPage> {
                                   text: 'SL-M',
                                   index: 3,
                                   fontSize: kToggleBoxOrderTypeFontSize,
-                                  colorTheme: pageThemeColor,
+                                  colorTheme:  widget.pageThemeColor,
                                 ),
                               ),
                             ],
@@ -467,7 +466,7 @@ class _OrderPageState extends State<OrderPage> {
                   sliderButtonYOffset: 0,
                   text: 'SWIPE TO BUY',
                   textStyle: TextStyle(fontSize: 14, color: Colors.white),
-                  outerColor: pageThemeColor,
+                  outerColor:  widget.pageThemeColor,
                   innerColor: Color(0xffffffff),
                   sliderButtonIconPadding: 11,
                   sliderRotate: false,
@@ -475,7 +474,7 @@ class _OrderPageState extends State<OrderPage> {
                   sliderButtonIcon: Icon(
                     Icons.chevron_right_rounded,
                     size: 36,
-                    color: pageThemeColor,
+                    color:  widget.pageThemeColor,
                   ),
                   onSubmit: () {
                     Future.delayed(
@@ -514,13 +513,9 @@ class ToggleContainer extends StatefulWidget {
   final int? index;
   final double? fontSize;
   final Color? colorTheme;
-  const ToggleContainer({
-    Key? key,
-    this.text,
-    this.index,
-    this.fontSize,
-    this.colorTheme
-  }) : super(key: key);
+  const ToggleContainer(
+      {Key? key, this.text, this.index, this.fontSize, this.colorTheme})
+      : super(key: key);
 
   @override
   State<ToggleContainer> createState() => _ToggleContainerState();
