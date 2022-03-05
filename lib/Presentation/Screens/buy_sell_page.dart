@@ -94,9 +94,12 @@ class _BuySellPageState extends State<BuySellPage>
         children: [
           OrderPage(
             orderSide: 'BUY',
+              pageThemeColor: Color(0xff286bdb) ,
           ),
           OrderPage(
             orderSide: 'SELL',
+          pageThemeColor:
+          Color(0xffef4006),
           ),
         ],
       ),
