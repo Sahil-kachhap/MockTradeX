@@ -6,6 +6,8 @@ import 'package:mock_tradex/Data/Models/crypto.dart';
 import 'package:mock_tradex/Data/Repositories/crypto_repository.dart';
 import 'package:mock_tradex/Presentation/Widgets/crypto_tile.dart';
 
+import '../../constants.dart';
+
 class ExchangeScreen extends StatefulWidget {
   const ExchangeScreen({Key? key}) : super(key: key);
 
@@ -13,7 +15,16 @@ class ExchangeScreen extends StatefulWidget {
   _ExchangeScreenState createState() => _ExchangeScreenState();
 }
 
-class _ExchangeScreenState extends State<ExchangeScreen> {
+class _ExchangeScreenState extends State<ExchangeScreen>
+    with SingleTickerProviderStateMixin {
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(
+        vsync: this, length: 2, animationDuration: Duration(milliseconds: 500));
+  }
+
+  TabController? tabController;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -21,30 +32,113 @@ class _ExchangeScreenState extends State<ExchangeScreen> {
           ExchangeBloc(RepositoryProvider.of<CryptoRepository>(context))
             ..add(LoadApiDataEvent()),
       child: Scaffold(
-          backgroundColor: Color(0xff151d27),
-          body: BlocBuilder<ExchangeBloc, ExchangeState>(
-              builder: (context, state) {
-            if (state is ExchangeInitial) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
+          appBar: AppBar(
+            backgroundColor: Color(0xff080c10),
+            title: Text('Exchange'),
 
-            if (state is DataLoadedState) {
-              return _buildCryptoTiles(state.crypto);
-            }
+            bottom: PreferredSize(
+              preferredSize: Size(MediaQuery.of(context).size.width, 30),
+              child: Container(
+                child: TabBar(
+                  labelPadding: EdgeInsets.all(0),
+                  indicatorSize: TabBarIndicatorSize.label,
+                  indicatorColor: Color(0xff125fcb),
+                  indicatorWeight: 4,
+                  controller: tabController,
+                  tabs: const [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      child: Tab(
+                        text: ('USD'),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Tab(
+                        text: ('BTC'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          backgroundColor: Color(0xff080c10),
+          body: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      flex: 9,
+                      child: Text(
+                        'Market / Vol',
+                        style: kTickerTextStyle.copyWith(
+                            fontSize: 11, color: kExchangeScreenSortTileTextColor),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 7,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Price        ',
+                            style: kTickerTextStyle.copyWith(
+                                fontSize: 11, color: kExchangeScreenSortTileTextColor),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: Text(
+                        'Change',
+                        style: kTickerTextStyle.copyWith(
+                            fontSize: 11, color: kExchangeScreenSortTileTextColor),
+                      ),
+                    ),
+                  ],
+                ),
+                height: 36,
+                width: MediaQuery.of(context).size.width,
+                decoration: const BoxDecoration(
+                  color: Color(0xff0a1628),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(5.0),
+                    bottomRight: Radius.circular(5),
+                  )
+                ),
+              ),
+              Expanded(
+                child: BlocBuilder<ExchangeBloc, ExchangeState>(
+                    builder: (context, state) {
+                  if (state is ExchangeInitial) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
 
-            if (state is DataErrorState) {
-              return Center(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                    Lottie.asset('assets/error.json'),
-                  ]));
-            }
-            return Container();
-          })),
+                  if (state is DataLoadedState) {
+                    return _buildCryptoTiles(state.crypto);
+                  }
+
+                  if (state is DataErrorState) {
+                    return Center(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                          Lottie.asset('assets/error.json'),
+                        ]));
+                  }
+                  return Container();
+                }),
+              ),
+            ],
+          )),
     );
   }
 }
@@ -68,11 +162,7 @@ Widget _buildCryptoTiles(List<Crypto>? cryptos) => ListView.builder(
       },
     );
 
-
-
-
-
-/* 
+/*
 ListView.builder(
             itemCount: crypto.length,
             itemBuilder: (BuildContext context, int index) {

@@ -14,6 +14,12 @@ class GraphData extends StatefulWidget {
 
 class _GraphDataState extends State<GraphData> {
   late WebViewController controller;
+  bool isLoading=false;
+  @override
+  void initState() {
+    super.initState();
+    WebView.platform = SurfaceAndroidWebView();
+  }
 
   void _loadLocalHtml() async {
     final url = Uri.dataFromString(
@@ -63,6 +69,15 @@ class _GraphDataState extends State<GraphData> {
           this.controller = controller;
           _loadLocalHtml();
         },
+        onPageStarted:(str){
+          print(DateTime.now().toString());
+        },
+        onPageFinished: (str){
+
+          print(DateTime.now().toString());
+        },
+
+        zoomEnabled:false ,
       ),
     );
   }

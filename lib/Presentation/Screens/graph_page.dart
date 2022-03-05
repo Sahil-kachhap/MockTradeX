@@ -41,6 +41,7 @@ class GraphPage extends StatefulWidget {
 }
 
 class _GraphPageState extends State<GraphPage> {
+
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final Favorites _favorites = Favorites();
 
@@ -100,7 +101,7 @@ class _GraphPageState extends State<GraphPage> {
                 children: [
                   Text(widget.cryptoName!),
                   Text(
-                    '/INR',
+                    '/USD',
                     style: kTickerSubTextStyle.copyWith(
                       fontSize: 15,
                     ),
@@ -291,7 +292,7 @@ class _GraphPageState extends State<GraphPage> {
                               widget.cryptoPrice!,
                               style: const TextStyle(
                                   color: kTickerWhite,
-                                  fontSize: 36,
+                                  fontSize: 34,
                                   fontWeight: FontWeight.w500),
                             ),
                             Row(

@@ -25,11 +25,16 @@ class AdPage {
     );
   }
 
-  void showAd() {
+  void showAd(context) {
     _rewardedAd!.show(
-      onUserEarnedReward: (AdWithoutView adWithoutView, RewardItem rewardItem) {
+      onUserEarnedReward: (AdWithoutView adWithoutView, RewardItem rewardItem) async{
         // Reward the user for watching an ad.
-        print('you earned 500\$');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("You earned 500\$!"),
+            backgroundColor: Colors.green,
+          ),
+        );
       },
     );
     _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
@@ -68,12 +73,14 @@ class _Deposit_ScreenState extends State<Deposit_Screen> {
     adPage.loadAd();
     super.initState();
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
     adPage._rewardedAd!.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -86,9 +93,8 @@ class _Deposit_ScreenState extends State<Deposit_Screen> {
               backgroundColor: Colors.teal,
             ),
             onPressed: () async {
-              await adPage.loadAd();
-              adPage.showAd();
-
+              adPage.loadAd();
+              adPage.showAd(context);
             },
             child: Text("VIEW AD"),
           ),

@@ -20,7 +20,8 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthBloc(authRepository: RepositoryProvider.of<AuthRepository>(context)),
+      create: (context) => AuthBloc(
+          authRepository: RepositoryProvider.of<AuthRepository>(context)),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.black,

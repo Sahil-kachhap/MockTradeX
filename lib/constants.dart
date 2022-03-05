@@ -32,3 +32,4 @@ const TextStyle optionStyle =
     TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 const kbackgroundColor=Color(0xff0f1c2d);
 const kFundTileColor=Color(0xff212c3e);
+const kExchangeScreenSortTileTextColor=Color(0xffefba08);

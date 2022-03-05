@@ -16,6 +16,7 @@ List<String>? l1 = [" "];
 int i = 1;
 int k = 1;
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   MobileAds.instance.initialize();
@@ -87,7 +88,6 @@ class _MyAppState extends State<MyApp> {
               if(snapshot.hasData){
                 return const Frontpage();
               }
-
               return const SignIn();
             },
           )
