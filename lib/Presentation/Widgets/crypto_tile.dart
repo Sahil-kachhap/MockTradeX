@@ -53,7 +53,7 @@ class CryptoTile extends StatelessWidget {
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: 80,
-        color: Colors.black,
+        color:Color(0xff080c10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -99,7 +99,7 @@ class CryptoTile extends StatelessWidget {
                                 style: kTickerTextStyle.copyWith(fontSize: 16),
                               ),
                               Text(
-                                '/INR',
+                                '/USD',
                                 style: kTickerSubTextStyle.copyWith(
                                   fontSize: 10,
                                 ),
@@ -160,6 +160,8 @@ class CryptoTile extends StatelessWidget {
                           ),
                           Text(
                             ' ' + priceChange!.toStringAsFixed(2) + '%',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 11.5,
