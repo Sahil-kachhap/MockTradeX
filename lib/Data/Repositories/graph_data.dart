@@ -14,16 +14,7 @@ class GraphData extends StatefulWidget {
 
 class _GraphDataState extends State<GraphData> {
   late WebViewController controller;
-  bool isLoading=false;
-  @override
-  void initState() {
-    super.initState();
-    WebView.platform = SurfaceAndroidWebView();
-  }
-
-  void _loadLocalHtml() async {
-    final url = Uri.dataFromString(
-      """
+  late String graphURL="""
    <html>
    <head>
        <meta name="viewport" content="width=360, initial-scale=0.9">
@@ -32,7 +23,11 @@ class _GraphDataState extends State<GraphData> {
    <div class="tradingview-widget-container">
    <div id="tradingview_7a395"></div>
    <div class="tradingview-widget-copyright"><a href="https://in.tradingview.com/symbols/ETHUSDT/?exchange=BINANCE" rel="noopener" target="_blank"></a></div>
-   <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+   ${script}
+   </div>
+   </body>
+   </html>""";
+  late String script ="""<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
    <script type="text/javascript">
    new TradingView.widget(
        {
@@ -49,10 +44,18 @@ class _GraphDataState extends State<GraphData> {
        "container_id": "tradingview_7a395"
        }
    );
-   </script>
-   </div>
-   </body>
-   </html>""",
+   </script>""";
+
+  bool isLoading=false;
+  @override
+  void initState() {
+    super.initState();
+    WebView.platform = SurfaceAndroidWebView();
+  }
+
+  void _loadLocalHtml() async {
+    final url = Uri.dataFromString(
+      graphURL,
       mimeType: 'text/html',
       encoding: Encoding.getByName('utf-8'),
     ).toString();
