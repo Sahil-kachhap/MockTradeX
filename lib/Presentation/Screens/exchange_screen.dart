@@ -16,7 +16,10 @@ class ExchangeScreen extends StatefulWidget {
 }
 
 class _ExchangeScreenState extends State<ExchangeScreen>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin,AutomaticKeepAliveClientMixin {
+
+  @override
+  bool get wantKeepAlive => true;
   @override
   void initState() {
     super.initState();
@@ -25,8 +28,10 @@ class _ExchangeScreenState extends State<ExchangeScreen>
   }
 
   TabController? tabController;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocProvider(
       create: (context) =>
           ExchangeBloc(RepositoryProvider.of<CryptoRepository>(context))

@@ -40,7 +40,7 @@ class GraphPage extends StatefulWidget {
   _GraphPageState createState() => _GraphPageState();
 }
 
-class _GraphPageState extends State<GraphPage> {
+class _GraphPageState extends State<GraphPage> with AutomaticKeepAliveClientMixin{
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final Favorites _favorites = Favorites();
@@ -74,12 +74,16 @@ class _GraphPageState extends State<GraphPage> {
   }
 
   @override
+  bool get wantKeepAlive => true;
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
   _democheck();
 
     return Scaffold(
       backgroundColor: kGraphPageBackground,
       appBar: AppBar(
+
         backgroundColor: kGraphPageBackground,
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -155,7 +159,7 @@ class _GraphPageState extends State<GraphPage> {
                   if(isFavorite){
                     _demoFunc();
                     _favorites.addFavorites(currency);
-                    
+
                     showDialog<String>(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
