@@ -69,30 +69,42 @@ class _MyAppState extends State<MyApp> {
 // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider(create: (context) => CryptoRepository()),
-        RepositoryProvider(create: (context) => AuthRepository()),
-      ],
-      child: MaterialApp(
-          theme: ThemeData(
-            primaryColor: Colors.deepPurpleAccent,
-            textTheme:
-                GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
-          ),
-          debugShowCheckedModeBanner: false,
-          title: 'MockTradeX',
-          home: StreamBuilder<User?>(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot){
-              if(snapshot.hasData){
-                return const Frontpage();
-              }
-              return const SignIn();
-            },
-          )
-         // const SignIn()
+    return ScrollConfiguration(
+      behavior: MyBehavior(),
+      child: MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider(create: (context) => CryptoRepository()),
+          RepositoryProvider(create: (context) => AuthRepository()),
+        ],
+        child: MaterialApp(
+            theme: ThemeData(
+              primaryColor: Colors.deepPurpleAccent,
+              textTheme:
+                  GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
+            ),
+            debugShowCheckedModeBanner: false,
+            title: 'MockTradeX',
+            home: StreamBuilder<User?>(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, snapshot){
+                if(snapshot.hasData){
+                  return const Frontpage();
+                }
+                return const SignIn();
+              },
+            )
+           // const SignIn()
+        ),
       ),
     );
   }
 }
+
+class MyBehavior extends ScrollBehavior {
+  @override
+  Widget buildOverscrollIndicator(
+      BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
+  }
+}
+
