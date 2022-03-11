@@ -5,6 +5,7 @@ import 'package:mock_tradex/Buisness_logic/exchange/exchange_bloc.dart';
 import 'package:mock_tradex/Data/Models/crypto.dart';
 import 'package:mock_tradex/Data/Repositories/crypto_repository.dart';
 import 'package:mock_tradex/Presentation/Widgets/crypto_tile.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../constants.dart';
 
 class ExchangeScreen extends StatefulWidget {
@@ -15,17 +16,21 @@ class ExchangeScreen extends StatefulWidget {
 }
 
 class _ExchangeScreenState extends State<ExchangeScreen>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   @override
   void initState() {
     super.initState();
     tabController = TabController(
-        vsync: this, length: 2, animationDuration: Duration(milliseconds: 500));
+        vsync: this, length: 2,);
   }
 
   TabController? tabController;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocProvider(
       create: (context) =>
           ExchangeBloc(RepositoryProvider.of<CryptoRepository>(context))
@@ -74,7 +79,8 @@ class _ExchangeScreenState extends State<ExchangeScreen>
                       child: Text(
                         'Market / Vol',
                         style: kTickerTextStyle.copyWith(
-                            fontSize: 11, color: kExchangeScreenSortTileTextColor),
+                            fontSize: 11,
+                            color: kExchangeScreenSortTileTextColor),
                       ),
                     ),
                     Expanded(
@@ -85,7 +91,8 @@ class _ExchangeScreenState extends State<ExchangeScreen>
                           Text(
                             'Price        ',
                             style: kTickerTextStyle.copyWith(
-                                fontSize: 11, color: kExchangeScreenSortTileTextColor),
+                                fontSize: 11,
+                                color: kExchangeScreenSortTileTextColor),
                           ),
                         ],
                       ),
@@ -95,7 +102,8 @@ class _ExchangeScreenState extends State<ExchangeScreen>
                       child: Text(
                         'Change',
                         style: kTickerTextStyle.copyWith(
-                            fontSize: 11, color: kExchangeScreenSortTileTextColor),
+                            fontSize: 11,
+                            color: kExchangeScreenSortTileTextColor),
                       ),
                     ),
                   ],
@@ -103,12 +111,11 @@ class _ExchangeScreenState extends State<ExchangeScreen>
                 height: 36,
                 width: MediaQuery.of(context).size.width,
                 decoration: const BoxDecoration(
-                  color: Color(0xff0a1628),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(5.0),
-                    bottomRight: Radius.circular(5),
-                  )
-                ),
+                    color: Color(0xff0a1628),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(5.0),
+                      bottomRight: Radius.circular(5),
+                    )),
               ),
               Expanded(
                 child: BlocBuilder<ExchangeBloc, ExchangeState>(
@@ -141,7 +148,43 @@ class _ExchangeScreenState extends State<ExchangeScreen>
   }
 }
 
-Widget _buildCryptoTiles(List<Crypto>? cryptos) => ListView.builder(
+Widget _buildCryptoTiles(List<Crypto>? cryptos) {
+  RefreshController _refreshController =
+  RefreshController(initialRefresh: false);
+  // necessary hai ye?
+  // @override
+  // void dispose() {
+  //   _refreshController.dispose();
+  // }
+
+
+  void _onRefresh() async{
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
+  // void _onLoading() async{
+  //   // monitor network fetch
+  //   await Future.delayed(Duration(milliseconds: 1000));
+  //   // if failed,use loadFailed(),if no data return,use LoadNodata()
+  //   _refreshController.loadComplete();
+  // }
+
+
+
+  return SmartRefresher(
+    enablePullDown: true,
+    controller: _refreshController,
+    header: MaterialClassicHeader(
+      color: Color(0xff056cf3),
+      backgroundColor: Color(0xff0a1628),
+    ),
+    onRefresh: _onRefresh,
+    //onLoading: _onLoading,
+
+    child: ListView.builder(
       itemCount: cryptos!.length,
       itemBuilder: (context, index) {
         final coin = cryptos[index];
@@ -158,7 +201,9 @@ Widget _buildCryptoTiles(List<Crypto>? cryptos) => ListView.builder(
           // totalVolume: coin.totalVolume,
         );
       },
-    );
+    ),
+  );
+}
 
 /*
 ListView.builder(
