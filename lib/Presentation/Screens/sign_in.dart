@@ -17,6 +17,9 @@ class _SignInState extends State<SignIn> {
   String? email;
   String? password;
 
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -75,7 +78,14 @@ class _SignInState extends State<SignIn> {
                       padding:
                           const EdgeInsets.only(left: 35, right: 35, top: 10),
                       margin: const EdgeInsets.only(top: 10),
-                      child: TextField(
+                      child: TextFormField(
+                        validator: (String? email){
+                          if(email!.isEmpty){
+                            return "Please Enter email";
+                          }
+                        },
+                        autofillHints: const [AutofillHints.email],
+                        controller: emailController,
                         onChanged: (value) {
                           email = value;
                         },
@@ -104,6 +114,7 @@ class _SignInState extends State<SignIn> {
                           const EdgeInsets.only(left: 35, right: 35, top: 10),
                       margin: const EdgeInsets.only(top: 10),
                       child: TextField(
+                        controller: passwordController,
                         onChanged: (value) {
                           password = value;
                         },

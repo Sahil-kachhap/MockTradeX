@@ -5,7 +5,6 @@ import 'package:mock_tradex/Buisness_logic/exchange/exchange_bloc.dart';
 import 'package:mock_tradex/Data/Models/crypto.dart';
 import 'package:mock_tradex/Data/Repositories/crypto_repository.dart';
 import 'package:mock_tradex/Presentation/Widgets/crypto_tile.dart';
-
 import '../../constants.dart';
 
 class ExchangeScreen extends StatefulWidget {
@@ -35,7 +34,6 @@ class _ExchangeScreenState extends State<ExchangeScreen>
           appBar: AppBar(
             backgroundColor: Color(0xff080c10),
             title: Text('Exchange'),
-
             bottom: PreferredSize(
               preferredSize: Size(MediaQuery.of(context).size.width, 30),
               child: Container(
