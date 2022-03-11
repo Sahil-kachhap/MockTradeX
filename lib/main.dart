@@ -10,11 +10,18 @@ import 'package:mock_tradex/Presentation/Screens/front_page.dart';
 import 'package:mock_tradex/Presentation/Screens/sign_in.dart';
 import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'functions.dart';
 
-List<String>? l = [" "];
-List<String>? l1 = [" "];
-int i = 1;
-int k = 1;
+
+List<String>? n=[];
+List<String>? sy=[];
+List<double>? pr=[];
+List<String>? price=[];
+List<String>? image=[];
+List<int>? index=[];
+
+
+
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,36 +42,11 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    method();
-    method1();
-    const Quickbuy();
+   //fun.method();
+    //const Quickbuy();
   }
 
-  void method() async {
-    var collection = FirebaseFirestore.instance.collection('favourite');
-    var querySnapshot = await collection.get();
-    for (var queryDocumentSnapshot in querySnapshot.docs) {
-      Map<String, dynamic> data = queryDocumentSnapshot.data();
-      String str = data.values.toString();
 
-      l?.insert(i, str);
-      i++;
-    }
-
-    //  print(l);
-  }
-
-  void method1() async {
-    var coll1 = FirebaseFirestore.instance.collection('favourite1');
-    var querySnapshot1 = await coll1.get();
-    for (var queryDocumentSnapshot in querySnapshot1.docs) {
-      Map<String, dynamic> data = queryDocumentSnapshot.data();
-      String str = data.values.toString();
-
-      l1?.insert(k, str);
-      k++;
-    }
-  }
 
 // This widget is the root of your application.
   @override

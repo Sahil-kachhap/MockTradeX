@@ -23,7 +23,8 @@ class _ExchangeScreenState extends State<ExchangeScreen>
   void initState() {
     super.initState();
     tabController = TabController(
-        vsync: this, length: 2,);
+        vsync: this, length: 2,
+    );
   }
 
   TabController? tabController;
