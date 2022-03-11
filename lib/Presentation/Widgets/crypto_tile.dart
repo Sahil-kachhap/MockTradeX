@@ -46,6 +46,8 @@ class CryptoTile extends StatelessWidget {
               high_24h: high_24h,
               low_24h: low_24h,
               totalVolume: totalVolume,
+              imageurl: imageUrl,
+              index: index,
             ),
           ),
         );

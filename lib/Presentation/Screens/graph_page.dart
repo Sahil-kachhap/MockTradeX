@@ -24,7 +24,8 @@ class GraphPage extends StatefulWidget {
   final double? high_24h;
   final double? low_24h;
   final double? totalVolume;
-
+  final String? imageurl;
+  final int? index;
   const GraphPage({
     Key? key,
     this.cryptoSymbol,
@@ -34,6 +35,8 @@ class GraphPage extends StatefulWidget {
     this.high_24h,
     this.low_24h,
     this.totalVolume,
+    this.imageurl,
+    this.index,
   }) : super(key: key);
 
   @override
@@ -160,113 +163,45 @@ class _GraphPageState extends State<GraphPage> with AutomaticKeepAliveClientMixi
                     _demoFunc();
                     _favorites.addFavorites(currency);
 
-                    showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        scrollable: true,
-                          backgroundColor: Colors.black45,
-                        content: Column(
-                          children: [
-                            GestureDetector(
-                              child: const ListTile(
-                                  title: Text('Watch List 1',style: TextStyle(
-                                    color: Colors.white,
-                                  ),)
-                              ),
-                              onTap: () {
-                                _firestore.collection('favourite').add({
-                                  'crypto':widget.cryptoName!,
-                                 // 'isfavorite':true,
-                                });
-                                l?.insert(i++, widget.cryptoName!);
-                                Navigator.pop(context);
-                              },
+                    _firestore.collection('favourite').add({
+                      'cryptoName': widget.cryptoName,
+                      'cryptoSymbol': widget.cryptoSymbol,
+                      'priceChange': widget.priceChange,
+                      'image':widget.imageurl,
 
-                            ),
-                            GestureDetector(
-                              child: const ListTile(
-                                  title: Text('Watch List 2',style: TextStyle(
-                                    color: Colors.white,
-                                  ),)
-                              ),
-                              onTap: () {
-                                _firestore.collection('favourite1').add({
-                                  'crypto':widget.cryptoName!,
-                                 // 'isfavorite':true,
-                                });
-                                l1?.insert(k++, widget.cryptoName!);
-                                Navigator.pop(context);
-                              },
+                      'price':widget.cryptoPrice,
+                      'high':12,
+                      'low':12,
+                      'total':12,
+                      // 'isfavorite':true,
+                    });
 
-                            ),
+                    n?.add(widget.cryptoName!);
+                    sy?.add(widget.cryptoSymbol!);
+                    pr?.add(widget.priceChange!);
+                    price?.add(widget.cryptoPrice!);
+                    image?.add(widget.imageurl!);
 
-                          ],
-                        ),
-
-                      ),
-                    );
                     //  print(l);
                   }else{
                 _demoDelete();
                 _favorites.removeFavorites(currency);
-                    showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        scrollable: true,
-                         backgroundColor: Colors.black45,
-                        content: Column(
-                          children: [
-                            GestureDetector(
-                              child: const ListTile(
-                                  title: Text('Watch List 1',style: TextStyle(
-                                    color: Colors.white,
-                                  ),)
-                              ),
-                              onTap: () {
-                                FirebaseFirestore.instance
-                                    .collection("favourite")
-                                    .where("crypto", isEqualTo : widget.cryptoName!)
-                                    .get().then((value){
-                                  value.docs.forEach((element) {
-                                    FirebaseFirestore.instance.collection("favourite").doc(element.id).delete().then((value){
+                FirebaseFirestore.instance
+                    .collection("favourite")
+                    .where("cryptoName", isEqualTo : widget.cryptoName!)
+                    .get().then((value){
+                  value.docs.forEach((element) {
+                    FirebaseFirestore.instance.collection("favourite").doc(element.id).delete().then((value){
 
-                                    });
-                                  });
-                                });
-                                l?.remove(widget.cryptoName!);
-                                Navigator.pop(context);
-                               // _demoDelete();
-                              },
+                    });
+                  });
+                });
+                n?.remove(widget.cryptoName!);
+                sy?.remove(widget.cryptoSymbol!);
+                pr?.remove(widget.priceChange!);
+                price?.remove(widget.cryptoPrice!);
+                image?.remove(widget.imageurl!);
 
-                            ),
-                            GestureDetector(
-                              child: const ListTile(
-                                  title: Text('Watch List 2',style: TextStyle(
-                                    color: Colors.white,
-                                  ),)
-                              ),
-                              onTap: () {
-                                FirebaseFirestore.instance
-                                    .collection("favourite1")
-                                    .where("crypto", isEqualTo : widget.cryptoName!)
-                                    .get().then((value){
-                                  value.docs.forEach((element) {
-                                    FirebaseFirestore.instance.collection("favourite1").doc(element.id).delete().then((value){
-
-                                    });
-                                  });
-                                });
-                                l1?.remove(widget.cryptoName!);
-                                Navigator.pop(context);
-                               // _demoDelete();
-                              },
-
-                            ),
-                          ],
-                        ),
-
-                      ),
-                    );
                     // code not written for removing
                    }
                 },

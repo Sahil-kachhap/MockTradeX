@@ -23,7 +23,7 @@ class _BuySellPageState extends State<BuySellPage>
     tabController = TabController(
       vsync: this,
       length: 2,
-      animationDuration: Duration(milliseconds: 500),
+     // animationDuration: Duration(milliseconds: 500),
     );
     if (widget.pageTitle == "BUY") {
       tabController!.index = 0;
