@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mock_tradex/Presentation/Screens/profile_screen.dart';
 import 'package:mock_tradex/constants.dart';
 import 'package:mock_tradex/Presentation/Screens/deposit_screen.dart';
 
@@ -20,6 +21,15 @@ class _FundsState extends State<Funds> {
         backgroundColor: kbackgroundColor,
         body: Column(
           children: [
+            Center(
+              child: IconButton(onPressed:()  {
+
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
+              }, icon: const Icon(Icons.account_circle_rounded,size: 70,color: Colors.white,),),
+            ),
+            SizedBox(
+              height: 10,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
