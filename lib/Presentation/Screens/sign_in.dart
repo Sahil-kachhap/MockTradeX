@@ -157,7 +157,7 @@ class _SignInState extends State<SignIn> {
                                 shape: MaterialStateProperty.all<
                                         RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
+                                  borderRadius: BorderRadius.circular(100.0),
                                 ))),
                             onPressed: () {
                               BlocProvider.of<AuthBloc>(context)
@@ -187,7 +187,7 @@ class _SignInState extends State<SignIn> {
                                 shape: MaterialStateProperty.all<
                                         RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
+                                  borderRadius: BorderRadius.circular(100.0),
                                 ))),
                             onPressed: () {
                               BlocProvider.of<AuthBloc>(context)
