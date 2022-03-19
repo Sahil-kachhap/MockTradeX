@@ -1,10 +1,7 @@
 import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:full_screen_menu/full_screen_menu.dart';
 import 'package:mock_tradex/Presentation/Screens/sign_in.dart';
-
 import 'package:mock_tradex/constants.dart';
 
 class Profile extends StatefulWidget {

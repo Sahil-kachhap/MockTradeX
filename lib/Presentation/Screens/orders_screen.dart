@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mock_tradex/Buisness_logic/auth/bloc/auth_bloc.dart';
+import 'package:mock_tradex/Data/Repositories/auth_repository.dart';
 import 'package:mock_tradex/constants.dart';
 
 class OrderScreen extends StatefulWidget {
@@ -16,30 +19,35 @@ class _OrderScreenState extends State<OrderScreen> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: kAppBackgroundColour,
-          title: TabBar(tabs: [
-            Tab(
-              child: Text(
-                "Open Orders",
-                style: GoogleFonts.poppins(letterSpacing: 1.0, fontSize: 18.0),
+      child: BlocProvider(
+        create: (context) => AuthBloc(authRepository: RepositoryProvider.of<AuthRepository>(context)),
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: kAppBackgroundColour,
+            title: TabBar(tabs: [
+              Tab(
+                child: Text(
+                  "Open Orders",
+                  style:
+                      GoogleFonts.poppins(letterSpacing: 1.0, fontSize: 18.0),
+                ),
               ),
-            ),
-            Tab(
-              child: Text(
-                "Order History",
-                style: GoogleFonts.poppins(letterSpacing: 1.0, fontSize: 18.0),
+              Tab(
+                child: Text(
+                  "Order History",
+                  style:
+                      GoogleFonts.poppins(letterSpacing: 1.0, fontSize: 18.0),
+                ),
               ),
-            ),
-          ]),
-        ),
-        backgroundColor: kbackgroundColor,
-        body: TabBarView(
-          children: [
-            _buildOrdersListView(),
-            _buildOrderHistoryListView(),
-          ],
+            ]),
+          ),
+          backgroundColor: kbackgroundColor,
+          body: TabBarView(
+            children: [
+              _buildOrdersListView(),
+              _buildOrderHistoryListView(),
+            ],
+          ),
         ),
       ),
     );
@@ -65,7 +73,6 @@ ListView _buildOrderHistoryListView() {
       itemCount: 1,
       itemBuilder: (context, index) {
         return Container(
-
           width: MediaQuery.of(context).size.width,
           margin: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
@@ -83,7 +90,7 @@ ListView _buildOrderHistoryListView() {
                         color: Colors.white, fontSize: 15.0),
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: 5.0,horizontal: 7),
+                    padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 7),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(2.0),
                         border: Border.all(color: Colors.white)),
@@ -101,7 +108,7 @@ ListView _buildOrderHistoryListView() {
                 ],
               ),
 
-              SizedBox(
+              const SizedBox(
                 height: 8.0,
               ),
               Row(
@@ -196,7 +203,28 @@ ListView _buildOrderHistoryListView() {
                         color: Colors.white),
                   )
                 ],
-              )
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                //color: Colors.blueAccent,
+                height: 60,
+                width: 120,
+                child: TextButton(
+                  style: ButtonStyle(
+                      // padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.blueAccent),
+                      // foregroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ))),
+                  onPressed: () {
+                    BlocProvider.of<AuthBloc>(context).add(SignOutRequested());
+                  },
+                  child: const Text('Log Out', style: kTickerTextStyle),
+                ),
+              ),
             ]),
           ),
         );
