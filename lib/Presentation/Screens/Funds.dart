@@ -21,12 +21,6 @@ class _FundsState extends State<Funds> {
         backgroundColor: kbackgroundColor,
         body: Column(
           children: [
-            Center(
-              child: IconButton(onPressed:()  {
-
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
-              }, icon: const Icon(Icons.account_circle_rounded,size: 70,color: Colors.white,),),
-            ),
             SizedBox(
               height: 10,
             ),
@@ -34,7 +28,9 @@ class _FundsState extends State<Funds> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  padding: const EdgeInsets.only(left: 25, top: 5),
+                  padding: const EdgeInsets.only(
+                    left: 25,
+                  ),
                   child: Text(
                     'Portfolio',
                     style: kTickerTextStyle.copyWith(
@@ -42,36 +38,23 @@ class _FundsState extends State<Funds> {
                     ),
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.only(right: 19),
-                  child: Column(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Deposit_Screen()));
-                        },
-                        icon: Icon(
-                          Icons.add_box,
-                          color: Color(0xFF596777),
-                        ),
-                        padding: EdgeInsets.only(top: 5),
-                        iconSize: 30,
-                      ),
-                      Text(
-                        'Deposit',
-                        style: kTickerTextStyle.copyWith(
-                            fontSize: 12, color: Color(0xFF596777)),
-                      ),
-                    ],
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Profile()));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: CircleAvatar(
+                      radius: 20,
+                      backgroundImage: ExactAssetImage('assets/friends.png'),
+                    ),
                   ),
                 ),
               ],
             ),
             SizedBox(
-              height: 7,
+              height: 10,
             ),
             Container(
               padding: EdgeInsets.only(right: 10),
@@ -89,7 +72,7 @@ class _FundsState extends State<Funds> {
                   ),
                   Container(
                     width: 72.0,
-                    height: 32,
+                    height: 35,
                     decoration: BoxDecoration(
                       color: Color(0xFF60D79D),
                       borderRadius: BorderRadius.all(Radius.circular(3)),
@@ -150,9 +133,51 @@ class _FundsState extends State<Funds> {
                 ),
               ],
             ),
-
             SizedBox(
-              height: 50,
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Container(
+                    height: 40,
+                    width: 100,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF283547),
+                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Deposit_Screen()));
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.add_box,
+                            color: Color(0xFF596777),
+                          ),
+                          SizedBox(width: 5,),
+                          Text(
+                            'Deposit',
+                            style: kTickerTextStyle.copyWith(
+                                fontSize: 14, color:  Color(0xffefba08)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 25,
             ),
             //  color: Color(0xff191D28),
             Container(
@@ -246,7 +271,8 @@ class _FundsState extends State<Funds> {
                                 maxLines: 1,
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4.0),
                                 child: Container(
                                   decoration: const BoxDecoration(
                                     color: Color(0xFF5CD096),
@@ -256,15 +282,14 @@ class _FundsState extends State<Funds> {
                                   ),
                                   width: 60.0,
                                   height: 27,
-
                                   child: Center(
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.baseline,
                                       textBaseline: TextBaseline.ideographic,
-                                      verticalDirection: VerticalDirection.down ,
-
-
+                                      verticalDirection: VerticalDirection.down,
                                       children: [
                                         Icon(
                                           Icons.arrow_downward_outlined,
@@ -292,14 +317,16 @@ class _FundsState extends State<Funds> {
                         Expanded(
                           flex: 6,
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   '\$ 1203999',
-                                  style: kTickerTextStyle.copyWith(fontSize: 18),
+                                  style:
+                                      kTickerTextStyle.copyWith(fontSize: 18),
                                 ),
                                 Text(
                                   '2999999 BTC',

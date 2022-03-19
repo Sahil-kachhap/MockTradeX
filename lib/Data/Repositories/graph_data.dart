@@ -16,6 +16,7 @@ class _GraphDataState extends State<GraphData> with AutomaticKeepAliveClientMixi
   late WebViewController controller;
  // InAppWebViewController? _webViewController;
   //CookieManager _cookieManager = CookieManager.instance();
+
   late String graphURL="""
    <html>
    <head>

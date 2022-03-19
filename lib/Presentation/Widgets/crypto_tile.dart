@@ -76,7 +76,7 @@ class CryptoTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(14, 0, 14, 0),
+                      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                       child: CircleAvatar(
                         radius: 20.0,
                         backgroundColor: Colors.black,
