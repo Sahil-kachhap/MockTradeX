@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mock_tradex/Presentation/Screens/funds.dart';
 import 'package:mock_tradex/Presentation/Screens/exchange_screen.dart';
 import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
-import 'package:mock_tradex/Presentation/Screens/sign_in.dart';
 import 'package:mock_tradex/constants.dart';
 import 'orders_screen.dart';
 import 'package:mock_tradex/functions.dart';

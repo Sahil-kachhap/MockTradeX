@@ -1,5 +1,7 @@
-// ignore_for_file: avoid_print
 import 'package:flutter/material.dart';
+import 'package:mock_tradex/Data/Models/crypto.dart';
+import 'package:mock_tradex/Data/Models/favorites.dart';
+import 'package:mock_tradex/Data/Repositories/firestore_repository.dart';
 import 'package:mock_tradex/Presentation/Widgets/crypto_coin.dart';
 import 'package:mock_tradex/Presentation/Widgets/favorites.dart';
 import 'package:mock_tradex/main.dart';
@@ -8,13 +10,11 @@ import 'package:mock_tradex/Data/Repositories/graph_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mock_tradex/Presentation/Widgets/buysell_box.dart'
-
-show BuySellBox;
+    show BuySellBox;
 
 bool notificationIsSelected = false;
 
 bool isFavorite = false;
-
 
 class GraphPage extends StatefulWidget {
   final String? cryptoSymbol;
@@ -26,6 +26,7 @@ class GraphPage extends StatefulWidget {
   final double? totalVolume;
   final String? imageurl;
   final int? index;
+
   const GraphPage({
     Key? key,
     this.cryptoSymbol,
@@ -43,35 +44,37 @@ class GraphPage extends StatefulWidget {
   _GraphPageState createState() => _GraphPageState();
 }
 
-class _GraphPageState extends State<GraphPage> with AutomaticKeepAliveClientMixin{
-
+class _GraphPageState extends State<GraphPage>
+    with AutomaticKeepAliveClientMixin {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final Favorites _favorites = Favorites();
 
   _demoFunc() async {
-    SharedPreferences prefs=await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool(widget.cryptoName!, true);
   }
-  _demoRetrieve() async {
-    SharedPreferences prefs=await SharedPreferences.getInstance();
-    setState(() {
-       prefs.getBool(widget.cryptoName!)!;
-    });
 
+  _demoRetrieve() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      prefs.getBool(widget.cryptoName!)!;
+    });
   }
+
   _demoDelete() async {
-    SharedPreferences prefs=await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove(widget.cryptoName!);
   }
-  _democheck() async{
+
+  _democheck() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.containsKey(widget.cryptoName!)) {
       setState(() {
-        isFavorite=true;
+        isFavorite = true;
       });
-    }else{
+    } else {
       setState(() {
-        isFavorite=false;
+        isFavorite = false;
       });
     }
   }
@@ -81,12 +84,11 @@ class _GraphPageState extends State<GraphPage> with AutomaticKeepAliveClientMixi
   @override
   Widget build(BuildContext context) {
     super.build(context);
-  _democheck();
+    _democheck();
 
     return Scaffold(
       backgroundColor: kGraphPageBackground,
       appBar: AppBar(
-
         backgroundColor: kGraphPageBackground,
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -116,63 +118,66 @@ class _GraphPageState extends State<GraphPage> with AutomaticKeepAliveClientMixi
                 ],
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.only(right: 15),
               child: IconButton(
-                  icon: isFavorite
-                      ?
-                  const Icon(
-                    Icons.star_rounded,
-                    color: Color(0xffe6b10b),
-                    size: 26,
-                  )
-                      :
-                  const Icon(
-                    Icons.star_outline_rounded,
-                    color: Color(0xFF596777),
-                    size: 25,
-                  ),
-
+                icon: isFavorite
+                    ? const Icon(
+                        Icons.star_rounded,
+                        color: Color(0xffe6b10b),
+                        size: 26,
+                      )
+                    : const Icon(
+                        Icons.star_outline_rounded,
+                        color: Color(0xFF596777),
+                        size: 25,
+                      ),
                 onPressed: () {
                   Favorites _favorites = Favorites();
-                  CryptoCoin currency = CryptoCoin(widget.cryptoSymbol, widget.cryptoName, widget.cryptoPrice, widget.priceChange);
+                  CryptoCoin currency = CryptoCoin(
+                      widget.cryptoSymbol,
+                      widget.cryptoName,
+                      widget.cryptoPrice,
+                      widget.priceChange);
                   print(currency);
                   setState(() {
-
                     // m.update(widget.cryptoName!, (value) => true);
-                    isFavorite=!isFavorite;
-
-
+                    isFavorite = !isFavorite;
                   });
                   isFavorite
-                      ?
-                  const Icon(
-                    Icons.star_rounded,
-                    color: Color(0xffe6b10b),
-                    size: 26,
-                  )
-                      :
-                  const Icon(
-                    Icons.star_outline_rounded,
-                    color: Color(0xFF596777),
-                    size: 25,
-                  );
+                      ? const Icon(
+                          Icons.star_rounded,
+                          color: Color(0xffe6b10b),
+                          size: 26,
+                        )
+                      : const Icon(
+                          Icons.star_outline_rounded,
+                          color: Color(0xFF596777),
+                          size: 25,
+                        );
 
-                  if(isFavorite){
+                  if (isFavorite) {
+                    CryptoFavorites _cryptoFav = CryptoFavorites(
+                        cryptoName: widget.cryptoName,
+                        price: widget.cryptoPrice,
+                        priceChange: widget.priceChange);
                     _demoFunc();
                     _favorites.addFavorites(currency);
+                    FirebaseFirestore.instance
+                        .collection('Users')
+                        .doc('j4uzSIS8rXKT1AxvJC8S')
+                        .update({'favorites': _cryptoFav.toJson()});
 
                     _firestore.collection('favourite').add({
                       'cryptoName': widget.cryptoName,
                       'cryptoSymbol': widget.cryptoSymbol,
                       'priceChange': widget.priceChange,
-                      'image':widget.imageurl,
+                      'image': widget.imageurl,
 
-                      'price':widget.cryptoPrice,
-                      'high':12,
-                      'low':12,
-                      'total':12,
+                      'price': widget.cryptoPrice,
+                      'high': 12,
+                      'low': 12,
+                      'total': 12,
                       // 'isfavorite':true,
                     });
 
@@ -183,29 +188,31 @@ class _GraphPageState extends State<GraphPage> with AutomaticKeepAliveClientMixi
                     image?.add(widget.imageurl!);
 
                     //  print(l);
-                  }else{
-                _demoDelete();
-                _favorites.removeFavorites(currency);
-                FirebaseFirestore.instance
-                    .collection("favourite")
-                    .where("cryptoName", isEqualTo : widget.cryptoName!)
-                    .get().then((value){
-                  value.docs.forEach((element) {
-                    FirebaseFirestore.instance.collection("favourite").doc(element.id).delete().then((value){
-
+                  } else {
+                    _demoDelete();
+                    _favorites.removeFavorites(currency);
+                    FirebaseFirestore.instance
+                        .collection("favourite")
+                        .where("cryptoName", isEqualTo: widget.cryptoName!)
+                        .get()
+                        .then((value) {
+                      value.docs.forEach((element) {
+                        FirebaseFirestore.instance
+                            .collection("favourite")
+                            .doc(element.id)
+                            .delete()
+                            .then((value) {});
+                      });
                     });
-                  });
-                });
-                n?.remove(widget.cryptoName!);
-                sy?.remove(widget.cryptoSymbol!);
-                pr?.remove(widget.priceChange!);
-                price?.remove(widget.cryptoPrice!);
-                image?.remove(widget.imageurl!);
+                    n?.remove(widget.cryptoName!);
+                    sy?.remove(widget.cryptoSymbol!);
+                    pr?.remove(widget.priceChange!);
+                    price?.remove(widget.cryptoPrice!);
+                    image?.remove(widget.imageurl!);
 
                     // code not written for removing
-                   }
+                  }
                 },
-
               ),
             ),
           ],
@@ -368,12 +375,10 @@ class _GraphPageState extends State<GraphPage> with AutomaticKeepAliveClientMixi
                     SizedBox(
                       width: 10,
                     ),
-
-                     BuySellBox(
-                        boxText: 'SELL',
-                        boxColor: kSellButtonRed,
-                      ),
-
+                    BuySellBox(
+                      boxText: 'SELL',
+                      boxColor: kSellButtonRed,
+                    ),
                     SizedBox(
                       width: 15,
                     ),
