@@ -1,17 +1,19 @@
-import 'crypto.dart';
-
 CryptoFavorites _favFromJson(Map<String, dynamic> json){
-  return CryptoFavorites(favoriteCrypto: json['favorites']);
+  return CryptoFavorites(cryptoName: json['name'], price: json['price'], priceChange: json['priceChange']);
 }
 
 Map<String, dynamic> _favToJson(CryptoFavorites instance) => <String, dynamic>{
-  'favorites': instance.favoriteCrypto,
+  'name': instance.cryptoName,
+  'priceChange': instance.priceChange,
+  'price': instance.price
 };
 
 class CryptoFavorites{
-  final Crypto? favoriteCrypto;
+  final String? cryptoName;
+  final double? priceChange;
+  final String? price; 
 
-  CryptoFavorites({this.favoriteCrypto});
+  CryptoFavorites({this.cryptoName, this.priceChange, this.price});
 
   factory CryptoFavorites.fromJson(Map<String, dynamic> json) => _favFromJson(json);
 

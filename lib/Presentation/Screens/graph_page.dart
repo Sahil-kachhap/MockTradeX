@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mock_tradex/Data/Models/crypto.dart';
+import 'package:mock_tradex/Data/Models/favorites.dart';
+import 'package:mock_tradex/Data/Repositories/firestore_repository.dart';
 import 'package:mock_tradex/Presentation/Widgets/crypto_coin.dart';
 import 'package:mock_tradex/Presentation/Widgets/favorites.dart';
 import 'package:mock_tradex/main.dart';
@@ -23,6 +26,7 @@ class GraphPage extends StatefulWidget {
   final double? totalVolume;
   final String? imageurl;
   final int? index;
+
   const GraphPage({
     Key? key,
     this.cryptoSymbol,
@@ -153,8 +157,16 @@ class _GraphPageState extends State<GraphPage>
                         );
 
                   if (isFavorite) {
+                    CryptoFavorites _cryptoFav = CryptoFavorites(
+                        cryptoName: widget.cryptoName,
+                        price: widget.cryptoPrice,
+                        priceChange: widget.priceChange);
                     _demoFunc();
                     _favorites.addFavorites(currency);
+                    FirebaseFirestore.instance
+                        .collection('Users')
+                        .doc('j4uzSIS8rXKT1AxvJC8S')
+                        .update({'favorites': _cryptoFav.toJson()});
 
                     _firestore.collection('favourite').add({
                       'cryptoName': widget.cryptoName,
