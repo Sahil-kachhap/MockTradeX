@@ -1,14 +1,9 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:mock_tradex/Data/Models/crypto.dart';
 import 'package:mock_tradex/main.dart';
 import 'package:mock_tradex/Presentation/Widgets/crypto_tile.dart';
 import 'package:mock_tradex/Presentation/Widgets/search_bar.dart';
 import 'package:mock_tradex/constants.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
-import '../../functions.dart';
 
 
 

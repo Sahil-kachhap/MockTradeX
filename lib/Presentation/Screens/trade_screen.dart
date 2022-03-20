@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mock_tradex/common.dart';
 import 'package:mock_tradex/constants.dart';
 import '/Presentation/Widgets/slide_act.dart';
-import 'package:mock_tradex/constants.dart';
 
 List<bool> orderSelected = [true, false, false, false];
 List<bool> percentSelected = [false, false, false, false];

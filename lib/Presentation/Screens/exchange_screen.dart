@@ -7,7 +7,6 @@ import 'package:mock_tradex/Data/Repositories/crypto_repository.dart';
 import 'package:mock_tradex/Presentation/Widgets/crypto_tile.dart';
 import 'package:mock_tradex/Presentation/Widgets/search_bar.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
 import '../../constants.dart';
 
 class ExchangeScreen extends StatefulWidget {
@@ -25,7 +24,8 @@ class _ExchangeScreenState extends State<ExchangeScreen>
   void initState() {
     super.initState();
     tabController = TabController(
-        vsync: this, length: 2,);
+        vsync: this, length: 2,
+    );
   }
 
   TabController? tabController;
