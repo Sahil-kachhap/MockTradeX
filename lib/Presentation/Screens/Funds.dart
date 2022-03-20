@@ -18,18 +18,23 @@ class _FundsState extends State<Funds> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: kbackgroundColor,
+        backgroundColor: kBottomBarColor,
         body: Column(
-          children: [
-            Center(
-              child: IconButton(onPressed:()  {
 
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
-              }, icon: const Icon(Icons.account_circle_rounded,size: 70,color: Colors.white,),),
-            ),
-            SizedBox(
-              height: 10,
-            ),
+          children: [
+           Container(
+             margin: EdgeInsets.only(top: 10),
+             child: Center(
+               child: GestureDetector(
+                   onTap: (){
+                     Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
+                   },
+                   child: Icon(Icons.account_circle_rounded,size: 70,color: Colors.white,)
+
+               ),
+             ),
+           ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -213,7 +218,7 @@ class _FundsState extends State<Funds> {
                           child: Row(
                             children: [
                               CircleAvatar(
-                                backgroundColor: kFundTileColor,
+                                backgroundColor: Colors.black,
                                 radius: 18.0,
                                 child: Icon(
                                   CupertinoIcons.bitcoin,
@@ -314,7 +319,7 @@ class _FundsState extends State<Funds> {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       //color: Color(0xff191D28),
-                      color: kFundTileColor,
+                      color: Colors.black,
                       border: Border(
                         bottom: Divider.createBorderSide(context,
                             color: kbackgroundColor, width: 1.5),

@@ -78,7 +78,7 @@ class _FrontpageState extends State<Frontpage> {
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.school,
+                Icons.wallet_travel_outlined,
               ),
               label: 'Funds',
             ),

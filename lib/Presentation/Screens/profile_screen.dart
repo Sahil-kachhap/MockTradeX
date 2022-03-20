@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:full_screen_menu/full_screen_menu.dart';
+import 'package:mock_tradex/Presentation/Screens/about_us.dart';
 import 'package:mock_tradex/Presentation/Screens/sign_in.dart';
 
 import 'package:mock_tradex/constants.dart';
@@ -151,7 +152,14 @@ class _ProfileState extends State<Profile> {
                 card('Log Out'),
                 divider(),
                 // SizedBox(height: 15,),
-                card('About'),
+                GestureDetector(child: card('About'),
+    onTap: () {
+    Navigator.push(
+    context,
+    MaterialPageRoute(
+    builder: (context) => const About()));
+    },
+                ),
               ],
             )
           ],
