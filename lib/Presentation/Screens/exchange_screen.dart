@@ -5,6 +5,7 @@ import 'package:mock_tradex/Buisness_logic/exchange/exchange_bloc.dart';
 import 'package:mock_tradex/Data/Models/crypto.dart';
 import 'package:mock_tradex/Data/Repositories/crypto_repository.dart';
 import 'package:mock_tradex/Presentation/Widgets/crypto_tile.dart';
+import 'package:mock_tradex/Presentation/Widgets/search_bar.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../constants.dart';
 
@@ -40,6 +41,14 @@ class _ExchangeScreenState extends State<ExchangeScreen>
           appBar: AppBar(
             backgroundColor: Color(0xff080c10),
             title: Text('Exchange'),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.search),
+                onPressed: (){
+                  showSearch(context: context, delegate: SearchUser());
+                },
+              )
+            ],
             bottom: PreferredSize(
               preferredSize: Size(MediaQuery.of(context).size.width, 30),
               child: Container(
