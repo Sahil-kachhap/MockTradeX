@@ -9,6 +9,7 @@ import 'package:mock_tradex/Presentation/Widgets/search_bar.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../constants.dart';
 
+
 class ExchangeScreen extends StatefulWidget {
   const ExchangeScreen({Key? key}) : super(key: key);
 
@@ -200,15 +201,16 @@ Widget _buildCryptoTiles(List<Crypto>? cryptos) {
         final coin = cryptos[index];
 
         return CryptoTile(
-          cryptoName: coin.name,
+          cryptoName: coin.name!,
           cryptoSymbol: coin.symbol!.toUpperCase(),
-          currentPrice: coin.currentPrice.toString(),
+          tradePair: coin.tradePair!,
+          currentPrice: coin.currentPrice!.toString(),
           priceChange: coin.priceChangePercentage24h,
           imageUrl: coin.image,
           index: index,
-          // low_24h: coin.low_24h,
-          //  high_24h: coin.high_24h,
-          // totalVolume: coin.totalVolume,
+           low_24h: coin.low_24h,
+            high_24h: coin.high_24h,
+          totalVolume: coin.totalVolume,
         );
       },
     ),
