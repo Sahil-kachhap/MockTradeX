@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart';
-import 'package:mock_tradex/Data/Data_Provider/coingecko_api.dart';
+import 'package:mock_tradex/Data/Data_Provider/binance_api.dart';
 import 'package:mock_tradex/Data/Models/crypto.dart';
 import 'package:mock_tradex/Data/Models/crypto.dart';
 

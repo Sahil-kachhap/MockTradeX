@@ -3,6 +3,7 @@ import 'package:mock_tradex/main.dart';
 import 'package:mock_tradex/Presentation/Widgets/crypto_tile.dart';
 import 'package:mock_tradex/Presentation/Widgets/search_bar.dart';
 import 'package:mock_tradex/constants.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 
 
@@ -24,7 +25,14 @@ class _QuickbuyState extends State<Quickbuy> {
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
 
-
+    RefreshController _refreshController =
+    RefreshController(initialRefresh: false);
+    void _onRefresh() async{
+      // monitor network fetch
+      await Future.delayed(Duration(milliseconds: 1000));
+      // if failed,use refreshFailed()
+      _refreshController.refreshCompleted();
+    }
 
     return DefaultTabController(
       length: 1,
@@ -32,68 +40,64 @@ class _QuickbuyState extends State<Quickbuy> {
           backgroundColor: Color(0xff1a202c),
           appBar: AppBar(
 
-              backgroundColor: kBottomBarColor,
+              backgroundColor: Colors.black,
               title: Text('Search and Add'),
               actions: [
                 IconButton(
                   icon: Icon(Icons.search),
-                  onPressed: (){
+                  onPressed: () {
                     showSearch(context: context, delegate: SearchUser());
                   },
                 )
               ],
-
               bottom: PreferredSize(
                   preferredSize: Size(50.0, 50.0),
                   child: TabBar(
                       indicatorColor: kBottomBarTextActive,
                       //indicatorSize: TabBarIndicatorSize.label,
-                      tabs:  [ Text('WatchList',style: TextStyle(
-                        height: 4,
-                        fontWeight: FontWeight.bold
-
-                      ),),
-
-
-
+                      tabs: [
+                        Text(
+                          'WatchList',
+                          style:
+                              TextStyle(height: 4, fontWeight: FontWeight.bold),
+                        ),
                       ]))),
           body: TabBarView(
             children: [
 
-              ListView.builder(
-                itemCount: n!.length,
-                itemBuilder: (context, index) {
 
-                  return CryptoTile(
-                    cryptoName: n?[index],
-                    cryptoSymbol: sy?[index],
-                    currentPrice: price?[index],
-                    priceChange: pr?[index],
-                    imageUrl: image?[index],
-                    index: index,
-                    // low_24h: coin.low_24h,
-                    //  high_24h: coin.high_24h,
-                    // totalVolume: coin.totalVolume,
+              SmartRefresher(
+                enablePullDown: true,
+                controller: _refreshController,
+                header: MaterialClassicHeader(
+                  color: Color(0xff056cf3),
+                  backgroundColor: Color(0xff0a1628),
+                ),
+                onRefresh: _onRefresh,
+                child: ListView.builder(
+                  itemCount: n!.length,
+                  itemBuilder: (context, index) {
+
+                    return CryptoTile(
+                      cryptoName: n?[index],
+                      cryptoSymbol: sy?[index],
+                      currentPrice: price?[index],
+                      priceChange: pr?[index],
+                      imageUrl: image?[index],
+                      index: index,
+                      // low_24h: coin.low_24h,
+                      //  high_24h: coin.high_24h,
+                      // totalVolume: coin.totalVolume,
 
 
-                  );
-                },
-              )
+                    );
+                  },
+                )
+
+              ),
 
             ],
-          )
-
-
-      ),
+          )),
     );
-
-
   }
 }
-
-
-
-
-
-
-

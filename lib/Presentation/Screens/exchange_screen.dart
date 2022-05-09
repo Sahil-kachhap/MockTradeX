@@ -5,8 +5,10 @@ import 'package:mock_tradex/Buisness_logic/exchange/exchange_bloc.dart';
 import 'package:mock_tradex/Data/Models/crypto.dart';
 import 'package:mock_tradex/Data/Repositories/crypto_repository.dart';
 import 'package:mock_tradex/Presentation/Widgets/crypto_tile.dart';
+import 'package:mock_tradex/Presentation/Widgets/search_bar.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../constants.dart';
+
 
 class ExchangeScreen extends StatefulWidget {
   const ExchangeScreen({Key? key}) : super(key: key);
@@ -40,6 +42,14 @@ class _ExchangeScreenState extends State<ExchangeScreen>
           appBar: AppBar(
             backgroundColor: Color(0xff080c10),
             title: Text('Exchange'),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.search),
+                onPressed: (){
+                  showSearch(context: context, delegate: SearchUser());
+                },
+              )
+            ],
             bottom: PreferredSize(
               preferredSize: Size(MediaQuery.of(context).size.width, 30),
               child: Container(
@@ -191,15 +201,16 @@ Widget _buildCryptoTiles(List<Crypto>? cryptos) {
         final coin = cryptos[index];
 
         return CryptoTile(
-          cryptoName: coin.name,
+          cryptoName: coin.name!,
           cryptoSymbol: coin.symbol!.toUpperCase(),
-          currentPrice: coin.currentPrice.toString(),
+          tradePair: coin.tradePair!,
+          currentPrice: coin.currentPrice!.toString(),
           priceChange: coin.priceChangePercentage24h,
           imageUrl: coin.image,
           index: index,
-          // low_24h: coin.low_24h,
-          //  high_24h: coin.high_24h,
-          // totalVolume: coin.totalVolume,
+           low_24h: coin.low_24h,
+            high_24h: coin.high_24h,
+          totalVolume: coin.totalVolume,
         );
       },
     ),
