@@ -6,7 +6,7 @@ import 'package:mock_tradex/main.dart';
 
 
 List<Crypto> cry=[];
-class fun{
+class func{
 
   static void method() async{
 
