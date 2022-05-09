@@ -11,6 +11,8 @@ import 'package:mock_tradex/Presentation/Screens/sign_in.dart';
 import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'functions.dart';
+import 'package:mock_tradex/Data/Data_Provider/crypto_name_handler.dart';
+
 
 
 List<String>? n=[];
@@ -27,6 +29,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   MobileAds.instance.initialize();
+  await CryptoNameResolver.getTickerNames();
   runApp(const MyApp());
 }
 

@@ -5,6 +5,7 @@ import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
 import 'package:mock_tradex/constants.dart';
 import 'orders_screen.dart';
 import 'package:mock_tradex/functions.dart';
+import 'news.dart';
 
 class Frontpage extends StatefulWidget {
 
@@ -22,6 +23,7 @@ class _FrontpageState extends State<Frontpage> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   static const List<Widget> _widgetOptions = <Widget>[
+    NEWSPage(),
     Quickbuy(),
     ExchangeScreen(),
     OrderScreen(),
@@ -58,13 +60,20 @@ class _FrontpageState extends State<Frontpage> {
             BottomNavigationBarItem(
 
               icon: Icon(
+                Icons.newspaper,
+              ),
+              label: 'News',
+            ),
+            BottomNavigationBarItem(
+
+              icon: Icon(
                 Icons.bubble_chart,
               ),
               label: 'Quick Buy',
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.business,
+                Icons.swap_horizontal_circle,
               ),
               label: 'Exchange',
             ),

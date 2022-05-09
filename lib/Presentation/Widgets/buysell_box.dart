@@ -13,31 +13,19 @@ class BuySellBox extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        await Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => BuySellPage(
-              pageTitle: boxText,
-            ),
-          ),
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 3),
-        child: Container(
-          child: Center(
-              child: Text(
-            boxText!,
-            style: kBuyBox,
-          )),
-          height: 42,
-          width: 110,
-          decoration: BoxDecoration(
-              color: boxColor!,
-              borderRadius: BorderRadius.all(Radius.circular(4))),
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 3),
+      child: Container(
+        child: Center(
+            child: Text(
+          boxText!,
+          style: kBuyBox,
+        )),
+        height: 42,
+        width: 110,
+        decoration: BoxDecoration(
+            color: boxColor!,
+            borderRadius: BorderRadius.all(Radius.circular(4))),
       ),
     );
   }
