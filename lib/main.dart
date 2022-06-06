@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +7,7 @@ import 'package:mock_tradex/Data/Repositories/auth_repository.dart';
 import 'package:mock_tradex/Data/Repositories/crypto_repository.dart';
 import 'package:mock_tradex/Presentation/Screens/front_page.dart';
 import 'package:mock_tradex/Presentation/Screens/sign_in.dart';
-import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'functions.dart';
 import 'package:mock_tradex/Data/Data_Provider/crypto_name_handler.dart';
 
 
@@ -43,7 +40,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
    //fun.method();
     //const Quickbuy();

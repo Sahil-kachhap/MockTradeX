@@ -1,3 +1,7 @@
+import 'dart:html';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,12 +19,14 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
+  final String? userId = FirebaseAuth.instance.currentUser!.uid;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: BlocProvider(
-        create: (context) => AuthBloc(authRepository: RepositoryProvider.of<AuthRepository>(context)),
+        create: (context) => AuthBloc(
+            authRepository: RepositoryProvider.of<AuthRepository>(context)),
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: kAppBackgroundColour,
@@ -43,10 +49,7 @@ class _OrderScreenState extends State<OrderScreen> {
           ),
           backgroundColor: kbackgroundColor,
           body: TabBarView(
-            children: [
-              _buildOrdersListView(),
-              _buildOrderHistoryListView(),
-            ],
+            children: [_buildOrdersListView(), _buildOrderHistoryListView()],
           ),
         ),
       ),
@@ -120,13 +123,13 @@ ListView _buildOrderHistoryListView() {
                         fontSize: 14.0, color: Colors.white),
                   ),
                   Text(
-                    "- -",
+                    "44.92",
                     style: GoogleFonts.poppins(
                         fontSize: 14.0, color: Colors.white),
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8.0,
               ),
               Row(
@@ -138,7 +141,7 @@ ListView _buildOrderHistoryListView() {
                         fontSize: 14.0, color: Colors.white),
                   ),
                   Text(
-                    "41.7601",
+                    "2",
                     style: GoogleFonts.poppins(
                         letterSpacing: 1.0,
                         fontSize: 14.0,
@@ -196,7 +199,7 @@ ListView _buildOrderHistoryListView() {
                         fontSize: 14.0, color: Colors.white),
                   ),
                   Text(
-                    "41.76",
+                    "44.92",
                     style: GoogleFonts.poppins(
                         letterSpacing: 1.0,
                         fontSize: 14.0,
