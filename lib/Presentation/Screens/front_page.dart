@@ -33,7 +33,7 @@ class _FrontpageState extends State<Frontpage> {
   @override
   void initState() {
     _pageController = PageController(initialPage: _selectedIndex,);
-    fun.method();
+   // fun.method();
     super.initState();
   }
   //
@@ -99,8 +99,8 @@ class _FrontpageState extends State<Frontpage> {
               _pageController!.jumpToPage(_selectedIndex);
             });
           },
-          selectedIconTheme: IconThemeData(color: kBottomBarTextActive),
-          unselectedIconTheme: IconThemeData(color: kBottomBarTextinActive),
+          selectedIconTheme: const IconThemeData(color: kBottomBarTextActive),
+          unselectedIconTheme: const IconThemeData(color: kBottomBarTextinActive),
           backgroundColor: kBottomBarColor,
         ),
       );

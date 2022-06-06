@@ -81,7 +81,7 @@ class _ExchangeScreenState extends State<ExchangeScreen>
           body: Column(
             children: [
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -188,7 +188,7 @@ Widget _buildCryptoTiles(List<Crypto>? cryptos) {
   return SmartRefresher(
     enablePullDown: true,
     controller: _refreshController,
-    header: MaterialClassicHeader(
+    header: const MaterialClassicHeader(
       color: Color(0xff056cf3),
       backgroundColor: Color(0xff0a1628),
     ),

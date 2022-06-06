@@ -20,6 +20,8 @@ class _SignInState extends State<SignIn> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -79,9 +81,9 @@ class _SignInState extends State<SignIn> {
                           const EdgeInsets.only(left: 35, right: 35, top: 10),
                       margin: const EdgeInsets.only(top: 10),
                       child: TextFormField(
-                        validator: (String? email){
-                          if(email!.isEmpty){
-                            return "Please Enter email";
+                        validator: (String? email) {
+                          if (email!.isEmpty) {
+                            return "Please enter valid email id";
                           }
                         },
                         autofillHints: const [AutofillHints.email],
@@ -93,20 +95,20 @@ class _SignInState extends State<SignIn> {
                         //scrollPadding: EdgeInsets.all(50),
 
                         decoration: const InputDecoration(
-                            // disabledBorder: ,
-                            fillColor: Color(0xff363144),
-                            hoverColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blueAccent),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.blueAccent)),
-                            // border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blueAccent)),
-                            labelText: 'E-mail',
-                            hintText: 'E-mail',
-                            labelStyle: TextStyle(color: Colors.blueAccent),
-                            hintStyle: TextStyle(color: Colors.blueAccent)),
+                          // disabledBorder: ,
+                          fillColor: Color(0xff363144),
+                          hoverColor: Colors.white,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blueAccent),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blueAccent)),
+                          // border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blueAccent)),
+                          labelText: 'E-mail',
+                          hintText: 'E-mail',
+                          labelStyle: TextStyle(color: Colors.blueAccent),
+                          hintStyle: TextStyle(color: Colors.blueAccent),
+                        ),
                       ),
                     ),
                     Container(
@@ -123,20 +125,19 @@ class _SignInState extends State<SignIn> {
                         //scrollPadding: EdgeInsets.all(50),
                         obscureText: true,
                         decoration: const InputDecoration(
-
-                            // disabledBorder: ,
-                            fillColor: Color(0xff363144),
-                            hoverColor: Colors.white,
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.blueAccent)),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blueAccent),
-                            ),
-                            labelText: 'Password',
-                            labelStyle: TextStyle(color: Colors.blueAccent),
-                            hintText: 'Password',
-                            hintStyle: TextStyle(color: Colors.blueAccent)),
+                          // disabledBorder: ,
+                          fillColor: Color(0xff363144),
+                          hoverColor: Colors.white,
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blueAccent)),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blueAccent),
+                          ),
+                          labelText: 'Password',
+                          labelStyle: TextStyle(color: Colors.blueAccent),
+                          hintText: 'Password',
+                          hintStyle: TextStyle(color: Colors.blueAccent),
+                        ),
                       ),
                     ),
                     Row(
@@ -160,8 +161,9 @@ class _SignInState extends State<SignIn> {
                                   borderRadius: BorderRadius.circular(100.0),
                                 ))),
                             onPressed: () {
-                              BlocProvider.of<AuthBloc>(context)
-                                  .add(SignInRequested(email, password));
+                              BlocProvider.of<AuthBloc>(context).add(
+                                SignInRequested(email, password),
+                              );
                             },
                             child:
                                 const Text('Log In', style: kTickerTextStyle),

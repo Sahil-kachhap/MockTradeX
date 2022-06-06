@@ -12,10 +12,17 @@ class CryptoFavorites{
   final String? cryptoName;
   final double? priceChange;
   final String? price; 
+  static List<Map<String, dynamic>> jsonFavoriteList = [];
+  
 
   CryptoFavorites({this.cryptoName, this.priceChange, this.price});
 
   factory CryptoFavorites.fromJson(Map<String, dynamic> json) => _favFromJson(json);
 
   Map<String, dynamic> toJson() => _favToJson(this);
+
+  storeJsoninList(){
+    Map<String, dynamic> json = _favToJson(this);
+    jsonFavoriteList.add(json);
+  }
 }

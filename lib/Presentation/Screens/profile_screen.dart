@@ -67,7 +67,7 @@ class _ProfileState extends State<Profile> {
                               },
                             ),
                             GestureDetector(
-                              child: CircleAvatar(
+                              child: const CircleAvatar(
                                 radius: 30,
                                 backgroundImage:
                                 ExactAssetImage('assets/friends.png'),
@@ -80,7 +80,7 @@ class _ProfileState extends State<Profile> {
                               },
                             ),
                             GestureDetector(
-                              child: CircleAvatar(
+                              child: const CircleAvatar(
                                 radius: 30,
                                 backgroundImage:
                                 ExactAssetImage('assets/dani.png'),
@@ -93,7 +93,7 @@ class _ProfileState extends State<Profile> {
                               },
                             ),
                           ],
-                          backgroundColor: Color(0xff733B3939),
+                          backgroundColor:  Color(0xff733B3939),
                         );
                       },
                       child: CircleAvatar(
@@ -132,8 +132,8 @@ class _ProfileState extends State<Profile> {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));
                   },
                   child: Container(
-                    margin: EdgeInsets.only(left: 30, right: 30),
-                    decoration: BoxDecoration(
+                    margin: const EdgeInsets.only(left: 30, right: 30),
+                    decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     height: 70,
                     child: Center(

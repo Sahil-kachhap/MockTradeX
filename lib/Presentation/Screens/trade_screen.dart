@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mock_tradex/Data/Data_Provider/binance_current.dart';
 import 'package:mock_tradex/Data/Data_Provider/binance_socket.dart';
+import 'package:mock_tradex/Data/Models/order.dart';
 import 'package:mock_tradex/Data/Models/socketResponse.dart';
 import 'package:mock_tradex/constants.dart';
 import '/Presentation/Widgets/slide_act.dart';
@@ -30,10 +31,7 @@ class _OrderPageState extends State<OrderPage> {
     super.initState();
     pageThemeColor =
         widget.orderSide == 'BUY' ? Color(0xff286bdb) : Color(0xffef4006);
-
-    }
-
-
+  }
 
   @override
   double price = 0;
@@ -56,9 +54,8 @@ class _OrderPageState extends State<OrderPage> {
         backgroundColor: Colors.black,
         elevation: 0,
         titleSpacing: 2,
-centerTitle: true,
+        centerTitle: true,
         title: Text('Spot ${widget.orderSide}'),
-
       ),
       body: Column(
         children: [
@@ -67,7 +64,6 @@ centerTitle: true,
               color: Colors.black,
               child: ListView(
                 children: [
-
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15.0, vertical: 15),
@@ -181,11 +177,16 @@ centerTitle: true,
                                     child: TextFormField(
                                       controller: myAmountController,
                                       onChanged: ((val) {
-                                        if (double.tryParse(val) != null)
-                                          setState(() {
-                                            amount = double.parse(val);
-                                            total = amount * price;
-                                          });
+                                        if (double.tryParse(val) != null) {
+                                          setState(
+                                            () {
+                                              amount = double.parse(val);
+                                              total = amount * price;
+                                            },
+                                          );
+                                          Order order = Order(cryptoName: "BitCoin",price: myPriceController.text, amount: myAmountController.text, type: OrderType.limitOrder);
+                                          order.addOrder(order);
+                                        }
                                       }),
                                       textAlignVertical:
                                           TextAlignVertical.center,
@@ -266,7 +267,7 @@ centerTitle: true,
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           'Bid',
@@ -289,7 +290,7 @@ centerTitle: true,
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           'Ask',
@@ -308,7 +309,9 @@ centerTitle: true,
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 5,),
+                              SizedBox(
+                                height: 5,
+                              ),
                               OrderRows(
                                 symbol: widget.tradePair,
                               )
@@ -318,7 +321,6 @@ centerTitle: true,
                       ],
                     ),
                   ),
-
 
                   // Padding(
                   //   padding: const EdgeInsets.symmetric(
@@ -522,7 +524,6 @@ centerTitle: true,
                       ],
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -534,8 +535,8 @@ centerTitle: true,
                 Container(
                   color: Color(0xcd13161b),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 5),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -563,7 +564,9 @@ centerTitle: true,
                     ),
                   ),
                 ),
-                SizedBox(height: 4,),
+                SizedBox(
+                  height: 4,
+                ),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: SlideAction(
@@ -586,6 +589,7 @@ centerTitle: true,
                         Duration(seconds: 1),
                         () => _key.currentState!.reset(),
                       );
+
                     },
                   ),
                 ),

@@ -69,7 +69,7 @@ class _QuickbuyState extends State<Quickbuy> {
               SmartRefresher(
                 enablePullDown: true,
                 controller: _refreshController,
-                header: MaterialClassicHeader(
+                header: const MaterialClassicHeader(
                   color: Color(0xff056cf3),
                   backgroundColor: Color(0xff0a1628),
                 ),
@@ -77,7 +77,6 @@ class _QuickbuyState extends State<Quickbuy> {
                 child: ListView.builder(
                   itemCount: n!.length,
                   itemBuilder: (context, index) {
-
                     return CryptoTile(
                       cryptoName: n?[index],
                       cryptoSymbol: sy?[index],
@@ -88,8 +87,6 @@ class _QuickbuyState extends State<Quickbuy> {
                       // low_24h: coin.low_24h,
                       //  high_24h: coin.high_24h,
                       // totalVolume: coin.totalVolume,
-
-
                     );
                   },
                 )
