@@ -16,6 +16,7 @@ class ExchangeBloc extends Bloc<ExchangeEvent, ExchangeState> {
          emit(DataLoadedState(crypto));
        }catch(e){
          emit(DataErrorState(e.toString()));
+         print(e);
        }
     });
   }

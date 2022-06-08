@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mock_tradex/Data/Models/crypto.dart';
 import 'package:mock_tradex/Data/Models/favorites.dart';
 import 'package:mock_tradex/Data/Repositories/firestore_repository.dart';
+import 'package:mock_tradex/Presentation/Screens/buy_sell_page.dart';
+import 'package:mock_tradex/Presentation/Screens/trade_screen.dart';
 import 'package:mock_tradex/Presentation/Widgets/crypto_coin.dart';
 import 'package:mock_tradex/Presentation/Widgets/favorites.dart';
 import 'package:mock_tradex/main.dart';
@@ -9,9 +11,9 @@ import 'package:mock_tradex/constants.dart';
 import 'package:mock_tradex/Data/Repositories/graph_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:mock_tradex/Presentation/Widgets/buysell_box.dart'
-    show BuySellBox;
-
+import 'package:mock_tradex/Presentation/Widgets/buysell_box.dart' show BuySellBox;
+import '../../Data/Data_Provider/binance_current.dart';
+import 'dart:async';
 bool notificationIsSelected = false;
 
 bool isFavorite = false;
@@ -19,6 +21,7 @@ bool isFavorite = false;
 class GraphPage extends StatefulWidget {
   final String? cryptoSymbol;
   final String? cryptoName;
+  final String? tradePair;
   final String? cryptoPrice;
   final double? priceChange;
   final double? high_24h;
@@ -30,7 +33,7 @@ class GraphPage extends StatefulWidget {
   const GraphPage({
     Key? key,
     this.cryptoSymbol,
-    this.cryptoName,
+    this.cryptoName,this.tradePair,
     this.cryptoPrice,
     this.priceChange,
     this.high_24h,
@@ -42,13 +45,41 @@ class GraphPage extends StatefulWidget {
 
   @override
   _GraphPageState createState() => _GraphPageState();
+
 }
 
 class _GraphPageState extends State<GraphPage>
     with AutomaticKeepAliveClientMixin {
+  double currentPrice=0;
+  StreamController<double> _streamController=StreamController();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final Favorites _favorites = Favorites();
 
+
+  Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+    
+    currentPrice=double.tryParse(widget.cryptoPrice!)!;
+    timer = Timer.periodic(Duration(seconds: 2), (Timer t) {
+        priceUpdate();
+
+    });
+
+  }
+  Future<void> priceUpdate()
+  async{
+     _streamController.sink.add(await getLatestPrice(widget.tradePair!));
+  }
+
+  @override
+  void dispose() {
+    _streamController.close();
+    timer?.cancel();
+    super.dispose();
+  }
   _demoFunc() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool(widget.cryptoName!, true);
@@ -108,7 +139,13 @@ class _GraphPageState extends State<GraphPage>
                 crossAxisAlignment: CrossAxisAlignment.baseline,
                 textBaseline: TextBaseline.alphabetic,
                 children: [
-                  Text(widget.cryptoName!),
+                  Flexible(
+                    child: Text(
+                      widget.cryptoName!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                   Text(
                     '/USD',
                     style: kTickerSubTextStyle.copyWith(
@@ -125,8 +162,8 @@ class _GraphPageState extends State<GraphPage>
                     ? const Icon(
                         Icons.star_rounded,
                         color: Color(0xffe6b10b),
-                        size: 26,
-                      )
+                        size: 25,
+                    )
                     : const Icon(
                         Icons.star_outline_rounded,
                         color: Color(0xFF596777),
@@ -235,12 +272,18 @@ class _GraphPageState extends State<GraphPage>
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
-                              widget.cryptoPrice!,
-                              style: const TextStyle(
-                                  color: kTickerWhite,
-                                  fontSize: 34,
-                                  fontWeight: FontWeight.w500),
+                            StreamBuilder(
+                              initialData: currentPrice,
+                              stream:_streamController.stream,
+                              builder: (context, snapshot) {
+                                return  Text(
+                                  '${snapshot.data}',
+                                  style: const TextStyle(
+                                      color: kTickerWhite,
+                                      fontSize: 34,
+                                      fontWeight: FontWeight.w500),
+                                );
+                              }
                             ),
                             Row(
                               children: [
@@ -355,7 +398,7 @@ class _GraphPageState extends State<GraphPage>
                             ? const Icon(
                                 Icons.notifications_on_rounded,
                                 color: Color(0xffe6b10b),
-                                size: 28,
+                                size: 27,
                               )
                             : const Icon(
                                 Icons.notifications_none_rounded,
@@ -368,17 +411,43 @@ class _GraphPageState extends State<GraphPage>
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    BuySellBox(
-                      boxText: 'BUY',
-                      boxColor: kBuyButtonGreen,
+                  children:  [
+                    GestureDetector(
+                      onTap: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OrderPage(
+                              orderSide: 'BUY',
+                              tradePair: widget.tradePair,
+                            ),
+                          ),
+                        );
+                      },
+                      child: BuySellBox(
+                        boxText: 'BUY',
+                        boxColor: kBuyButtonGreen,
+                      ),
                     ),
                     SizedBox(
                       width: 10,
                     ),
-                    BuySellBox(
-                      boxText: 'SELL',
-                      boxColor: kSellButtonRed,
+                    GestureDetector(
+                      onTap: () async {
+                        await Navigator.push(
+                          (context),
+                          MaterialPageRoute(
+                            builder: (context) => OrderPage(
+                              orderSide: 'SELL',
+                              tradePair: widget.tradePair,
+                            ),
+                          ),
+                        );
+                      },
+                      child: BuySellBox(
+                        boxText: 'SELL',
+                        boxColor: kSellButtonRed,
+                      ),
                     ),
                     SizedBox(
                       width: 15,

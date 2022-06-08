@@ -47,25 +47,22 @@ class _QuickbuyState extends State<Quickbuy> {
               actions: [
                 IconButton(
                   icon: Icon(Icons.search),
-                  onPressed: (){
+                  onPressed: () {
                     showSearch(context: context, delegate: SearchUser());
                   },
                 )
               ],
-
               bottom: PreferredSize(
                   preferredSize: Size(50.0, 50.0),
                   child: TabBar(
                       indicatorColor: kBottomBarTextActive,
                       //indicatorSize: TabBarIndicatorSize.label,
-                      tabs:  [ Text('WatchList',style: TextStyle(
-                        height: 4,
-                        fontWeight: FontWeight.bold
-
-                      ),),
-
-
-
+                      tabs: [
+                        Text(
+                          'WatchList',
+                          style:
+                              TextStyle(height: 4, fontWeight: FontWeight.bold),
+                        ),
                       ]))),
           body: TabBarView(
             children: [
@@ -99,22 +96,10 @@ class _QuickbuyState extends State<Quickbuy> {
                   },
                 )
 
-              )
+              ),
 
             ],
-          )
-
-
-      ),
+          )),
     );
-
-
   }
 }
-
-
-
-
-
-
-

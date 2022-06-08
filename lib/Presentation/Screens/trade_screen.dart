@@ -1,5 +1,9 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mock_tradex/Data/Data_Provider/binance_socket.dart';
+import 'package:mock_tradex/Data/Models/orders.dart';
+import 'package:mock_tradex/Data/Models/socketResponse.dart';
 import 'package:mock_tradex/constants.dart';
 import '/Presentation/Widgets/slide_act.dart';
 
@@ -8,21 +12,22 @@ List<bool> percentSelected = [false, false, false, false];
 
 class OrderPage extends StatefulWidget {
   final String? orderSide;
-  final Color? pageThemeColor;
-  const OrderPage({
-    Key? key,
-    this.orderSide,
-    this.pageThemeColor,
-  }) : super(key: key);
+  final String? tradePair;
+
+  OrderPage({Key? key, this.orderSide, this.tradePair}) : super(key: key);
 
   @override
   _OrderPageState createState() => _OrderPageState();
 }
 
 class _OrderPageState extends State<OrderPage> {
+  Color? pageThemeColor;
+
   @override
   void initState() {
     super.initState();
+    pageThemeColor =
+        widget.orderSide == 'BUY' ? Color(0xff286bdb) : Color(0xffef4006);
   }
 
   @override
@@ -35,23 +40,26 @@ class _OrderPageState extends State<OrderPage> {
     // Clean up the controller when the widget is disposed.
     myPriceController.dispose();
     myAmountController.dispose();
+
     super.dispose();
   }
 
   Widget build(BuildContext context) {
     final GlobalKey<SlideActionState> _key = GlobalKey();
     return Scaffold(
-      backgroundColor: kTradeScreenBackgroundColor,
-      body: SingleChildScrollView(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height -
-                Scaffold.of(context).appBarMaxHeight!.toDouble(),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        titleSpacing: 2,
+        centerTitle: true,
+        title: Text('Spot ${widget.orderSide}'),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Container(
+              color: Colors.black,
+              child: ListView(
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -86,10 +94,11 @@ class _OrderPageState extends State<OrderPage> {
                                         vertical: 10),
                                     child: TextFormField(
                                       onChanged: ((val) {
-                                        if (double.tryParse(val) != null)
+                                        if (double.tryParse(val) != null) {
                                           setState(() {
                                             price = double.parse(val);
                                           });
+                                        }
                                       }),
                                       controller: myPriceController,
                                       textAlignVertical:
@@ -108,7 +117,7 @@ class _OrderPageState extends State<OrderPage> {
                                         FilteringTextInputFormatter.allow(
                                             RegExp(r'(^-?\d*\.?\d*)'))
                                       ],
-                                      cursorColor: widget.pageThemeColor,
+                                      cursorColor: pageThemeColor,
                                       cursorWidth: 2,
                                       enabled: true,
                                       decoration: const InputDecoration(
@@ -166,11 +175,14 @@ class _OrderPageState extends State<OrderPage> {
                                     child: TextFormField(
                                       controller: myAmountController,
                                       onChanged: ((val) {
-                                        if (double.tryParse(val) != null)
-                                          setState(() {
-                                            amount = double.parse(val);
-                                            total = amount * price;
-                                          });
+                                        if (double.tryParse(val) != null) {
+                                          setState(
+                                            () {
+                                              amount = double.parse(val);
+                                              total = amount * price;
+                                            },
+                                          );
+                                        }
                                       }),
                                       textAlignVertical:
                                           TextAlignVertical.center,
@@ -186,7 +198,7 @@ class _OrderPageState extends State<OrderPage> {
                                         FilteringTextInputFormatter.allow(
                                             RegExp(r'(^-?\d*\.?\d*)'))
                                       ],
-                                      cursorColor: widget.pageThemeColor,
+                                      cursorColor: pageThemeColor,
                                       cursorWidth: 2,
                                       enabled: true,
                                       decoration: const InputDecoration(
@@ -227,72 +239,125 @@ class _OrderPageState extends State<OrderPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              'Available USD ',
-                              style: TextStyle(color: Color(0xb773787f)),
-                            ),
-                            Icon(
-                              Icons.account_balance_wallet_rounded,
-                              color: Color(
-                                0xb773787f,
+                              'Order Book',
+                              style: TextStyle(
+                                color: Color(0xffeaecf0),
                               ),
-                              size: 15,
                             ),
                           ],
                         ),
-                        Text(
-                          '\$99999999',
-                          style: TextStyle(color: Color(0xffeaecf0)),
+                        SizedBox(
+                          height: 10,
                         ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        ToggleButtons(
-                          onPressed: (int index) {
-                            setState(() {
-                              for (int buttonIndex = 0;
-                                  buttonIndex < percentSelected.length;
-                                  buttonIndex++) {
-                                if (buttonIndex == index) {
-                                  percentSelected[buttonIndex] =
-                                      !percentSelected[buttonIndex];
-                                } else {
-                                  percentSelected[buttonIndex] = false;
-                                }
-                              }
-                            });
-                          },
-                          children: [
-                            Text('25%'),
-                            Text('50%'),
-                            Text('75%'),
-                            Text('100%')
-                          ],
-                          textStyle: TextStyle(
-                            fontSize: kToggleBoxOrderPercentFontSize,
+                        Container(
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Bid',
+                                          style: TextStyle(
+                                            color: Color(0xb773787f),
+                                          ),
+                                        ),
+                                        Text(
+                                          'Qty',
+                                          style: TextStyle(
+                                            color: Color(0xb773787f),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Ask',
+                                          style: TextStyle(
+                                            color: Color(0xb773787f),
+                                          ),
+                                        ),
+                                        Text(
+                                          'Qty',
+                                          style: TextStyle(
+                                            color: Color(0xb773787f),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              OrderRows(
+                                symbol: widget.tradePair,
+                              )
+                            ],
                           ),
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                          selectedBorderColor:  widget.pageThemeColor,
-                          isSelected: percentSelected,
-                          color: Color(0xffd9d9d7),
-                          selectedColor:  widget.pageThemeColor,
-                          fillColor: Colors.black,
                         ),
                       ],
                     ),
                   ),
+
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(
+                  //       horizontal: 20.0, vertical: 10),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.end,
+                  //     children: [
+                  //       ToggleButtons(
+                  //         onPressed: (int index) {
+                  //           setState(() {
+                  //             for (int buttonIndex = 0;
+                  //                 buttonIndex < percentSelected.length;
+                  //                 buttonIndex++) {
+                  //               if (buttonIndex == index) {
+                  //                 percentSelected[buttonIndex] =
+                  //                     !percentSelected[buttonIndex];
+                  //               } else {
+                  //                 percentSelected[buttonIndex] = false;
+                  //               }
+                  //             }
+                  //           });
+                  //         },
+                  //         children: [
+                  //           Text('25%'),
+                  //           Text('50%'),
+                  //           Text('75%'),
+                  //           Text('100%')
+                  //         ],
+                  //         textStyle: TextStyle(
+                  //           fontSize: kToggleBoxOrderPercentFontSize,
+                  //         ),
+                  //         borderRadius: BorderRadius.all(Radius.circular(5)),
+                  //         selectedBorderColor: pageThemeColor,
+                  //         isSelected: percentSelected,
+                  //         color: Color(0xffd9d9d7),
+                  //         selectedColor: pageThemeColor,
+                  //         fillColor: Colors.black,
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20.0, vertical: 10),
@@ -324,7 +389,7 @@ class _OrderPageState extends State<OrderPage> {
                                   text: 'Limit',
                                   index: 0,
                                   fontSize: kToggleBoxOrderTypeFontSize,
-                                  colorTheme:  widget.pageThemeColor,
+                                  colorTheme: pageThemeColor,
                                 ),
                               ),
                               GestureDetector(
@@ -337,7 +402,7 @@ class _OrderPageState extends State<OrderPage> {
                                   text: 'Market',
                                   index: 1,
                                   fontSize: kToggleBoxOrderTypeFontSize,
-                                  colorTheme:  widget.pageThemeColor,
+                                  colorTheme: pageThemeColor,
                                 ),
                               ),
                               GestureDetector(
@@ -350,7 +415,7 @@ class _OrderPageState extends State<OrderPage> {
                                   text: 'SL',
                                   index: 2,
                                   fontSize: kToggleBoxOrderTypeFontSize,
-                                  colorTheme:  widget.pageThemeColor,
+                                  colorTheme: pageThemeColor,
                                 ),
                               ),
                               GestureDetector(
@@ -363,7 +428,7 @@ class _OrderPageState extends State<OrderPage> {
                                   text: 'SL-M',
                                   index: 3,
                                   fontSize: kToggleBoxOrderTypeFontSize,
-                                  colorTheme:  widget.pageThemeColor,
+                                  colorTheme: pageThemeColor,
                                 ),
                               ),
                             ],
@@ -411,80 +476,129 @@ class _OrderPageState extends State<OrderPage> {
                           ),
                         ),
                         /*
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 15),
-                          child: TextFormField(
-                            focusNode: ,
-                            enabled: false,
-                            textAlignVertical: TextAlignVertical.center,
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: kTickerWhite,
-                            ),
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                            cursorColor: Color(0xff2196f4),
-                            cursorWidth: 2,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(10),
-                              isCollapsed: true,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(6)),
-                              ),
-                              disabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: kTradeScreenGreyBoxColorTextFieldBorder,
-                                    width: 1),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: kTradeScreenGreyBoxColorTextFieldBorder,
-                                    width: 1),
-                              ),
-                              hintText: '0',
-                              hintStyle: TextStyle(
-                                fontSize: 20,
-                                color: kHintTextColor,
-                              ),
-                            ),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 15),
+                      child: TextFormField(
+                        focusNode: ,
+                        enabled: false,
+                        textAlignVertical: TextAlignVertical.center,
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: kTickerWhite,
+                        ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                        cursorColor: Color(0xff2196f4),
+                        cursorWidth: 2,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(10),
+                          isCollapsed: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(6)),
                           ),
-                        )*/
+                          disabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: kTradeScreenGreyBoxColorTextFieldBorder,
+                                width: 1),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: kTradeScreenGreyBoxColorTextFieldBorder,
+                                width: 1),
+                          ),
+                          hintText: '0',
+                          hintStyle: TextStyle(
+                            fontSize: 20,
+                            color: kHintTextColor,
+                          ),
+                        ),
+                      ),
+                    )*/
                       ],
                     ),
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: SlideAction(
-                  key: _key,
-                  sliderButtonYOffset: 0,
-                  text: 'SWIPE TO BUY',
-                  textStyle: TextStyle(fontSize: 14, color: Colors.white),
-                  outerColor:  widget.pageThemeColor,
-                  innerColor: Color(0xffffffff),
-                  sliderButtonIconPadding: 11,
-                  sliderRotate: false,
-                  height: 65,
-                  sliderButtonIcon: Icon(
-                    Icons.chevron_right_rounded,
-                    size: 36,
-                    color:  widget.pageThemeColor,
-                  ),
-                  onSubmit: () {
-                    Future.delayed(
-                      Duration(seconds: 1),
-                      () => _key.currentState!.reset(),
-                    );
-                  },
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
+          Container(
+            color: Colors.black,
+            child: Column(
+              children: [
+                Container(
+                  color: Color(0xcd13161b),
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Available USD ',
+                              style: TextStyle(color: Color(0xb773787f)),
+                            ),
+                            Icon(
+                              Icons.account_balance_wallet_rounded,
+                              color: Color(
+                                0xb773787f,
+                              ),
+                              size: 15,
+                            ),
+                          ],
+                        ),
+                        Text(
+                          '\$99999999',
+                          style: TextStyle(color: Color(0xffeaecf0)),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: SlideAction(
+                    key: _key,
+                    sliderButtonYOffset: 0,
+                    text: 'SWIPE TO BUY',
+                    textStyle: TextStyle(fontSize: 14, color: Colors.white),
+                    outerColor: pageThemeColor,
+                    innerColor: Color(0xffffffff),
+                    sliderButtonIconPadding: 11,
+                    sliderRotate: false,
+                    height: 65,
+                    sliderButtonIcon: Icon(
+                      Icons.chevron_right_rounded,
+                      size: 36,
+                      color: pageThemeColor,
+                    ),
+                    onSubmit: () {
+                      Order order = Order(
+                          cryptoName: "BitCoin",
+                          price: myPriceController.text,
+                          amount: myAmountController.text,
+                          type: OrderType.limitOrder,
+                          total: total);
+                      order.addOrder(order);
+                      Future.delayed(
+                        Duration(seconds: 1),
+                        () => _key.currentState!.reset(),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -503,6 +617,114 @@ class _OrderPageState extends State<OrderPage> {
         orderSelected[buttonIndex] = false;
       }
     }
+  }
+}
+
+class OrderRows extends StatefulWidget {
+  final String? symbol;
+  const OrderRows({Key? key, this.symbol}) : super(key: key);
+
+  @override
+  State<OrderRows> createState() => _OrderRowsState();
+}
+
+class _OrderRowsState extends State<OrderRows> {
+  StreamController<BinanceOrderBook> _streamController =
+      StreamController<BinanceOrderBook>();
+  BinanceSocket? binanceSocket;
+  BinanceOrderBook? orderbook;
+
+  @override
+  void initState() {
+    super.initState();
+    binanceSocket = BinanceSocket(symbol: widget.symbol);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    binanceSocket!.channel!.sink.close();
+    _streamController.close();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Container(
+        child: StreamBuilder<BinanceOrderBook>(
+            // initialData:orderbook ,
+            stream: binanceSocket!.getOrders(widget.symbol!),
+            builder: (context, snapshot) {
+              return ListView.builder(
+                  physics: ClampingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: 5,
+                  itemBuilder: (context, index) {
+                    // return Text(
+                    //   '${snapshot.connectionState==ConnectionState.active?'${snapshot.data!.ask![index]}':'tryi'}',
+                    //   style: TextStyle(
+                    //     color: Colors.white,
+                    //   ),
+                    // );
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 20,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  '${snapshot.connectionState == ConnectionState.active ? '${double.tryParse(snapshot.data!.bid![index])!.toStringAsPrecision(7)}' : '0.0'}',
+                                  style: TextStyle(
+                                    color: Color(0xff286bdb),
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                Text(
+                                  '${snapshot.connectionState == ConnectionState.active ? '${double.tryParse(snapshot.data!.bidQuantity![index])!.toStringAsPrecision(5)}' : '0.0'}',
+                                  style: TextStyle(
+                                    color: Color(0xff286bdb),
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  '${snapshot.connectionState == ConnectionState.active ? '${double.tryParse(snapshot.data!.ask![index])!.toStringAsPrecision(7)}' : '0.0'}',
+                                  style: TextStyle(
+                                    color: Color(0xffef4006),
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                Text(
+                                  '${snapshot.connectionState == ConnectionState.active ? '${double.tryParse(snapshot.data!.askQuantity![index])!.toStringAsPrecision(5)}' : '0.0'}',
+                                  style: TextStyle(
+                                    color: Color(0xffef4006),
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  });
+            }),
+      ),
+    );
   }
 }
 

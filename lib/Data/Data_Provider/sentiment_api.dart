@@ -1,7 +1,3 @@
-// ignore_for_file: constant_identifier_names
-//
-// enum typeOfOrder { Market,Limit,SL,SL_M}
-// enum orderSide {Buy,Sell}
 import 'dart:convert' as convert;
 
 import 'package:http/http.dart' as http;
@@ -9,7 +5,7 @@ import 'package:http/http.dart';
 
 String emotion="";
 String emotionValue="50";
-void main() async {
+Future<void> getSentiment() async {
 
   // Await the HTTP GET response, then decode the
   // JSON data it contains.

@@ -35,7 +35,7 @@ class _GraphDataState extends State<GraphData> with AutomaticKeepAliveClientMixi
    new TradingView.widget(
        {
        "autosize": true,
-       "symbol": "BINANCE:${widget.cryptoSymbol}USD",  //usd global binance
+       "symbol": "BINANCE:${widget.cryptoSymbol}USDT",  //usd global binance
        "timezone": "Asia/Kolkata",
        "theme": "dark",
        "style": "2",
