@@ -1,4 +1,7 @@
+
+
 import 'package:flutter/material.dart';
+import 'package:mock_tradex/Data/Repositories/firebase_dynamic_link.dart';
 import 'package:mock_tradex/constants.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -86,18 +89,51 @@ class _Deposit_ScreenState extends State<Deposit_Screen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: kAppBackgroundColour,
-        body: Center(
-          child: OutlinedButton(
-            style: OutlinedButton.styleFrom(
-              primary: Colors.white,
-              backgroundColor: Colors.teal,
+        body: Column(
+          children: [
+
+            Container(
+              margin: EdgeInsets.only(top: 30,bottom: 20),
+              child: Text('Deposit',style: kTickerTextStyle.copyWith(
+                fontSize: 30
+              ),),
             ),
-            onPressed: () async {
-              adPage.loadAd();
-              adPage.showAd(context);
-            },
-            child: Text("VIEW AD"),
-          ),
+
+
+            Center(
+
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      primary: Colors.white,
+                      backgroundColor: Colors.teal,
+                    ),
+                    onPressed: () async {
+                      adPage.loadAd();
+                      adPage.showAd(context);
+                    },
+                    child: Text("VIEW AD"),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      primary: Colors.white,
+                      backgroundColor: Colors.teal,
+                    ),
+                    onPressed: () async {
+                    String str=await FirebaseDynamicLinkService.createDynamicLink();
+                    print(str);
+                    },
+                    child: Text("REFER AND EARN"),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

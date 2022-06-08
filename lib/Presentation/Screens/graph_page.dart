@@ -166,7 +166,8 @@ class _GraphPageState extends State<GraphPage>
                     FirebaseFirestore.instance
                         .collection('Users')
                         .doc('j4uzSIS8rXKT1AxvJC8S')
-                        .update({'favorites': _cryptoFav.toJson()});
+                        .update({'favorite': FieldValue.arrayUnion([widget.cryptoName],),
+                    });
 
                     _firestore.collection('favourite').add({
                       'cryptoName': widget.cryptoName,

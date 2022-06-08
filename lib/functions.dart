@@ -4,43 +4,32 @@ import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
 import 'package:mock_tradex/Presentation/Widgets/crypto_tile.dart';
 import 'package:mock_tradex/main.dart';
 
-
-List<Crypto> cry=[];
-class fun{
-
-  static void method() async{
-
-    var collection = FirebaseFirestore.instance.collection('favourite');
-    var querySnapshot = await collection.get();
-    for (var queryDocumentSnapshot in querySnapshot.docs) {
-      Map<String, dynamic> data = queryDocumentSnapshot.data();
-      // Crypto c=Crypto.fromJson1(data);
-      n?.add(data['cryptoName']);
-      sy?.add(data['cryptoSymbol']);
-      pr?.add(data['priceChange']);
-      price?.add(data['price']);
-      image?.add(data['image']);
+import 'Data/Repositories/crypto_repository.dart';
 
 
+List<Crypto> cry=<Crypto>[];
+List<String> pointList = <String>[];
 
-      // String str=data['cryptoName'];
+void getdata() async{
+  await FirebaseFirestore.instance.collection("Users").doc('j4uzSIS8rXKT1AxvJC8S').get().then((value){
 
-      //  n?.add(str);
-      // sy?.add( data['cryptoSymbol']);
-      // pr?.add(data['priceChange'] );
-      // price?.add(data['price']);
-      // image?.add(data['image']);
-      // index?.add(data['index']);
+    // first add the data to the Offset object
+    for (var element in List.from(value.get('favorite'))) {
+      // String data = new Offset(element);
 
-
+      //then add the data to the List<Offset>, now we have a type Offset
+      pointList.add(element);
     }
 
+  });
+  String? cryp=m?[pointList[0]]?.name;
 
-    // print('sahil');
+  print(cryp);
+}
+
+class fun{
 
 
-//  print(l);
 
-  }
 
 }

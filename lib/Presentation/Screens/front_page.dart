@@ -31,7 +31,7 @@ class _FrontpageState extends State<Frontpage> {
   @override
   void initState() {
     _pageController = PageController(initialPage: _selectedIndex,);
-    fun.method();
+   // fun.method();
     super.initState();
   }
   //
