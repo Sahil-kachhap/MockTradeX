@@ -1,19 +1,23 @@
+//readonly for price
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mock_tradex/Data/Data_Provider/binance_current.dart';
 import 'package:mock_tradex/Data/Data_Provider/binance_socket.dart';
 import 'package:mock_tradex/Data/Models/orders.dart';
 import 'package:mock_tradex/Data/Models/socketResponse.dart';
 import 'package:mock_tradex/constants.dart';
 import '/Presentation/Widgets/slide_act.dart';
 
-List<bool> orderSelected = [true, false, false, false];
+List<bool> orderSelected = [false,true,  false, false];
 List<bool> percentSelected = [false, false, false, false];
 BinanceSocket? binanceSocket;
 BinanceOrderBook? orderBook;
 StreamController<BinanceOrderBook> _streamController =
     StreamController<BinanceOrderBook>();
 Stream<BinanceOrderBook> stream=_streamController.stream;
+
 
 
 class OrderPage extends StatefulWidget {
@@ -28,13 +32,27 @@ class OrderPage extends StatefulWidget {
 
 class _OrderPageState extends State<OrderPage> {
   Color? pageThemeColor;
-
+  Timer? timer;
+  double currPrice=0;
   @override
   void initState() {
     super.initState();
     binanceSocket = BinanceSocket(symbol: widget.tradePair);
     stream= binanceSocket!.getOrders( widget.tradePair!);
+
+    timer = Timer.periodic(Duration(seconds: 1), (Timer t) async{
+      currPrice=await priceUpdate();
+      myPriceController.text='${currPrice.toStringAsPrecision(5)}';
+
+      setState(() {
+        total = amount * double.tryParse(myPriceController.text)!;
+      });
+    });
     pageThemeColor = widget.orderSide == 'BUY' ? Color(0xff286bdb) : Color(0xffef4006);
+  }
+  Future<double> priceUpdate()
+  async{
+    return getLatestPrice(widget.tradePair!);
   }
 
   @override
@@ -49,7 +67,7 @@ class _OrderPageState extends State<OrderPage> {
     myAmountController.dispose();
     binanceSocket!.channel!.sink.close();
     _streamController.close();
-
+    timer?.cancel();
     super.dispose();
   }
 
@@ -102,6 +120,7 @@ class _OrderPageState extends State<OrderPage> {
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 10),
                                     child: TextFormField(
+                                      readOnly: true,
                                       onChanged: ((val) {
                                         if (double.tryParse(val) != null) {
                                           setState(() {
@@ -188,7 +207,7 @@ class _OrderPageState extends State<OrderPage> {
                                           setState(
                                             () {
                                               amount = double.parse(val);
-                                              total = amount * price;
+
                                             },
                                           );
                                         }
@@ -390,9 +409,9 @@ class _OrderPageState extends State<OrderPage> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  setState(() {
-                                    buttonSelect(0, orderSelected);
-                                  });
+                                  // setState(() {
+                                  //  buttonSelect(0, orderSelected);
+                                  // });
                                 },
                                 child: ToggleContainer(
                                   text: 'Limit',
@@ -403,9 +422,9 @@ class _OrderPageState extends State<OrderPage> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  setState(() {
-                                    buttonSelect(1, orderSelected);
-                                  });
+                                  // setState(() {
+                                  //   buttonSelect(1, orderSelected);
+                                  // });
                                 },
                                 child: ToggleContainer(
                                   text: 'Market',
@@ -416,9 +435,9 @@ class _OrderPageState extends State<OrderPage> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  setState(() {
-                                    buttonSelect(2, orderSelected);
-                                  });
+                                  // setState(() {
+                                  //   buttonSelect(2, orderSelected);
+                                  // });
                                 },
                                 child: ToggleContainer(
                                   text: 'SL',
@@ -429,9 +448,9 @@ class _OrderPageState extends State<OrderPage> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  setState(() {
-                                    buttonSelect(3, orderSelected);
-                                  });
+                                  // setState(() {
+                                  //   buttonSelect(3, orderSelected);
+                                  // });
                                 },
                                 child: ToggleContainer(
                                   text: 'SL-M',
