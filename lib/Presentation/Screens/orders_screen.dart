@@ -1,6 +1,4 @@
-import 'dart:html';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -93,7 +91,8 @@ ListView _buildOrderHistoryListView() {
                         color: Colors.white, fontSize: 15.0),
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 7),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 5.0, horizontal: 7),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(2.0),
                         border: Border.all(color: Colors.white)),
@@ -123,7 +122,7 @@ ListView _buildOrderHistoryListView() {
                         fontSize: 14.0, color: Colors.white),
                   ),
                   Text(
-                    "44.92",
+                    "44.82",
                     style: GoogleFonts.poppins(
                         fontSize: 14.0, color: Colors.white),
                   )
@@ -141,7 +140,7 @@ ListView _buildOrderHistoryListView() {
                         fontSize: 14.0, color: Colors.white),
                   ),
                   Text(
-                    "2",
+                    "10",
                     style: GoogleFonts.poppins(
                         letterSpacing: 1.0,
                         fontSize: 14.0,
@@ -199,7 +198,7 @@ ListView _buildOrderHistoryListView() {
                         fontSize: 14.0, color: Colors.white),
                   ),
                   Text(
-                    "44.92",
+                    "44.82",
                     style: GoogleFonts.poppins(
                         letterSpacing: 1.0,
                         fontSize: 14.0,
