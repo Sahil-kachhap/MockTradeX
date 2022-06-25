@@ -23,18 +23,18 @@ class _FundsState extends State<Funds> {
 
           children: [
 
-           Container(
-             margin: EdgeInsets.only(top: 10),
-             child: Center(
-               child: GestureDetector(
-                   onTap: (){
-                     Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
-                   },
-                   child: Icon(Icons.account_circle_rounded,size: 70,color: Colors.white,)
-
-               ),
-             ),
-           ),
+           // Container(
+           //   margin: EdgeInsets.only(top: 10),
+           //   child: Center(
+           //     child: GestureDetector(
+           //         onTap: (){
+           //           Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
+           //         },
+           //         child: Icon(Icons.account_circle_rounded,size: 70,color: Colors.white,)
+           //
+           //     ),
+           //   ),
+           // ),
 
             SizedBox(
               height: 10,
