@@ -25,7 +25,7 @@ class _ExchangeScreenState extends State<ExchangeScreen>
   void initState() {
     super.initState();
     tabController = TabController(
-        vsync: this, length: 2,
+      vsync: this, length: 2,
     );
   }
 
@@ -36,8 +36,8 @@ class _ExchangeScreenState extends State<ExchangeScreen>
     super.build(context);
     return BlocProvider(
       create: (context) =>
-          ExchangeBloc(RepositoryProvider.of<CryptoRepository>(context))
-            ..add(LoadApiDataEvent()),
+      ExchangeBloc(RepositoryProvider.of<CryptoRepository>(context))
+        ..add(LoadApiDataEvent()),
       child: Scaffold(
           appBar: AppBar(
             backgroundColor: Color(0xff080c10),
@@ -131,27 +131,27 @@ class _ExchangeScreenState extends State<ExchangeScreen>
               Expanded(
                 child: BlocBuilder<ExchangeBloc, ExchangeState>(
                     builder: (context, state) {
-                  if (state is ExchangeInitial) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
+                      if (state is ExchangeInitial) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
 
-                  if (state is DataLoadedState) {
-                    return _buildCryptoTiles(state.crypto);
-                  }
+                      if (state is DataLoadedState) {
+                        return _buildCryptoTiles(state.crypto);
+                      }
 
-                  if (state is DataErrorState) {
-                    return Center(
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                          Lottie.asset('assets/error.json'),
-                        ]));
-                  }
-                  return Container();
-                }),
+                      if (state is DataErrorState) {
+                        return Center(
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Lottie.asset('assets/error.json'),
+                                ]));
+                      }
+                      return Container();
+                    }),
               ),
             ],
           )),
@@ -208,8 +208,8 @@ Widget _buildCryptoTiles(List<Crypto>? cryptos) {
           priceChange: coin.priceChangePercentage24h,
           imageUrl: coin.image,
           index: index,
-           low_24h: coin.low_24h,
-            high_24h: coin.high_24h,
+          low_24h: coin.low_24h,
+          high_24h: coin.high_24h,
           totalVolume: coin.totalVolume,
         );
       },
@@ -230,5 +230,4 @@ ListView.builder(
               );
             }));
   }
-
 */

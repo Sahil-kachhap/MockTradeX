@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import 'package:mock_tradex/Data/Repositories/firebase_dynamic_link.dart';
 import 'package:mock_tradex/constants.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -85,19 +87,59 @@ class _Deposit_ScreenState extends State<Deposit_Screen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: kAppBackgroundColour,
-        body: Center(
-          child: OutlinedButton(
-            style: OutlinedButton.styleFrom(
-              primary: Colors.white,
-              backgroundColor: Colors.teal,
+        backgroundColor: Color(0xff2EAEB7),
+        body: Column(
+          children: [
+
+            Container(
+              margin: EdgeInsets.only(top: 30,bottom: 20),
+              child: Text('Deposit',style: kTickerTextStyle.copyWith(
+                fontSize: 30
+              ),),
             ),
-            onPressed: () async {
-              adPage.loadAd();
-              adPage.showAd(context);
-            },
-            child: Text("VIEW AD"),
+            Container(
+              margin: const EdgeInsets.only(top: 70),
+              //padding: EdgeInsets.only(left: 50),
+              height: 250,
+              width: 400,
+              // child: Text('Login',style: kTickerTextStyle.copyWith(fontSize: 24),),
+              child: Image.asset('assets/deposit_.png'),
+            ),
+          SizedBox(
+           height: 200,
           ),
+            Center(
+
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      primary: Colors.white,
+                      backgroundColor: Colors.teal,
+                    ),
+                    onPressed: () async {
+                      adPage.loadAd();
+                      adPage.showAd(context);
+                    },
+                    child: Text("VIEW AD"),
+                  ),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Column(
+                    children: [
+                      Text('View ads to earn money and buy'
+                      , style: kTickerTextStyle.copyWith(fontSize: 15),),
+                      Text('and buy your favourite crypto coins.'
+                        , style: kTickerTextStyle.copyWith(fontSize: 15),),
+                    ],
+                  ),
+
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -10,14 +11,16 @@ import 'package:mock_tradex/Presentation/Screens/sign_in.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mock_tradex/Data/Data_Provider/crypto_name_handler.dart';
 
+import 'functions.dart';
 
 
-List<String>? n=[];
-List<String>? sy=[];
-List<double>? pr=[];
-List<String>? price=[];
-List<String>? image=[];
-List<int>? index=[];
+
+List<String> ?n=[];
+List<String> ?sy=[];
+List<double> ?pr=[];
+List<String> ?price=[];
+List<String> ?image=[];
+List<int> ?ind=[];
 
 
 
@@ -39,10 +42,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  void initState() {
-    super.initState();
-   //fun.method();
-    //const Quickbuy();
+ void initState() {
+    // TODO: implement initState
+    getdata();
   }
 
 

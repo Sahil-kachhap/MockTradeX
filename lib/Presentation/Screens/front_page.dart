@@ -4,7 +4,7 @@ import 'package:mock_tradex/Presentation/Screens/exchange_screen.dart';
 import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
 import 'package:mock_tradex/constants.dart';
 import 'orders_screen.dart';
-import 'package:mock_tradex/functions.dart';
+
 import 'news.dart';
 
 class Frontpage extends StatefulWidget {
@@ -32,8 +32,13 @@ class _FrontpageState extends State<Frontpage> {
 
   @override
   void initState() {
+
+    _pageController = PageController(initialPage: _selectedIndex,);
+   // fun.method();
+
     _pageController = PageController(initialPage: 0,);
-    fun.method();
+   // fun.method();
+
     super.initState();
   }
   //

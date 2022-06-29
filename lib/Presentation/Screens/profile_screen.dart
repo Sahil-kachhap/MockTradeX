@@ -228,13 +228,15 @@ class _ProfileState extends State<Profile> {
 class divider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      //color: Color(0xff444040),
-      decoration: BoxDecoration(
-        color: kFundTileColor,
-        border: Border(
-          bottom: Divider.createBorderSide(context,
-              color: Colors.black, width: 1.5),
+    return SingleChildScrollView(
+      child: Container(
+        //color: Color(0xff444040),
+        decoration: BoxDecoration(
+          color: kFundTileColor,
+          border: Border(
+            bottom: Divider.createBorderSide(context,
+                color: Colors.black, width: 1.5),
+          ),
         ),
       ),
     );
