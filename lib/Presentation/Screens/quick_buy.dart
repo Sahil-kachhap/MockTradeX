@@ -43,7 +43,7 @@ class _QuickbuyState extends State<Quickbuy> {
           appBar: AppBar(
 
               backgroundColor: Colors.black,
-              title: Text('Search and Add'),
+              title: Text('Favourites'),
               actions: [
                 IconButton(
                   icon: Icon(Icons.search),
@@ -52,18 +52,7 @@ class _QuickbuyState extends State<Quickbuy> {
                   },
                 )
               ],
-              bottom: PreferredSize(
-                  preferredSize: Size(50.0, 50.0),
-                  child: TabBar(
-                      indicatorColor: kBottomBarTextActive,
-                      //indicatorSize: TabBarIndicatorSize.label,
-                      tabs: [
-                        Text(
-                          'WatchList',
-                          style:
-                              TextStyle(height: 4, fontWeight: FontWeight.bold),
-                        ),
-                      ]))),
+             ),
           body: TabBarView(
             children: [
 
@@ -85,9 +74,9 @@ class _QuickbuyState extends State<Quickbuy> {
                       cryptoSymbol: sy?[index],
                       currentPrice: price?[index],
                       priceChange: pr?[index],
-                      imageUrl: image?[index],
+                     // imageUrl: image?[index],
                       index: index,
-                      // low_24h: coin.low_24h,
+                     // low_24h: coin.low_24h,
                       //  high_24h: coin.high_24h,
                       // totalVolume: coin.totalVolume,
 

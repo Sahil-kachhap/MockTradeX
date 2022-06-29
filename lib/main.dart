@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -14,12 +15,12 @@ import 'functions.dart';
 
 
 
-List<String>? n=[];
-List<String>? sy=[];
-List<double>? pr=[];
-List<String>? price=[];
-List<String>? image=[];
-List<int>? index=[];
+List<String> ?n=[];
+List<String> ?sy=[];
+List<double> ?pr=[];
+List<String> ?price=[];
+List<String> ?image=[];
+List<int> ?ind=[];
 
 
 
@@ -41,11 +42,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  void initState() {
-    super.initState();
+ void initState() {
+    // TODO: implement initState
     getdata();
-   //fun.method();
-    //const Quickbuy();
   }
 
 

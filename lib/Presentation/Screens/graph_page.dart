@@ -170,41 +170,38 @@ class _GraphPageState extends State<GraphPage>
                         size: 25,
                       ),
                 onPressed: () {
-                  Favorites _favorites = Favorites();
-                  CryptoCoin currency = CryptoCoin(
-                      widget.cryptoSymbol,
-                      widget.cryptoName,
-                      widget.cryptoPrice,
-                      widget.priceChange);
-                  print(currency);
+              //    Favorites _favorites = Favorites();
+               //   CryptoCoin currency = CryptoCoin(
+                 //     widget.cryptoSymbol,
+                   //   widget.cryptoName,
+                     // widget.cryptoPrice,
+                      //widget.priceChange);
+               //   print(currency);
                   setState(() {
                     // m.update(widget.cryptoName!, (value) => true);
                     isFavorite = !isFavorite;
                   });
                   isFavorite
-                      ? const Icon(
-                          Icons.star_rounded,
-                          color: Color(0xffe6b10b),
-                          size: 26,
-                        )
-                      : const Icon(
-                          Icons.star_outline_rounded,
-                          color: Color(0xFF596777),
-                          size: 25,
-                        );
+                      ?  const Icon(
+                    Icons.star_rounded,
+                    color: Color(0xffe6b10b),
+                    size: 26,
+                  )
+                      :
+
+                  const Icon(
+                    Icons.star_outline_rounded,
+                    color: Color(0xFF596777),
+                    size: 25,
+                  );
 
                   if (isFavorite) {
-                    CryptoFavorites _cryptoFav = CryptoFavorites(
-                        cryptoName: widget.cryptoName,
-                        price: widget.cryptoPrice,
-                        priceChange: widget.priceChange);
+                   // CryptoFavorites _cryptoFav = CryptoFavorites(
+                      //  cryptoName: widget.cryptoName,
+                        //price: widget.cryptoPrice,
+                        //priceChange: widget.priceChange);
                     _demoFunc();
-                    _favorites.addFavorites(currency);
-                    FirebaseFirestore.instance
-                        .collection('Users')
-                        .doc('j4uzSIS8rXKT1AxvJC8S')
-                        .update({'favorite': FieldValue.arrayUnion([widget.cryptoName],),
-                    });
+
 
                     _firestore.collection('favourite').add({
                       'cryptoName': widget.cryptoName,
@@ -223,15 +220,15 @@ class _GraphPageState extends State<GraphPage>
                     sy?.add(widget.cryptoSymbol!);
                     pr?.add(widget.priceChange!);
                     price?.add(widget.cryptoPrice!);
-                    image?.add(widget.imageurl!);
+                   // image?.add(widget.imageurl!);
 
-                    //  print(l);
+
                   } else {
-                    _demoDelete();
-                    _favorites.removeFavorites(currency);
+
+                     _demoDelete();
                     FirebaseFirestore.instance
                         .collection("favourite")
-                        .where("cryptoName", isEqualTo: widget.cryptoName!)
+                        .where("cryptoName", isEqualTo: widget.cryptoName)
                         .get()
                         .then((value) {
                       value.docs.forEach((element) {
@@ -242,14 +239,15 @@ class _GraphPageState extends State<GraphPage>
                             .then((value) {});
                       });
                     });
-                    n?.remove(widget.cryptoName!);
-                    sy?.remove(widget.cryptoSymbol!);
-                    pr?.remove(widget.priceChange!);
-                    price?.remove(widget.cryptoPrice!);
-                    image?.remove(widget.imageurl!);
+                    n?.remove(widget.cryptoName);
+                    sy?.remove(widget.cryptoSymbol);
+                    pr?.remove(widget.priceChange);
+                    price?.remove(widget.cryptoPrice);
+
 
                     // code not written for removing
                   }
+                 // print(sy);
                 },
               ),
             ),

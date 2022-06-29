@@ -1,5 +1,4 @@
 
-
 import 'package:flutter/material.dart';
 import 'package:mock_tradex/Data/Repositories/firebase_dynamic_link.dart';
 import 'package:mock_tradex/constants.dart';
@@ -88,7 +87,7 @@ class _Deposit_ScreenState extends State<Deposit_Screen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: kAppBackgroundColour,
+        backgroundColor: Color(0xff2EAEB7),
         body: Column(
           children: [
 
@@ -98,11 +97,20 @@ class _Deposit_ScreenState extends State<Deposit_Screen> {
                 fontSize: 30
               ),),
             ),
-
-
+            Container(
+              margin: const EdgeInsets.only(top: 70),
+              //padding: EdgeInsets.only(left: 50),
+              height: 250,
+              width: 400,
+              // child: Text('Login',style: kTickerTextStyle.copyWith(fontSize: 24),),
+              child: Image.asset('assets/deposit_.png'),
+            ),
+          SizedBox(
+           height: 200,
+          ),
             Center(
 
-              child: Row(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   OutlinedButton(
@@ -117,19 +125,17 @@ class _Deposit_ScreenState extends State<Deposit_Screen> {
                     child: Text("VIEW AD"),
                   ),
                   SizedBox(
-                    width: 20,
+                    width: 50,
                   ),
-                  OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      primary: Colors.white,
-                      backgroundColor: Colors.teal,
-                    ),
-                    onPressed: () async {
-                    String str=await FirebaseDynamicLinkService.createDynamicLink();
-                    print(str);
-                    },
-                    child: Text("REFER AND EARN"),
+                  Column(
+                    children: [
+                      Text('View ads to earn money and buy'
+                      , style: kTickerTextStyle.copyWith(fontSize: 15),),
+                      Text('and buy your favourite crypto coins.'
+                        , style: kTickerTextStyle.copyWith(fontSize: 15),),
+                    ],
                   ),
+
                 ],
               ),
             ),
