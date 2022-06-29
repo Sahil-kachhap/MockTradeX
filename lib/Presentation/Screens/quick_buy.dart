@@ -5,8 +5,6 @@ import 'package:mock_tradex/Presentation/Widgets/search_bar.dart';
 import 'package:mock_tradex/constants.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-
-
 //late final List<String> n;
 
 class Quickbuy extends StatefulWidget {
@@ -21,15 +19,14 @@ class _QuickbuyState extends State<Quickbuy> {
 
   @override
   Widget build(BuildContext context) {
-
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
 
     RefreshController _refreshController =
-    RefreshController(initialRefresh: false);
-    void _onRefresh() async{
+        RefreshController(initialRefresh: false);
+    void _onRefresh() async {
       // monitor network fetch
-      await Future.delayed(Duration(milliseconds: 1000));
+      await Future.delayed(const Duration(milliseconds: 1000));
       // if failed,use refreshFailed()
       _refreshController.refreshCompleted();
     }
@@ -39,25 +36,31 @@ class _QuickbuyState extends State<Quickbuy> {
     return DefaultTabController(
       length: 1,
       child: Scaffold(
-          backgroundColor: Color(0xff1a202c),
+          backgroundColor: const Color(0xff1a202c),
           appBar: AppBar(
-
               backgroundColor: Colors.black,
+
               title: Text('Favourites'),
+
+
+
               actions: [
                 IconButton(
-                  icon: Icon(Icons.search),
+                  icon: const Icon(Icons.search),
                   onPressed: () {
                     showSearch(context: context, delegate: SearchUser());
                   },
                 )
               ],
+
              ),
+
+
+
           body: TabBarView(
             children: [
-
-
               SmartRefresher(
+
                 enablePullDown: true,
                 controller: _refreshController,
                 header: MaterialClassicHeader(

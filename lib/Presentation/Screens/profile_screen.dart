@@ -57,7 +57,7 @@ class _ProfileState extends State<Profile> {
                               child: CircleAvatar(
                                 radius: 30,
                                 backgroundImage:
-                                ExactAssetImage('assets/anime_avatar.png'),
+                                    ExactAssetImage('assets/anime_avatar.png'),
                               ),
                               onTap: () {
                                 setState(() {
@@ -70,7 +70,7 @@ class _ProfileState extends State<Profile> {
                               child: CircleAvatar(
                                 radius: 30,
                                 backgroundImage:
-                                ExactAssetImage('assets/friends.png'),
+                                    ExactAssetImage('assets/friends.png'),
                               ),
                               onTap: () {
                                 setState(() {
@@ -83,7 +83,7 @@ class _ProfileState extends State<Profile> {
                               child: CircleAvatar(
                                 radius: 30,
                                 backgroundImage:
-                                ExactAssetImage('assets/dani.png'),
+                                    ExactAssetImage('assets/dani.png'),
                               ),
                               onTap: () {
                                 setState(() {
@@ -116,46 +116,105 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             SizedBox(
-              height: 50,
+              height: 10,
             ),
             ListView(
               shrinkWrap: true,
               children: [
-                card('E mail  -  dani@gmail.com'),
                 divider(),
-                card('Password  -  123456'),
+                Container(
+                  margin: EdgeInsets.only(left: 30, right: 30),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  height: 70,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Email',
+                        style: kTickerTextStyle.copyWith(fontSize: 15),
+                      ),
+                      Text(
+                        'dani@gmail.com',
+                        style: kTickerTextStyle.copyWith(fontSize: 15),
+                      ),
+                    ],
+                  ),
+                ),
+
                 divider(),
+                Container(
+                  margin: EdgeInsets.only(left: 30, right: 30),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  height: 70,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Password',
+                        style: kTickerTextStyle.copyWith(fontSize: 15),
+                      ),
+                      Text(
+                        '**********',
+                        style: kTickerTextStyle.copyWith(fontSize: 15),
+                      ),
+                    ],
+                  ),
+                ),
+                 divider(),
                 //card('Password  123456'),
                 // SizedBox(height: 15,),
                 GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SignIn()));
                   },
                   child: Container(
-                    margin: EdgeInsets.only(left: 30, right: 30),
+                    margin: EdgeInsets.symmetric(vertical: 5,horizontal: 30),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     height: 70,
-                    child: Center(
-                      child: Text(
-                        'Sign In',
-                        style: kTickerTextStyle.copyWith(fontSize: 15),
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: Text(
+                            'Sign In',
+                            style: kTickerTextStyle.copyWith(fontSize: 15),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-                divider(),
+                // divider(),
                 //SizedBox(height: 15,),
-                card('Log Out'),
-                divider(),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 5,horizontal: 30),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  height: 70,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Text(
+                          'Log Out',
+                          style: kTickerTextStyle.copyWith(fontSize: 15),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+               // divider(),
                 // SizedBox(height: 15,),
-                GestureDetector(child: card('About'),
-    onTap: () {
-    Navigator.push(
-    context,
-    MaterialPageRoute(
-    builder: (context) => const About()));
-    },
+                GestureDetector(
+                  child: card('About'),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const About()));
+                  },
                 ),
               ],
             )
@@ -193,7 +252,7 @@ class card extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(left: 30, right: 30),
       decoration:
-      BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20))),
+          BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20))),
       height: 70,
       child: Center(
         child: Text(

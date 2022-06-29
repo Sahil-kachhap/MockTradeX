@@ -16,6 +16,7 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   String? email;
   String? password;
+  final formKey = GlobalKey<FormState>();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -74,69 +75,85 @@ class _SignInState extends State<SignIn> {
                         ),
                       ),
                     ),
-                    Container(
-                      padding:
-                          const EdgeInsets.only(left: 35, right: 35, top: 10),
-                      margin: const EdgeInsets.only(top: 10),
-                      child: TextFormField(
-                        validator: (String? email){
-                          if(email!.isEmpty){
-                            return "Please Enter email";
-                          }
-                        },
-                        autofillHints: const [AutofillHints.email],
-                        controller: emailController,
-                        onChanged: (value) {
-                          email = value;
-                        },
-                        style: const TextStyle(color: Colors.blueAccent),
-                        //scrollPadding: EdgeInsets.all(50),
+                    Form(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.only(
+                                left: 35, right: 35, top: 10),
+                            margin: const EdgeInsets.only(top: 10),
+                            child: TextFormField(
+                              validator: (email) => email != null &&
+                                      !RegExp(r'^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$')
+                                          .hasMatch(email)
+                                  ? 'Enter a valid email id'
+                                  : null,
+                              autofillHints: const [AutofillHints.email],
+                              controller: emailController,
+                              onChanged: (value) {
+                                email = value;
+                              },
+                              style: const TextStyle(color: Colors.blueAccent),
+                              //scrollPadding: EdgeInsets.all(50),
 
-                        decoration: const InputDecoration(
-                            // disabledBorder: ,
-                            fillColor: Color(0xff363144),
-                            hoverColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blueAccent),
+                              decoration: const InputDecoration(
+                                  // disabledBorder: ,
+                                  fillColor: Color(0xff363144),
+                                  hoverColor: Colors.white,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.blueAccent),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blueAccent)),
+                                  // border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blueAccent)),
+                                  labelText: 'E-mail',
+                                  hintText: 'E-mail',
+                                  labelStyle:
+                                      TextStyle(color: Colors.blueAccent),
+                                  hintStyle:
+                                      TextStyle(color: Colors.blueAccent)),
                             ),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.blueAccent)),
-                            // border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blueAccent)),
-                            labelText: 'E-mail',
-                            hintText: 'E-mail',
-                            labelStyle: TextStyle(color: Colors.blueAccent),
-                            hintStyle: TextStyle(color: Colors.blueAccent)),
-                      ),
-                    ),
-                    Container(
-                      padding:
-                          const EdgeInsets.only(left: 35, right: 35, top: 10),
-                      margin: const EdgeInsets.only(top: 10),
-                      child: TextField(
-                        controller: passwordController,
-                        onChanged: (value) {
-                          password = value;
-                        },
-                        style: const TextStyle(color: Colors.blueAccent),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(
+                                left: 35, right: 35, top: 10),
+                            margin: const EdgeInsets.only(top: 10),
+                            child: TextFormField(
+                              validator: (password) => password!.length < 8
+                                  ? "Password length must be atleast 8 characters"
+                                  : null,
+                              controller: passwordController,
+                              onChanged: (value) {
+                                password = value;
+                              },
+                              style: const TextStyle(color: Colors.blueAccent),
 
-                        //scrollPadding: EdgeInsets.all(50),
-                        obscureText: true,
-                        decoration: const InputDecoration(
+                              //scrollPadding: EdgeInsets.all(50),
+                              obscureText: true,
+                              decoration: const InputDecoration(
 
-                            // disabledBorder: ,
-                            fillColor: Color(0xff363144),
-                            hoverColor: Colors.white,
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.blueAccent)),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blueAccent),
+                                  // disabledBorder: ,
+                                  fillColor: Color(0xff363144),
+                                  hoverColor: Colors.white,
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blueAccent)),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.blueAccent),
+                                  ),
+                                  labelText: 'Password',
+                                  labelStyle:
+                                      TextStyle(color: Colors.blueAccent),
+                                  hintText: 'Password',
+                                  hintStyle:
+                                      TextStyle(color: Colors.blueAccent)),
                             ),
-                            labelText: 'Password',
-                            labelStyle: TextStyle(color: Colors.blueAccent),
-                            hintText: 'Password',
-                            hintStyle: TextStyle(color: Colors.blueAccent)),
+                          ),
+                        ],
                       ),
                     ),
                     Row(
@@ -160,41 +177,15 @@ class _SignInState extends State<SignIn> {
                                   borderRadius: BorderRadius.circular(100.0),
                                 ))),
                             onPressed: () {
-                              BlocProvider.of<AuthBloc>(context)
-                                  .add(SignInRequested(email, password));
+                              final isValidForm =
+                                  formKey.currentState!.validate();
+                              if (isValidForm) {
+                                BlocProvider.of<AuthBloc>(context)
+                                    .add(SignInRequested(email, password));
+                              }
                             },
                             child:
                                 const Text('Log In', style: kTickerTextStyle),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(top: 20),
-                          //color: Colors.blueAccent,
-                          height: 60,
-                          width: 120,
-                          child: TextButton(
-                            style: ButtonStyle(
-                                // padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.blueAccent),
-                                // foregroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent),
-                                shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(100.0),
-                                ))),
-                            onPressed: () {
-                              BlocProvider.of<AuthBloc>(context)
-                                  .add(SignOutRequested());
-                            },
-                            child:
-                                const Text('Log Out', style: kTickerTextStyle),
                           ),
                         ),
                       ],
@@ -217,9 +208,11 @@ class _SignInState extends State<SignIn> {
                           ),
                           onTap: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const SignUp()));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SignUp(),
+                              ),
+                            );
                           },
                         )
                       ],

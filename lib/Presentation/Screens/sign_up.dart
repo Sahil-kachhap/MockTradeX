@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mock_tradex/Buisness_logic/auth/bloc/auth_bloc.dart';
@@ -6,7 +5,6 @@ import 'package:mock_tradex/Data/Repositories/auth_repository.dart';
 import 'package:mock_tradex/Presentation/Screens/front_page.dart';
 import 'package:mock_tradex/Presentation/Screens/sign_in.dart';
 import 'package:mock_tradex/constants.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -20,6 +18,7 @@ class _SignUpState extends State<SignUp> {
   String? name;
   String? password;
   String? confirm;
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -63,155 +62,176 @@ class _SignUpState extends State<SignUp> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Container(
-                      padding:
-                          const EdgeInsets.only(left: 35, right: 35, top: 10),
-                      margin: const EdgeInsets.only(top: 10),
-                      child: TextField(
-                        onChanged: (value) {
-                          name = value;
-                        },
+                    Form(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.only(
+                                left: 35, right: 35, top: 10),
+                            margin: const EdgeInsets.only(top: 10),
+                            child: TextFormField(
+                              onChanged: (value) {
+                                name = value;
+                              },
+                              validator: (userName) => userName!.isEmpty
+                                  ? 'Name cannot be left blank'
+                                  : null,
+                              style: const TextStyle(color: Colors.blueAccent),
+                              //scrollPadding: EdgeInsets.all(50),
 
-                        style: const TextStyle(color: Colors.blueAccent),
-                        //scrollPadding: EdgeInsets.all(50),
+                              decoration: InputDecoration(
+                                  // disabledBorder: ,
 
-                        decoration: InputDecoration(
-                            // disabledBorder: ,
-
-                            fillColor: const Color(0xff363144),
-                            hoverColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.blueAccent),
-                                borderRadius: BorderRadius.circular(20)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.blueAccent),
-                                borderRadius: BorderRadius.circular(20)),
-                            // border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blueAccent)),
-                            labelText: 'Name',
-                            hintText: 'Name',
-                            labelStyle: const TextStyle(
-                              color: Colors.blueAccent,
+                                  fillColor: const Color(0xff363144),
+                                  hoverColor: Colors.white,
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.blueAccent),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.blueAccent),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  // border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blueAccent)),
+                                  labelText: 'Name',
+                                  hintText: 'Name',
+                                  labelStyle: const TextStyle(
+                                    color: Colors.blueAccent,
+                                  ),
+                                  hintStyle: const TextStyle(
+                                      color: Colors.blueAccent)),
                             ),
-                            hintStyle:
-                                const TextStyle(color: Colors.blueAccent)),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      padding:
-                          const EdgeInsets.only(left: 35, right: 35, top: 10),
-                      margin: const EdgeInsets.only(top: 10),
-                      child: TextField(
-                        onChanged: (value) {
-                          email = value;
-                        },
-                        style: const TextStyle(color: Colors.blueAccent),
-                        //scrollPadding: EdgeInsets.all(50),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(
+                                left: 35, right: 35, top: 10),
+                            margin: const EdgeInsets.only(top: 10),
+                            child: TextFormField(
+                              onChanged: (value) {
+                                email = value;
+                              },
+                              validator: (email) => email != null &&
+                                      !RegExp(r'^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$')
+                                          .hasMatch(email)
+                                  ? 'Enter a valid email id'
+                                  : null,
+                              style: const TextStyle(color: Colors.blueAccent),
+                              //scrollPadding: EdgeInsets.all(50),
 
-                        decoration: InputDecoration(
-                            // disabledBorder: ,
+                              decoration: InputDecoration(
+                                  // disabledBorder: ,
 
-                            fillColor: const Color(0xff363144),
-                            hoverColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.blueAccent),
-                                borderRadius: BorderRadius.circular(20)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.blueAccent),
-                                borderRadius: BorderRadius.circular(20)),
-                            // border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blueAccent)),
-                            labelText: 'E-mail',
-                            hintText: 'E-mail',
-                            labelStyle: const TextStyle(
-                              color: Colors.blueAccent,
+                                  fillColor: const Color(0xff363144),
+                                  hoverColor: Colors.white,
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.blueAccent),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.blueAccent),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  // border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blueAccent)),
+                                  labelText: 'E-mail',
+                                  hintText: 'E-mail',
+                                  labelStyle: const TextStyle(
+                                    color: Colors.blueAccent,
+                                  ),
+                                  hintStyle: const TextStyle(
+                                      color: Colors.blueAccent)),
                             ),
-                            hintStyle:
-                                const TextStyle(color: Colors.blueAccent)),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      padding:
-                          const EdgeInsets.only(left: 35, right: 35, top: 10),
-                      margin: const EdgeInsets.only(top: 10),
-                      child: TextField(
-                        onChanged: (value) {
-                          password = value;
-                        },
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(
+                                left: 35, right: 35, top: 10),
+                            margin: const EdgeInsets.only(top: 10),
+                            child: TextFormField(
+                              onChanged: (value) {
+                                password = value;
+                              },
 
-                        obscureText: true,
-                        style: const TextStyle(color: Colors.blueAccent),
-                        //scrollPadding: EdgeInsets.all(50),
+                              validator: (password) => password!.length < 8
+                                  ? "Password length must be atleast 8 characters"
+                                  : null,
 
-                        decoration: InputDecoration(
-                            // disabledBorder: ,
+                              obscureText: true,
+                              style: const TextStyle(color: Colors.blueAccent),
+                              //scrollPadding: EdgeInsets.all(50),
 
-                            fillColor: Color(0xff363144),
-                            hoverColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.blueAccent),
-                                borderRadius: BorderRadius.circular(20)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.blueAccent),
-                                borderRadius: BorderRadius.circular(20)),
-                            // border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blueAccent)),
-                            labelText: 'Password',
-                            hintText: 'Password',
-                            labelStyle: const TextStyle(
-                              color: Colors.blueAccent,
+                              decoration: InputDecoration(
+                                  // disabledBorder: ,
+
+                                  fillColor: Color(0xff363144),
+                                  hoverColor: Colors.white,
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.blueAccent),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blueAccent),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  // border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blueAccent)),
+                                  labelText: 'Password',
+                                  hintText: 'Password',
+                                  labelStyle: const TextStyle(
+                                    color: Colors.blueAccent,
+                                  ),
+                                  hintStyle: const TextStyle(
+                                      color: Colors.blueAccent)),
                             ),
-                            hintStyle:
-                                const TextStyle(color: Colors.blueAccent)),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      padding:
-                          const EdgeInsets.only(left: 35, right: 35, top: 10),
-                      margin: const EdgeInsets.only(top: 10),
-                      child: TextField(
-                        onChanged: (value) {
-                          confirm = value;
-                        },
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(
+                                left: 35, right: 35, top: 10),
+                            margin: const EdgeInsets.only(top: 10),
+                            child: TextFormField(
+                              onChanged: (value) {
+                                confirm = value;
+                              },
+                              validator: (confirmPassword) => password !=
+                                      confirm
+                                  ? 'Doesn\'t matches with the above entered password'
+                                  : null,
+                              obscureText: true,
 
-                        obscureText: true,
+                              style: const TextStyle(color: Colors.blueAccent),
+                              //scrollPadding: EdgeInsets.all(50),
 
-                        style: const TextStyle(color: Colors.blueAccent),
-                        //scrollPadding: EdgeInsets.all(50),
+                              decoration: InputDecoration(
+                                  // disabledBorder: ,
 
-                        decoration: InputDecoration(
-                            // disabledBorder: ,
-
-                            fillColor: const Color(0xff363144),
-                            hoverColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.blueAccent),
-                                borderRadius: BorderRadius.circular(20)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.blueAccent),
-                                borderRadius: BorderRadius.circular(20)),
-                            // border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blueAccent)),
-                            labelText: 'Confirm Password',
-                            hintText: 'Confirm Password',
-                            labelStyle: const TextStyle(
-                              color: Colors.blueAccent,
+                                  fillColor: const Color(0xff363144),
+                                  hoverColor: Colors.white,
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.blueAccent),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.blueAccent),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  // border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blueAccent)),
+                                  labelText: 'Confirm Password',
+                                  hintText: 'Confirm Password',
+                                  labelStyle: const TextStyle(
+                                    color: Colors.blueAccent,
+                                  ),
+                                  hintStyle: const TextStyle(
+                                      color: Colors.blueAccent)),
                             ),
-                            hintStyle:
-                                const TextStyle(color: Colors.blueAccent)),
+                          ),
+                        ],
                       ),
                     ),
                     Row(
@@ -235,8 +255,12 @@ class _SignUpState extends State<SignUp> {
                               )),
                             ),
                             onPressed: () {
-                              BlocProvider.of<AuthBloc>(context)
-                                  .add(SignUpRequested(name, email, confirm));
+                              final isValidForm =
+                                  formKey.currentState!.validate();
+                              if (isValidForm) {
+                                BlocProvider.of<AuthBloc>(context)
+                                    .add(SignUpRequested(name, email, confirm));
+                              }
                             },
                             child:
                                 const Text('Sign Up', style: kTickerTextStyle),
