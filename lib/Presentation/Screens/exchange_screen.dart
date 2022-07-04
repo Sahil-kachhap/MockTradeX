@@ -9,7 +9,6 @@ import 'package:mock_tradex/Presentation/Widgets/search_bar.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../constants.dart';
 
-
 class ExchangeScreen extends StatefulWidget {
   const ExchangeScreen({Key? key}) : super(key: key);
 
@@ -25,7 +24,8 @@ class _ExchangeScreenState extends State<ExchangeScreen>
   void initState() {
     super.initState();
     tabController = TabController(
-      vsync: this, length: 2,
+      vsync: this,
+      length: 2,
     );
   }
 
@@ -36,8 +36,8 @@ class _ExchangeScreenState extends State<ExchangeScreen>
     super.build(context);
     return BlocProvider(
       create: (context) =>
-      ExchangeBloc(RepositoryProvider.of<CryptoRepository>(context))
-        ..add(LoadApiDataEvent()),
+          ExchangeBloc(RepositoryProvider.of<CryptoRepository>(context))
+            ..add(LoadApiDataEvent()),
       child: Scaffold(
           appBar: AppBar(
             backgroundColor: Color(0xff080c10),
@@ -45,7 +45,7 @@ class _ExchangeScreenState extends State<ExchangeScreen>
             actions: [
               IconButton(
                 icon: Icon(Icons.search),
-                onPressed: (){
+                onPressed: () {
                   showSearch(context: context, delegate: SearchUser());
                 },
               )
@@ -131,27 +131,27 @@ class _ExchangeScreenState extends State<ExchangeScreen>
               Expanded(
                 child: BlocBuilder<ExchangeBloc, ExchangeState>(
                     builder: (context, state) {
-                      if (state is ExchangeInitial) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
+                  if (state is ExchangeInitial) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
 
-                      if (state is DataLoadedState) {
-                        return _buildCryptoTiles(state.crypto);
-                      }
+                  if (state is DataLoadedState) {
+                    return _buildCryptoTiles(state.crypto);
+                  }
 
-                      if (state is DataErrorState) {
-                        return Center(
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Lottie.asset('assets/error.json'),
-                                ]));
-                      }
-                      return Container();
-                    }),
+                  if (state is DataErrorState) {
+                    return Center(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                          Lottie.asset('assets/error.json'),
+                        ]));
+                  }
+                  return Container();
+                }),
               ),
             ],
           )),
@@ -161,15 +161,14 @@ class _ExchangeScreenState extends State<ExchangeScreen>
 
 Widget _buildCryptoTiles(List<Crypto>? cryptos) {
   RefreshController _refreshController =
-  RefreshController(initialRefresh: false);
+      RefreshController(initialRefresh: false);
   // necessary hai ye?
   // @override
   // void dispose() {
   //   _refreshController.dispose();
   // }
 
-
-  void _onRefresh() async{
+  void _onRefresh() async {
     // monitor network fetch
     await Future.delayed(Duration(milliseconds: 1000));
     // if failed,use refreshFailed()
@@ -182,8 +181,6 @@ Widget _buildCryptoTiles(List<Crypto>? cryptos) {
   //   // if failed,use loadFailed(),if no data return,use LoadNodata()
   //   _refreshController.loadComplete();
   // }
-
-
 
   return SmartRefresher(
     enablePullDown: true,

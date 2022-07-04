@@ -1,6 +1,3 @@
-
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 //import 'package:cloud_firestore/cloud_firestore.dart';
@@ -87,8 +84,10 @@ ListView _buildOrderHistoryListView() {
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Row(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                  Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -154,7 +153,7 @@ ListView _buildOrderHistoryListView() {
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8.0,
               ),
               // Row(
