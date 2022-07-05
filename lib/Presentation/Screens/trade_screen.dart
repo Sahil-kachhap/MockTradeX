@@ -15,7 +15,7 @@ List<bool> percentSelected = [false, false, false, false];
 BinanceSocket? binanceSocket;
 BinanceOrderBook? orderBook;
 StreamController<BinanceOrderBook> _streamController =
-    StreamController<BinanceOrderBook>();
+StreamController<BinanceOrderBook>();
 Stream<BinanceOrderBook> stream = _streamController.stream;
 
 class OrderPage extends StatefulWidget {
@@ -55,7 +55,7 @@ class _OrderPageState extends State<OrderPage> {
       });
     });
     pageThemeColor =
-        widget.orderSide == 'BUY' ? Color(0xff286bdb) : Color(0xffef4006);
+    widget.orderSide == 'BUY' ? Color(0xff286bdb) : Color(0xffef4006);
   }
 
   Future<double> priceUpdate() async {
@@ -133,15 +133,15 @@ class _OrderPageState extends State<OrderPage> {
                                       }),
                                       controller: myPriceController,
                                       textAlignVertical:
-                                          TextAlignVertical.center,
+                                      TextAlignVertical.center,
                                       textAlign: TextAlign.start,
                                       style: const TextStyle(
                                         fontSize: 20,
                                         color: kTickerWhite,
                                       ),
                                       keyboardType:
-                                          const TextInputType.numberWithOptions(
-                                              decimal: true),
+                                      const TextInputType.numberWithOptions(
+                                          decimal: true),
                                       inputFormatters: [
                                         LengthLimitingTextInputFormatter(12),
                                         //max length of 12 characters
@@ -161,13 +161,13 @@ class _OrderPageState extends State<OrderPage> {
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color:
-                                                  kTradeScreenGreyBoxColorTextFieldBorder,
+                                              kTradeScreenGreyBoxColorTextFieldBorder,
                                               width: 1),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color:
-                                                  kTradeScreenGreyBoxColorTextFieldBorder,
+                                              kTradeScreenGreyBoxColorTextFieldBorder,
                                               width: 1),
                                         ),
                                         hintText: '0',
@@ -208,7 +208,7 @@ class _OrderPageState extends State<OrderPage> {
                                       onChanged: ((val) {
                                         if (double.tryParse(val) != null) {
                                           setState(
-                                            () {
+                                                () {
                                               amount = double.parse(val);
                                               total = amount * price;
                                             },
@@ -216,7 +216,7 @@ class _OrderPageState extends State<OrderPage> {
                                         }
                                       }),
                                       textAlignVertical:
-                                          TextAlignVertical.center,
+                                      TextAlignVertical.center,
                                       textAlign: TextAlign.start,
                                       style: const TextStyle(
                                         fontSize: 20,
@@ -242,13 +242,13 @@ class _OrderPageState extends State<OrderPage> {
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color:
-                                                  kTradeScreenGreyBoxColorTextFieldBorder,
+                                              kTradeScreenGreyBoxColorTextFieldBorder,
                                               width: 1),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color:
-                                                  kTradeScreenGreyBoxColorTextFieldBorder,
+                                              kTradeScreenGreyBoxColorTextFieldBorder,
                                               width: 1),
                                         ),
                                         hintText: '0',
@@ -293,7 +293,7 @@ class _OrderPageState extends State<OrderPage> {
                                 Expanded(
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: const [
                                       Text(
                                         'Bid',
@@ -316,7 +316,7 @@ class _OrderPageState extends State<OrderPage> {
                                 Expanded(
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: const [
                                       Text(
                                         'Ask',
@@ -444,10 +444,10 @@ class _OrderPageState extends State<OrderPage> {
                             decoration: BoxDecoration(
                               color: Colors.black,
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(4)),
+                              const BorderRadius.all(Radius.circular(4)),
                               border: Border.all(
                                   color:
-                                      kTradeScreenGreyBoxColorTextFieldBorder),
+                                  kTradeScreenGreyBoxColorTextFieldBorder),
                             ),
                           ),
                         ),
@@ -466,7 +466,7 @@ class _OrderPageState extends State<OrderPage> {
                   color: const Color(0xcd13161b),
                   child: Padding(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -504,7 +504,7 @@ class _OrderPageState extends State<OrderPage> {
                     sliderButtonYOffset: 0,
                     text: 'SWIPE TO BUY',
                     textStyle:
-                        const TextStyle(fontSize: 14, color: Colors.white),
+                    const TextStyle(fontSize: 14, color: Colors.white),
                     outerColor: pageThemeColor,
                     innerColor: const Color(0xffffffff),
                     sliderButtonIconPadding: 11,
@@ -518,7 +518,7 @@ class _OrderPageState extends State<OrderPage> {
                     onSubmit: () async {
                       await Future.delayed(
                         const Duration(seconds: 1),
-                        () => _key.currentState!.reset(),
+                            () => _key.currentState!.reset(),
                       );
                       Order order = Order(
                         cryptoName: widget.cryptoName,
@@ -543,8 +543,8 @@ class _OrderPageState extends State<OrderPage> {
 
   void buttonSelect(int index, List<bool> isSelected) {
     for (int buttonIndex = 0;
-        buttonIndex < orderSelected.length;
-        buttonIndex++) {
+    buttonIndex < orderSelected.length;
+    buttonIndex++) {
       if (buttonIndex == index) {
         orderSelected[buttonIndex] = true;
       } else {
