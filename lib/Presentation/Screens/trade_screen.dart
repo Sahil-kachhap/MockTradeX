@@ -8,7 +8,8 @@ import 'package:mock_tradex/Data/Data_Provider/binance_socket.dart';
 import 'package:mock_tradex/Data/Models/orders.dart';
 import 'package:mock_tradex/Data/Models/socketResponse.dart';
 import 'package:mock_tradex/constants.dart';
-import '/Presentation/Widgets/slide_act.dart';
+
+import 'package:action_slider/action_slider.dart';
 
 List<bool> orderSelected = [false, true, false, false];
 List<bool> percentSelected = [false, false, false, false];
@@ -75,7 +76,7 @@ class _OrderPageState extends State<OrderPage> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<SlideActionState> _key = GlobalKey();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -499,39 +500,64 @@ class _OrderPageState extends State<OrderPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: SlideAction(
-                    key: _key,
-                    sliderButtonYOffset: 0,
-                    text: 'SWIPE TO BUY',
-                    textStyle:
-                    const TextStyle(fontSize: 14, color: Colors.white),
-                    outerColor: pageThemeColor,
-                    innerColor: const Color(0xffffffff),
-                    sliderButtonIconPadding: 11,
-                    sliderRotate: false,
-                    height: 65,
-                    sliderButtonIcon: Icon(
-                      Icons.chevron_right_rounded,
-                      size: 36,
-                      color: pageThemeColor,
-                    ),
-                    onSubmit: () async {
-                      await Future.delayed(
-                        const Duration(seconds: 1),
-                            () => _key.currentState!.reset(),
-                      );
-                      Order order = Order(
-                        cryptoName: widget.cryptoName,
-                        price: myPriceController.text,
-                        amount: myAmountController.text,
-                        type: "Market",
-                        total: total,
-                        orderSide: widget.orderSide,
-                        orderTime: DateTime.now().toIso8601String(),
-                      );
-                      order.addOrder(order);
+                  child:  ActionSlider.standard(
+                    backgroundColor: pageThemeColor,
+                    toggleColor: const Color(0xffffffff),
+                    width: 240.0,
+                    height: 70.0,
+                    slideAnimationCurve: Curves.easeOutExpo,
+                    slideAnimationDuration: Duration(milliseconds: 200),
+                    reverseSlideAnimationCurve: Curves.easeOutExpo,
+                    reverseSlideAnimationDuration: Duration(milliseconds: 200),
+                    actionThresholdType: ThresholdType.release,
+                    child: const Text('SWIPE TO BUY'),
+                    onSlide: (controller) async {
+                      controller.loading(); //starts loading animation
+                      await Future.delayed(const Duration(seconds: 1));
+                      if(true) {
+                        orderConfirmed();
+                        controller.success(); //starts success animation
+                      }
+                      else {
+                        controller.failure();
+                      }
+                      await Future.delayed(const Duration(seconds: 1));
+                      controller.reset(); //resets the slider
                     },
                   ),
+                  // child: SlideAction(
+                  //   key: _key,
+                  //   sliderButtonYOffset: 0,
+                  //   text: 'SWIPE TO BUY',
+                  //   textStyle:
+                  //   const TextStyle(fontSize: 14, color: Colors.white),
+                  //   outerColor: pageThemeColor,
+                  //   innerColor: const Color(0xffffffff),
+                  //   sliderButtonIconPadding: 11,
+                  //   sliderRotate: false,
+                  //   height: 65,
+                  //   sliderButtonIcon: Icon(
+                  //     Icons.chevron_right_rounded,
+                  //     size: 36,
+                  //     color: pageThemeColor,
+                  //   ),
+                  //   onSubmit: () async {
+                  //     await Future.delayed(
+                  //       const Duration(seconds: 1),
+                  //           () => _key.currentState!.reset(),
+                  //     );
+                  //     Order order = Order(
+                  //       cryptoName: widget.cryptoName,
+                  //       price: myPriceController.text,
+                  //       amount: myAmountController.text,
+                  //       type: "Market",
+                  //       total: total,
+                  //       orderSide: widget.orderSide,
+                  //       orderTime: DateTime.now().toIso8601String(),
+                  //     );
+                  //     order.addOrder(order);
+                  //   },
+                  // ),
                 ),
               ],
             ),
@@ -539,6 +565,19 @@ class _OrderPageState extends State<OrderPage> {
         ],
       ),
     );
+  }
+
+  void orderConfirmed(){
+        Order order = Order(
+          cryptoName: widget.cryptoName,
+          price: myPriceController.text,
+          amount: myAmountController.text,
+          type: "Market",
+          total: total,
+          orderSide: widget.orderSide,
+          orderTime: DateTime.now().toIso8601String(),
+        );
+        order.addOrder(order);
   }
 
   void buttonSelect(int index, List<bool> isSelected) {
