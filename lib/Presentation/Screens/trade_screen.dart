@@ -479,9 +479,7 @@ class _OrderPageState extends State<OrderPage> {
                             ),
                             Icon(
                               Icons.account_balance_wallet_rounded,
-                              color: Color(
-                                0xb773787f,
-                              ),
+                              color: Color(0xb773787f),
                               size: 15,
                             ),
                           ],
