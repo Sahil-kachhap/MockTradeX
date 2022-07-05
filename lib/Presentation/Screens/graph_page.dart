@@ -11,9 +11,11 @@ import 'package:mock_tradex/constants.dart';
 import 'package:mock_tradex/Data/Repositories/graph_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:mock_tradex/Presentation/Widgets/buysell_box.dart' show BuySellBox;
+import 'package:mock_tradex/Presentation/Widgets/buysell_box.dart'
+    show BuySellBox;
 import '../../Data/Data_Provider/binance_current.dart';
 import 'dart:async';
+
 bool notificationIsSelected = false;
 
 bool isFavorite = false;
@@ -33,7 +35,8 @@ class GraphPage extends StatefulWidget {
   const GraphPage({
     Key? key,
     this.cryptoSymbol,
-    this.cryptoName,this.tradePair,
+    this.cryptoName,
+    this.tradePair,
     this.cryptoPrice,
     this.priceChange,
     this.high_24h,
@@ -45,33 +48,29 @@ class GraphPage extends StatefulWidget {
 
   @override
   _GraphPageState createState() => _GraphPageState();
-
 }
 
 class _GraphPageState extends State<GraphPage>
     with AutomaticKeepAliveClientMixin {
-  double currentPrice=0;
-  StreamController<double> _streamController=StreamController();
+  double currentPrice = 0;
+  StreamController<double> _streamController = StreamController();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final Favorites _favorites = Favorites();
-
 
   Timer? timer;
 
   @override
   void initState() {
     super.initState();
-    
-    currentPrice=double.tryParse(widget.cryptoPrice!)!;
+
+    currentPrice = double.tryParse(widget.cryptoPrice!)!;
     timer = Timer.periodic(Duration(seconds: 2), (Timer t) {
-        priceUpdate();
-
+      priceUpdate();
     });
-
   }
-  Future<void> priceUpdate()
-  async{
-     _streamController.sink.add(await getLatestPrice(widget.tradePair!));
+
+  Future<void> priceUpdate() async {
+    _streamController.sink.add(await getLatestPrice(widget.tradePair!));
   }
 
   @override
@@ -80,6 +79,7 @@ class _GraphPageState extends State<GraphPage>
     timer?.cancel();
     super.dispose();
   }
+
   _demoFunc() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool(widget.cryptoName!, true);
@@ -163,45 +163,42 @@ class _GraphPageState extends State<GraphPage>
                         Icons.star_rounded,
                         color: Color(0xffe6b10b),
                         size: 25,
-                    )
+                      )
                     : const Icon(
                         Icons.star_outline_rounded,
                         color: Color(0xFF596777),
                         size: 25,
                       ),
                 onPressed: () {
-              //    Favorites _favorites = Favorites();
-               //   CryptoCoin currency = CryptoCoin(
-                 //     widget.cryptoSymbol,
-                   //   widget.cryptoName,
-                     // widget.cryptoPrice,
-                      //widget.priceChange);
-               //   print(currency);
+                  //    Favorites _favorites = Favorites();
+                  //   CryptoCoin currency = CryptoCoin(
+                  //     widget.cryptoSymbol,
+                  //   widget.cryptoName,
+                  // widget.cryptoPrice,
+                  //widget.priceChange);
+                  //   print(currency);
                   setState(() {
                     // m.update(widget.cryptoName!, (value) => true);
                     isFavorite = !isFavorite;
                   });
                   isFavorite
-                      ?  const Icon(
-                    Icons.star_rounded,
-                    color: Color(0xffe6b10b),
-                    size: 26,
-                  )
-                      :
-
-                  const Icon(
-                    Icons.star_outline_rounded,
-                    color: Color(0xFF596777),
-                    size: 25,
-                  );
+                      ? const Icon(
+                          Icons.star_rounded,
+                          color: Color(0xffe6b10b),
+                          size: 26,
+                        )
+                      : const Icon(
+                          Icons.star_outline_rounded,
+                          color: Color(0xFF596777),
+                          size: 25,
+                        );
 
                   if (isFavorite) {
-                   // CryptoFavorites _cryptoFav = CryptoFavorites(
-                      //  cryptoName: widget.cryptoName,
-                        //price: widget.cryptoPrice,
-                        //priceChange: widget.priceChange);
+                    // CryptoFavorites _cryptoFav = CryptoFavorites(
+                    //  cryptoName: widget.cryptoName,
+                    //price: widget.cryptoPrice,
+                    //priceChange: widget.priceChange);
                     _demoFunc();
-
 
                     _firestore.collection('favourite').add({
                       'cryptoName': widget.cryptoName,
@@ -220,12 +217,10 @@ class _GraphPageState extends State<GraphPage>
                     sy?.add(widget.cryptoSymbol!);
                     pr?.add(widget.priceChange!);
                     price?.add(widget.cryptoPrice!);
-                   // image?.add(widget.imageurl!);
-
+                    // image?.add(widget.imageurl!);
 
                   } else {
-
-                     _demoDelete();
+                    _demoDelete();
                     FirebaseFirestore.instance
                         .collection("favourite")
                         .where("cryptoName", isEqualTo: widget.cryptoName)
@@ -244,10 +239,9 @@ class _GraphPageState extends State<GraphPage>
                     pr?.remove(widget.priceChange);
                     price?.remove(widget.cryptoPrice);
 
-
                     // code not written for removing
                   }
-                 // print(sy);
+                  // print(sy);
                 },
               ),
             ),
@@ -258,7 +252,7 @@ class _GraphPageState extends State<GraphPage>
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5),
-            child: Container(
+            child: SizedBox(
               width: double.infinity,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -271,18 +265,17 @@ class _GraphPageState extends State<GraphPage>
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             StreamBuilder(
-                              initialData: currentPrice,
-                              stream:_streamController.stream,
-                              builder: (context, snapshot) {
-                                return  Text(
-                                  '${snapshot.data}',
-                                  style: const TextStyle(
-                                      color: kTickerWhite,
-                                      fontSize: 34,
-                                      fontWeight: FontWeight.w500),
-                                );
-                              }
-                            ),
+                                initialData: currentPrice,
+                                stream: _streamController.stream,
+                                builder: (context, snapshot) {
+                                  return Text(
+                                    '${snapshot.data}',
+                                    style: const TextStyle(
+                                        color: kTickerWhite,
+                                        fontSize: 34,
+                                        fontWeight: FontWeight.w500),
+                                  );
+                                }),
                             Row(
                               children: [
                                 Text(
@@ -376,7 +369,7 @@ class _GraphPageState extends State<GraphPage>
               cryptoSymbol: widget.cryptoSymbol,
             ),
           ),
-          Container(
+          SizedBox(
             height: 60,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -409,13 +402,14 @@ class _GraphPageState extends State<GraphPage>
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children:  [
+                  children: [
                     GestureDetector(
                       onTap: () async {
                         await Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => OrderPage(
+                              cryptoName: widget.cryptoName,
                               orderSide: 'BUY',
                               tradePair: widget.tradePair,
                             ),
@@ -427,7 +421,7 @@ class _GraphPageState extends State<GraphPage>
                         boxColor: kBuyButtonGreen,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     GestureDetector(
@@ -436,18 +430,19 @@ class _GraphPageState extends State<GraphPage>
                           (context),
                           MaterialPageRoute(
                             builder: (context) => OrderPage(
+                              cryptoName: widget.cryptoName,
                               orderSide: 'SELL',
                               tradePair: widget.tradePair,
                             ),
                           ),
                         );
                       },
-                      child: BuySellBox(
+                      child: const BuySellBox(
                         boxText: 'SELL',
                         boxColor: kSellButtonRed,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
                   ],

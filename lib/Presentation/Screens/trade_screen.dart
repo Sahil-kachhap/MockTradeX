@@ -10,21 +10,21 @@ import 'package:mock_tradex/Data/Models/socketResponse.dart';
 import 'package:mock_tradex/constants.dart';
 import '/Presentation/Widgets/slide_act.dart';
 
-List<bool> orderSelected = [false,true,  false, false];
+List<bool> orderSelected = [false, true, false, false];
 List<bool> percentSelected = [false, false, false, false];
 BinanceSocket? binanceSocket;
 BinanceOrderBook? orderBook;
 StreamController<BinanceOrderBook> _streamController =
     StreamController<BinanceOrderBook>();
-Stream<BinanceOrderBook> stream=_streamController.stream;
-
-
+Stream<BinanceOrderBook> stream = _streamController.stream;
 
 class OrderPage extends StatefulWidget {
+  final String? cryptoName;
   final String? orderSide;
   final String? tradePair;
 
-  OrderPage({Key? key, this.orderSide, this.tradePair}) : super(key: key);
+  const OrderPage({Key? key, this.orderSide, this.tradePair, this.cryptoName})
+      : super(key: key);
 
   @override
   _OrderPageState createState() => _OrderPageState();
@@ -33,34 +33,36 @@ class OrderPage extends StatefulWidget {
 class _OrderPageState extends State<OrderPage> {
   Color? pageThemeColor;
   Timer? timer;
-  double currPrice=0;
-  @override
-  void initState() {
-    super.initState();
-    binanceSocket = BinanceSocket(symbol: widget.tradePair);
-    stream= binanceSocket!.getOrders( widget.tradePair!);
-
-    timer = Timer.periodic(Duration(seconds: 1), (Timer t) async{
-      currPrice=await priceUpdate();
-      myPriceController.text='${currPrice.toStringAsPrecision(5)}';
-
-      setState(() {
-        total = amount * double.tryParse(myPriceController.text)!;
-      });
-    });
-    pageThemeColor = widget.orderSide == 'BUY' ? Color(0xff286bdb) : Color(0xffef4006);
-  }
-  Future<double> priceUpdate()
-  async{
-    return getLatestPrice(widget.tradePair!);
-  }
-
-  @override
+  double currPrice = 0;
   double price = 0;
   double amount = 0;
   double total = 0;
   final myPriceController = TextEditingController();
   final myAmountController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    binanceSocket = BinanceSocket(symbol: widget.tradePair);
+    stream = binanceSocket!.getOrders(widget.tradePair!);
+
+    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) async {
+      currPrice = await priceUpdate();
+      myPriceController.text = '${currPrice.toStringAsPrecision(5)}';
+
+      setState(() {
+        total = amount * double.tryParse(myPriceController.text)!;
+      });
+    });
+    pageThemeColor =
+        widget.orderSide == 'BUY' ? Color(0xff286bdb) : Color(0xffef4006);
+  }
+
+  Future<double> priceUpdate() async {
+    return getLatestPrice(widget.tradePair!);
+  }
+
+  @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
     myPriceController.dispose();
@@ -71,6 +73,7 @@ class _OrderPageState extends State<OrderPage> {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     final GlobalKey<SlideActionState> _key = GlobalKey();
     return Scaffold(
@@ -92,9 +95,9 @@ class _OrderPageState extends State<OrderPage> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15.0, vertical: 15),
                     child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 5, vertical: 12),
-                      decoration: BoxDecoration(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 12),
+                      decoration: const BoxDecoration(
                         color: kTradeScreenGreyBoxColor,
                         borderRadius: BorderRadius.all(Radius.circular(5)),
                       ),
@@ -137,7 +140,7 @@ class _OrderPageState extends State<OrderPage> {
                                         color: kTickerWhite,
                                       ),
                                       keyboardType:
-                                          TextInputType.numberWithOptions(
+                                          const TextInputType.numberWithOptions(
                                               decimal: true),
                                       inputFormatters: [
                                         LengthLimitingTextInputFormatter(12),
@@ -207,7 +210,7 @@ class _OrderPageState extends State<OrderPage> {
                                           setState(
                                             () {
                                               amount = double.parse(val);
-
+                                              total = amount * price;
                                             },
                                           );
                                         }
@@ -271,7 +274,7 @@ class _OrderPageState extends State<OrderPage> {
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
+                          children: const [
                             Text(
                               'Order Book',
                               style: TextStyle(
@@ -280,112 +283,69 @@ class _OrderPageState extends State<OrderPage> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Container(
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Bid',
-                                          style: TextStyle(
-                                            color: Color(0xb773787f),
-                                          ),
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: const [
+                                      Text(
+                                        'Bid',
+                                        style: TextStyle(
+                                          color: Color(0xb773787f),
                                         ),
-                                        Text(
-                                          'Qty',
-                                          style: TextStyle(
-                                            color: Color(0xb773787f),
-                                          ),
+                                      ),
+                                      Text(
+                                        'Qty',
+                                        style: TextStyle(
+                                          color: Color(0xb773787f),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Ask',
-                                          style: TextStyle(
-                                            color: Color(0xb773787f),
-                                          ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: const [
+                                      Text(
+                                        'Ask',
+                                        style: TextStyle(
+                                          color: Color(0xb773787f),
                                         ),
-                                        Text(
-                                          'Qty',
-                                          style: TextStyle(
-                                            color: Color(0xb773787f),
-                                          ),
+                                      ),
+                                      Text(
+                                        'Qty',
+                                        style: TextStyle(
+                                          color: Color(0xb773787f),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              OrderRows(
-                                symbol: widget.tradePair,
-                              )
-                            ],
-                          ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            OrderRows(
+                              symbol: widget.tradePair,
+                            )
+                          ],
                         ),
                       ],
                     ),
                   ),
-
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(
-                  //       horizontal: 20.0, vertical: 10),
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.end,
-                  //     children: [
-                  //       ToggleButtons(
-                  //         onPressed: (int index) {
-                  //           setState(() {
-                  //             for (int buttonIndex = 0;
-                  //                 buttonIndex < percentSelected.length;
-                  //                 buttonIndex++) {
-                  //               if (buttonIndex == index) {
-                  //                 percentSelected[buttonIndex] =
-                  //                     !percentSelected[buttonIndex];
-                  //               } else {
-                  //                 percentSelected[buttonIndex] = false;
-                  //               }
-                  //             }
-                  //           });
-                  //         },
-                  //         children: [
-                  //           Text('25%'),
-                  //           Text('50%'),
-                  //           Text('75%'),
-                  //           Text('100%')
-                  //         ],
-                  //         textStyle: TextStyle(
-                  //           fontSize: kToggleBoxOrderPercentFontSize,
-                  //         ),
-                  //         borderRadius: BorderRadius.all(Radius.circular(5)),
-                  //         selectedBorderColor: pageThemeColor,
-                  //         isSelected: percentSelected,
-                  //         color: Color(0xffd9d9d7),
-                  //         selectedColor: pageThemeColor,
-                  //         fillColor: Colors.black,
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20.0, vertical: 10),
@@ -393,7 +353,7 @@ class _OrderPageState extends State<OrderPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Type',
                           style: TextStyle(
                             color: Color(0xfffeffff),
@@ -408,11 +368,7 @@ class _OrderPageState extends State<OrderPage> {
                                 .spaceBetween, //setstate problem
                             children: [
                               GestureDetector(
-                                onTap: () {
-                                  // setState(() {
-                                  //  buttonSelect(0, orderSelected);
-                                  // });
-                                },
+                                onTap: () {},
                                 child: ToggleContainer(
                                   text: 'Limit',
                                   index: 0,
@@ -421,11 +377,7 @@ class _OrderPageState extends State<OrderPage> {
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () {
-                                  // setState(() {
-                                  //   buttonSelect(1, orderSelected);
-                                  // });
-                                },
+                                onTap: () {},
                                 child: ToggleContainer(
                                   text: 'Market',
                                   index: 1,
@@ -447,11 +399,7 @@ class _OrderPageState extends State<OrderPage> {
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () {
-                                  // setState(() {
-                                  //   buttonSelect(3, orderSelected);
-                                  // });
-                                },
+                                onTap: () {},
                                 child: ToggleContainer(
                                   text: 'SL-M',
                                   index: 3,
@@ -472,7 +420,7 @@ class _OrderPageState extends State<OrderPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           'Total',
                           style: TextStyle(
                             color: Color(0xfffeffff),
@@ -484,11 +432,11 @@ class _OrderPageState extends State<OrderPage> {
                           padding: const EdgeInsets.symmetric(vertical: 20.0),
                           child: Container(
                             width: double.infinity,
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 12),
                             child: Text(
                               '${total.truncateToDouble()}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 20,
                                 color: kTickerWhite,
                               ),
@@ -496,55 +444,13 @@ class _OrderPageState extends State<OrderPage> {
                             decoration: BoxDecoration(
                               color: Colors.black,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(4)),
+                                  const BorderRadius.all(Radius.circular(4)),
                               border: Border.all(
                                   color:
                                       kTradeScreenGreyBoxColorTextFieldBorder),
                             ),
                           ),
                         ),
-                        /*
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 15),
-                      child: TextFormField(
-                        focusNode: ,
-                        enabled: false,
-                        textAlignVertical: TextAlignVertical.center,
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: kTickerWhite,
-                        ),
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                        cursorColor: Color(0xff2196f4),
-                        cursorWidth: 2,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10),
-                          isCollapsed: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(6)),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kTradeScreenGreyBoxColorTextFieldBorder,
-                                width: 1),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kTradeScreenGreyBoxColorTextFieldBorder,
-                                width: 1),
-                          ),
-                          hintText: '0',
-                          hintStyle: TextStyle(
-                            fontSize: 20,
-                            color: kHintTextColor,
-                          ),
-                        ),
-                      ),
-                    )*/
                       ],
                     ),
                   ),
@@ -557,7 +463,7 @@ class _OrderPageState extends State<OrderPage> {
             child: Column(
               children: [
                 Container(
-                  color: Color(0xcd13161b),
+                  color: const Color(0xcd13161b),
                   child: Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
@@ -566,7 +472,7 @@ class _OrderPageState extends State<OrderPage> {
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
+                          children: const [
                             Text(
                               'Available USD ',
                               style: TextStyle(color: Color(0xb773787f)),
@@ -580,7 +486,7 @@ class _OrderPageState extends State<OrderPage> {
                             ),
                           ],
                         ),
-                        Text(
+                        const Text(
                           '\$99999999',
                           style: TextStyle(color: Color(0xffeaecf0)),
                         ),
@@ -588,7 +494,7 @@ class _OrderPageState extends State<OrderPage> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 Padding(
@@ -597,9 +503,10 @@ class _OrderPageState extends State<OrderPage> {
                     key: _key,
                     sliderButtonYOffset: 0,
                     text: 'SWIPE TO BUY',
-                    textStyle: TextStyle(fontSize: 14, color: Colors.white),
+                    textStyle:
+                        const TextStyle(fontSize: 14, color: Colors.white),
                     outerColor: pageThemeColor,
-                    innerColor: Color(0xffffffff),
+                    innerColor: const Color(0xffffffff),
                     sliderButtonIconPadding: 11,
                     sliderRotate: false,
                     height: 65,
@@ -608,17 +515,20 @@ class _OrderPageState extends State<OrderPage> {
                       size: 36,
                       color: pageThemeColor,
                     ),
-                    onSubmit: () {
-                      Future.delayed(
-                        Duration(seconds: 1),
+                    onSubmit: () async {
+                      await Future.delayed(
+                        const Duration(seconds: 1),
                         () => _key.currentState!.reset(),
                       );
                       Order order = Order(
-                          cryptoName: "BitCoin",
-                          price: myPriceController.text,
-                          amount: myAmountController.text,
-                          type: OrderType.limitOrder,
-                          total: total);
+                        cryptoName: widget.cryptoName,
+                        price: myPriceController.text,
+                        amount: myAmountController.text,
+                        type: "Market",
+                        total: total,
+                        orderSide: widget.orderSide,
+                        orderTime: DateTime.now().toIso8601String(),
+                      );
                       order.addOrder(order);
                     },
                   ),
@@ -629,10 +539,6 @@ class _OrderPageState extends State<OrderPage> {
         ],
       ),
     );
-  }
-
-  void orderConfirmed() {
-    print('ok');
   }
 
   void buttonSelect(int index, List<bool> isSelected) {
@@ -665,89 +571,75 @@ class _OrderRowsState extends State<OrderRows> {
   @override
   void dispose() {
     super.dispose();
-
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Container(
-        child: StreamBuilder<BinanceOrderBook>(
-            // initialData:orderbook ,
-           // stream: binanceSocket!.getOrders(widget.symbol!),
-          stream: stream,
-            builder: (context, snapshot) {
-              return ListView.builder(
-                  physics: ClampingScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    // return Text(
-                    //   '${snapshot.connectionState==ConnectionState.active?'${snapshot.data!.ask![index]}':'tryi'}',
-                    //   style: TextStyle(
-                    //     color: Colors.white,
-                    //   ),
-                    // );
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 20,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  '${snapshot.connectionState == ConnectionState.active ? '${double.tryParse(snapshot.data!.bid![index])!.toStringAsPrecision(7)}' : '0.0'}',
-                                  style: TextStyle(
-                                    color: Color(0xff286bdb),
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                Text(
-                                  '${snapshot.connectionState == ConnectionState.active ? '${double.tryParse(snapshot.data!.bidQuantity![index])!.toStringAsPrecision(5)}' : '0.0'}',
-                                  style: TextStyle(
-                                    color: Color(0xff286bdb),
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ],
+    return StreamBuilder<BinanceOrderBook>(
+        stream: stream,
+        builder: (context, snapshot) {
+          return ListView.builder(
+              physics: const ClampingScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                return SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 20,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '${snapshot.connectionState == ConnectionState.active ? '${double.tryParse(snapshot.data!.bid![index])!.toStringAsPrecision(7)}' : '0.0'}',
+                              style: const TextStyle(
+                                color: Color(0xff286bdb),
+                                fontSize: 12,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  '${snapshot.connectionState == ConnectionState.active ? '${double.tryParse(snapshot.data!.ask![index])!.toStringAsPrecision(7)}' : '0.0'}',
-                                  style: TextStyle(
-                                    color: Color(0xffef4006),
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                Text(
-                                  '${snapshot.connectionState == ConnectionState.active ? '${double.tryParse(snapshot.data!.askQuantity![index])!.toStringAsPrecision(5)}' : '0.0'}',
-
-                                  style: TextStyle(
-                                    color: Color(0xffef4006),
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ],
+                            Text(
+                              '${snapshot.connectionState == ConnectionState.active ? '${double.tryParse(snapshot.data!.bidQuantity![index])!.toStringAsPrecision(5)}' : '0.0'}',
+                              style: const TextStyle(
+                                color: Color(0xff286bdb),
+                                fontSize: 12,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    );
-                  });
-            }),
-      ),
-    );
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '${snapshot.connectionState == ConnectionState.active ? '${double.tryParse(snapshot.data!.ask![index])!.toStringAsPrecision(7)}' : '0.0'}',
+                              style: const TextStyle(
+                                color: Color(0xffef4006),
+                                fontSize: 12,
+                              ),
+                            ),
+                            Text(
+                              '${snapshot.connectionState == ConnectionState.active ? '${double.tryParse(snapshot.data!.askQuantity![index])!.toStringAsPrecision(5)}' : '0.0'}',
+                              style: const TextStyle(
+                                color: Color(0xffef4006),
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              });
+        });
   }
 }
 
@@ -768,24 +660,25 @@ class _ToggleContainerState extends State<ToggleContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       child: Text(
         '${widget.text}',
         style: TextStyle(
           color: orderSelected[widget.index!]
               ? widget.colorTheme!
-              : Color(0xffd9d9d7),
+              : const Color(0xffd9d9d7),
           fontSize: widget.fontSize,
         ),
       ),
       decoration: BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.all(Radius.circular(3)),
-          border: Border.all(
-            color: orderSelected[widget.index!]
-                ? widget.colorTheme!
-                : Color(0xff1f1f1f),
-          )),
+        color: Colors.black,
+        borderRadius: const BorderRadius.all(Radius.circular(3)),
+        border: Border.all(
+          color: orderSelected[widget.index!]
+              ? widget.colorTheme!
+              : const Color(0xff1f1f1f),
+        ),
+      ),
     );
   }
 }

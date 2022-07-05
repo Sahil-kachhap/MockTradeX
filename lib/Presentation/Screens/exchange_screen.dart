@@ -170,7 +170,7 @@ Widget _buildCryptoTiles(List<Crypto>? cryptos) {
 
   void _onRefresh() async {
     // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
   }
@@ -185,7 +185,7 @@ Widget _buildCryptoTiles(List<Crypto>? cryptos) {
   return SmartRefresher(
     enablePullDown: true,
     controller: _refreshController,
-    header: MaterialClassicHeader(
+    header: const MaterialClassicHeader(
       color: Color(0xff056cf3),
       backgroundColor: Color(0xff0a1628),
     ),
