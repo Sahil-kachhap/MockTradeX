@@ -8,14 +8,15 @@ import 'package:mock_tradex/Data/Data_Provider/binance_socket.dart';
 import 'package:mock_tradex/Data/Models/orders.dart';
 import 'package:mock_tradex/Data/Models/socketResponse.dart';
 import 'package:mock_tradex/constants.dart';
-import '/Presentation/Widgets/slide_act.dart';
+
+import 'package:action_slider/action_slider.dart';
 
 List<bool> orderSelected = [false, true, false, false];
 List<bool> percentSelected = [false, false, false, false];
 BinanceSocket? binanceSocket;
 BinanceOrderBook? orderBook;
 StreamController<BinanceOrderBook> _streamController =
-    StreamController<BinanceOrderBook>();
+StreamController<BinanceOrderBook>();
 Stream<BinanceOrderBook> stream = _streamController.stream;
 
 class OrderPage extends StatefulWidget {
@@ -55,7 +56,7 @@ class _OrderPageState extends State<OrderPage> {
       });
     });
     pageThemeColor =
-        widget.orderSide == 'BUY' ? Color(0xff286bdb) : Color(0xffef4006);
+    widget.orderSide == 'BUY' ? Color(0xff286bdb) : Color(0xffef4006);
   }
 
   Future<double> priceUpdate() async {
@@ -75,7 +76,7 @@ class _OrderPageState extends State<OrderPage> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<SlideActionState> _key = GlobalKey();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -133,15 +134,15 @@ class _OrderPageState extends State<OrderPage> {
                                       }),
                                       controller: myPriceController,
                                       textAlignVertical:
-                                          TextAlignVertical.center,
+                                      TextAlignVertical.center,
                                       textAlign: TextAlign.start,
                                       style: const TextStyle(
                                         fontSize: 20,
                                         color: kTickerWhite,
                                       ),
                                       keyboardType:
-                                          const TextInputType.numberWithOptions(
-                                              decimal: true),
+                                      const TextInputType.numberWithOptions(
+                                          decimal: true),
                                       inputFormatters: [
                                         LengthLimitingTextInputFormatter(12),
                                         //max length of 12 characters
@@ -161,13 +162,13 @@ class _OrderPageState extends State<OrderPage> {
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color:
-                                                  kTradeScreenGreyBoxColorTextFieldBorder,
+                                              kTradeScreenGreyBoxColorTextFieldBorder,
                                               width: 1),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color:
-                                                  kTradeScreenGreyBoxColorTextFieldBorder,
+                                              kTradeScreenGreyBoxColorTextFieldBorder,
                                               width: 1),
                                         ),
                                         hintText: '0',
@@ -208,7 +209,7 @@ class _OrderPageState extends State<OrderPage> {
                                       onChanged: ((val) {
                                         if (double.tryParse(val) != null) {
                                           setState(
-                                            () {
+                                                () {
                                               amount = double.parse(val);
                                               total = amount * price;
                                             },
@@ -216,7 +217,7 @@ class _OrderPageState extends State<OrderPage> {
                                         }
                                       }),
                                       textAlignVertical:
-                                          TextAlignVertical.center,
+                                      TextAlignVertical.center,
                                       textAlign: TextAlign.start,
                                       style: const TextStyle(
                                         fontSize: 20,
@@ -242,13 +243,13 @@ class _OrderPageState extends State<OrderPage> {
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color:
-                                                  kTradeScreenGreyBoxColorTextFieldBorder,
+                                              kTradeScreenGreyBoxColorTextFieldBorder,
                                               width: 1),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color:
-                                                  kTradeScreenGreyBoxColorTextFieldBorder,
+                                              kTradeScreenGreyBoxColorTextFieldBorder,
                                               width: 1),
                                         ),
                                         hintText: '0',
@@ -293,7 +294,7 @@ class _OrderPageState extends State<OrderPage> {
                                 Expanded(
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: const [
                                       Text(
                                         'Bid',
@@ -316,7 +317,7 @@ class _OrderPageState extends State<OrderPage> {
                                 Expanded(
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: const [
                                       Text(
                                         'Ask',
@@ -444,10 +445,10 @@ class _OrderPageState extends State<OrderPage> {
                             decoration: BoxDecoration(
                               color: Colors.black,
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(4)),
+                              const BorderRadius.all(Radius.circular(4)),
                               border: Border.all(
                                   color:
-                                      kTradeScreenGreyBoxColorTextFieldBorder),
+                                  kTradeScreenGreyBoxColorTextFieldBorder),
                             ),
                           ),
                         ),
@@ -466,7 +467,7 @@ class _OrderPageState extends State<OrderPage> {
                   color: const Color(0xcd13161b),
                   child: Padding(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -497,39 +498,64 @@ class _OrderPageState extends State<OrderPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: SlideAction(
-                    key: _key,
-                    sliderButtonYOffset: 0,
-                    text: 'SWIPE TO BUY',
-                    textStyle:
-                        const TextStyle(fontSize: 14, color: Colors.white),
-                    outerColor: pageThemeColor,
-                    innerColor: const Color(0xffffffff),
-                    sliderButtonIconPadding: 11,
-                    sliderRotate: false,
-                    height: 65,
-                    sliderButtonIcon: Icon(
-                      Icons.chevron_right_rounded,
-                      size: 36,
-                      color: pageThemeColor,
-                    ),
-                    onSubmit: () async {
-                      await Future.delayed(
-                        const Duration(seconds: 1),
-                        () => _key.currentState!.reset(),
-                      );
-                      Order order = Order(
-                        cryptoName: widget.cryptoName,
-                        price: myPriceController.text,
-                        amount: myAmountController.text,
-                        type: "Market",
-                        total: total,
-                        orderSide: widget.orderSide,
-                        orderTime: DateTime.now().toIso8601String(),
-                      );
-                      order.addOrder(order);
+                  child:  ActionSlider.standard(
+                    backgroundColor: pageThemeColor,
+                    toggleColor: const Color(0xffffffff),
+                    width: 240.0,
+                    height: 70.0,
+                    slideAnimationCurve: Curves.easeOutExpo,
+                    slideAnimationDuration: Duration(milliseconds: 200),
+                    reverseSlideAnimationCurve: Curves.easeOutExpo,
+                    reverseSlideAnimationDuration: Duration(milliseconds: 200),
+                    actionThresholdType: ThresholdType.release,
+                    child: const Text('SWIPE TO BUY'),
+                    onSlide: (controller) async {
+                      controller.loading(); //starts loading animation
+                      await Future.delayed(const Duration(seconds: 1));
+                      if(true) {
+                        orderConfirmed();
+                        controller.success(); //starts success animation
+                      }
+                      else {
+                        controller.failure();
+                      }
+                      await Future.delayed(const Duration(seconds: 1));
+                      controller.reset(); //resets the slider
                     },
                   ),
+                  // child: SlideAction(
+                  //   key: _key,
+                  //   sliderButtonYOffset: 0,
+                  //   text: 'SWIPE TO BUY',
+                  //   textStyle:
+                  //   const TextStyle(fontSize: 14, color: Colors.white),
+                  //   outerColor: pageThemeColor,
+                  //   innerColor: const Color(0xffffffff),
+                  //   sliderButtonIconPadding: 11,
+                  //   sliderRotate: false,
+                  //   height: 65,
+                  //   sliderButtonIcon: Icon(
+                  //     Icons.chevron_right_rounded,
+                  //     size: 36,
+                  //     color: pageThemeColor,
+                  //   ),
+                  //   onSubmit: () async {
+                  //     await Future.delayed(
+                  //       const Duration(seconds: 1),
+                  //           () => _key.currentState!.reset(),
+                  //     );
+                  //     Order order = Order(
+                  //       cryptoName: widget.cryptoName,
+                  //       price: myPriceController.text,
+                  //       amount: myAmountController.text,
+                  //       type: "Market",
+                  //       total: total,
+                  //       orderSide: widget.orderSide,
+                  //       orderTime: DateTime.now().toIso8601String(),
+                  //     );
+                  //     order.addOrder(order);
+                  //   },
+                  // ),
                 ),
               ],
             ),
@@ -539,10 +565,23 @@ class _OrderPageState extends State<OrderPage> {
     );
   }
 
+  void orderConfirmed(){
+        Order order = Order(
+          cryptoName: widget.cryptoName,
+          price: myPriceController.text,
+          amount: myAmountController.text,
+          type: "Market",
+          total: total,
+          orderSide: widget.orderSide,
+          orderTime: DateTime.now().toIso8601String(),
+        );
+        order.addOrder(order);
+  }
+
   void buttonSelect(int index, List<bool> isSelected) {
     for (int buttonIndex = 0;
-        buttonIndex < orderSelected.length;
-        buttonIndex++) {
+    buttonIndex < orderSelected.length;
+    buttonIndex++) {
       if (buttonIndex == index) {
         orderSelected[buttonIndex] = true;
       } else {
