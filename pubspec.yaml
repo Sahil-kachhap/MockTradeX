@@ -54,6 +54,8 @@ dependencies:
   modal_bottom_sheet: ^2.0.1
   flutter_svg: ^1.0.3
   web_socket_channel: ^2.1.0
+  share_plus: ^4.0.10
+  path_provider: ^2.0.11
 
 
 

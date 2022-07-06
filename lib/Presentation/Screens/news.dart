@@ -108,6 +108,9 @@ class _NEWSPageState extends State<NEWSPage>  with AutomaticKeepAliveClientMixin
                               title: articles[index].title,
                               description: articles[index].description,
                               url: articles[index].url,
+                              author: articles[index].author,
+                              publishedAt: articles[index].publishedAt,
+                              name: articles[index].name,
                             );
                           }),
                     ),

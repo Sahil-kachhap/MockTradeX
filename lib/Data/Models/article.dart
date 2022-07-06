@@ -5,9 +5,10 @@ class ArticleModel{
   String? url;
   String? urlToImage;
   String? content;
- // String? publishedAt;
+  DateTime? publishedAt;
+  String? name;
 
 
   ArticleModel({this.author, this.title, this.description, this.url,
-      this.urlToImage, this.content});
+      this.urlToImage, this.content,this.publishedAt,this.name});
 }

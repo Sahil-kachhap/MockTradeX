@@ -67,6 +67,9 @@ class _CategoryNewsState extends State<CategoryNews> {
                             title: articles[index].title,
                             description: articles[index].description,
                             url: articles[index].url,
+                            author: articles[index].author,
+                            name: articles[index].name,
+                            publishedAt: articles[index].publishedAt,
                           );
                         }),
                   ),
