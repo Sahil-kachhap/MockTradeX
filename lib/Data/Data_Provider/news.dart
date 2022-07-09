@@ -24,6 +24,8 @@ class News{
               author: article['author'],
               content: article['content'],
               url: article['url'],
+              publishedAt: DateTime.parse(article['publishedAt']),
+              name: article['source']['name'],
               //publishedAt: article['publishedAt'],
 
             );
@@ -62,7 +64,8 @@ class NewsForCategory{
             author: article['author'],
             content: article['content'],
             url: article['url'],
-            //publishedAt: article['publishedAt'],
+            publishedAt: DateTime.parse(article['publishedAt']),
+            name: article['source']['name'],
 
           );
           news.add(articleModel);

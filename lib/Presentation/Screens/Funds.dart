@@ -138,7 +138,7 @@ class _FundsState extends State<Funds> {
                     SizedBox(
                       width: 5,
                     ),
-                    Text('Total Assets in INR',
+                    Text('Wallet Balance',
                         style: kTickerTextStyle.copyWith(fontSize: 16)),
                   ],
                 ),
