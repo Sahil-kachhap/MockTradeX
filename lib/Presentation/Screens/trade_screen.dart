@@ -8,7 +8,6 @@ import 'package:mock_tradex/Data/Data_Provider/binance_socket.dart';
 import 'package:mock_tradex/Data/Models/orders.dart';
 import 'package:mock_tradex/Data/Models/socketResponse.dart';
 import 'package:mock_tradex/constants.dart';
-
 import 'package:action_slider/action_slider.dart';
 
 List<bool> orderSelected = [false, true, false, false];
