@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mock_tradex/Data/Repositories/auth_repository.dart';
 
 part 'auth_event.dart';
@@ -14,13 +16,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         await authRepository.SignIn(
             email: event.email, password: event.password);
-        emit(Authenticated());
+        dynamic balance = await FirebaseFirestore.instance.collection('Users').doc(FirebaseAuth.instance.currentUser!.uid).get().then((value) => value.data()!['wallet_balance']);
+        emit(Authenticated(balance: balance),);
       } catch (e) {
         emit(AuthError(e.toString()));
         emit(UnAuthenticated());
       }
     });
-
     on<SignUpRequested>((event, emit) async {
       emit(Loading());
       try {

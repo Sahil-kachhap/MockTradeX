@@ -8,36 +8,38 @@ import 'orders_screen.dart';
 import 'news.dart';
 
 class Frontpage extends StatefulWidget {
-
-  const Frontpage({Key? key}) : super(key: key);
+  final dynamic balance;
+  const Frontpage({Key? key, this.balance}) : super(key: key);
   @override
   _FrontpageState createState() => _FrontpageState();
 }
 
 class _FrontpageState extends State<Frontpage> {
- 
   int _selectedIndex = 0;
   PageController? _pageController;
 
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    NEWSPage(),
-    Quickbuy(),
-    ExchangeScreen(),
-    OrderScreen(),
-    Funds(),
-  ];
+  // List<Widget> _widgetOptions = <Widget>[
+  //   NEWSPage(),
+  //   Quickbuy(),
+  //   ExchangeScreen(),
+  //   OrderScreen(),
+  //   Funds(),
+  // ];
 
   @override
   void initState() {
+    _pageController = PageController(
+      initialPage: _selectedIndex,
+    );
+    // fun.method();
 
-    _pageController = PageController(initialPage: _selectedIndex,);
-   // fun.method();
-
-    _pageController = PageController(initialPage: 0,);
-   // fun.method();
+    _pageController = PageController(
+      initialPage: 0,
+    );
+    // fun.method();
 
     super.initState();
   }
@@ -48,66 +50,71 @@ class _FrontpageState extends State<Frontpage> {
   //   });
   // }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: kAppBackgroundColour,
-        body: PageView(
-          controller: _pageController,
-          children: _widgetOptions,
-          physics: NeverScrollableScrollPhysics(),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          iconSize: 24.5,
-          type: BottomNavigationBarType.fixed,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-
-              icon: Icon(
-                Icons.newspaper,
-              ),
-              label: 'News',
+      backgroundColor: kAppBackgroundColour,
+      body: PageView(
+        controller: _pageController,
+        children: [
+          const NEWSPage(),
+          const Quickbuy(),
+          const ExchangeScreen(),
+          const OrderScreen(),
+          Funds(
+            wallet: widget.balance,
+          ),
+        ],
+        physics: const NeverScrollableScrollPhysics(),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        iconSize: 24.5,
+        type: BottomNavigationBarType.fixed,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.newspaper,
             ),
-            BottomNavigationBarItem(
-
-              icon: Icon(
-                Icons.bubble_chart,
-              ),
-              label: 'Quick Buy',
+            label: 'News',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.bubble_chart,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.swap_horizontal_circle,
-              ),
-              label: 'Exchange',
+            label: 'Quick Buy',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.swap_horizontal_circle,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.school,
-              ),
-              label: 'Orders',
+            label: 'Exchange',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.school,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.wallet_travel_outlined,
-              ),
-              label: 'Funds',
+            label: 'Orders',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.wallet_travel_outlined,
             ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: kBottomBarTextActive,
-          unselectedItemColor: kBottomBarTextinActive,
-          onTap: (_selectedPageIndex){
-            setState(() {
-              _selectedIndex = _selectedPageIndex;
-              _pageController!.jumpToPage(_selectedIndex);
-            });
-          },
-          selectedIconTheme: IconThemeData(color: kBottomBarTextActive),
-          unselectedIconTheme: IconThemeData(color: kBottomBarTextinActive),
-          backgroundColor: kBottomBarColor,
-        ),
-      );
+            label: 'Funds',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: kBottomBarTextActive,
+        unselectedItemColor: kBottomBarTextinActive,
+        onTap: (_selectedPageIndex) {
+          setState(() {
+            _selectedIndex = _selectedPageIndex;
+            _pageController!.jumpToPage(_selectedIndex);
+          });
+        },
+        selectedIconTheme: IconThemeData(color: kBottomBarTextActive),
+        unselectedIconTheme: IconThemeData(color: kBottomBarTextinActive),
+        backgroundColor: kBottomBarColor,
+      ),
+    );
   }
 }

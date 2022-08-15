@@ -9,6 +9,8 @@ class Loading extends AuthState{
 }
 
 class Authenticated extends AuthState{
+  dynamic balance;
+  Authenticated({this.balance});
   @override
   // TODO: implement props
   List<Object?> get props => [];

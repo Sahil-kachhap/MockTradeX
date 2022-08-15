@@ -40,11 +40,11 @@ class _ExchangeScreenState extends State<ExchangeScreen>
             ..add(LoadApiDataEvent()),
       child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Color(0xff080c10),
-            title: Text('Exchange'),
+            backgroundColor: const Color(0xff080c10),
+            title: const Text('Exchange'),
             actions: [
               IconButton(
-                icon: Icon(Icons.search),
+                icon: const Icon(Icons.search),
                 onPressed: () {
                   showSearch(context: context, delegate: SearchUser());
                 },
@@ -54,9 +54,9 @@ class _ExchangeScreenState extends State<ExchangeScreen>
               preferredSize: Size(MediaQuery.of(context).size.width, 30),
               child: Container(
                 child: TabBar(
-                  labelPadding: EdgeInsets.all(0),
+                  labelPadding: const EdgeInsets.all(0),
                   indicatorSize: TabBarIndicatorSize.label,
-                  indicatorColor: Color(0xff125fcb),
+                  indicatorColor: const Color(0xff125fcb),
                   indicatorWeight: 4,
                   controller: tabController,
                   tabs: const [
@@ -77,11 +77,11 @@ class _ExchangeScreenState extends State<ExchangeScreen>
               ),
             ),
           ),
-          backgroundColor: Color(0xff080c10),
+          backgroundColor: const Color(0xff080c10),
           body: Column(
             children: [
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

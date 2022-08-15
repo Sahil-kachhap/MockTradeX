@@ -13,7 +13,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  late String image = 'assets/dani.png';
+  late String image = 'assets/india.jpg';
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +23,9 @@ class _ProfileState extends State<Profile> {
         child: Column(
           children: [
             Container(
-              decoration: new BoxDecoration(
-                image: new DecorationImage(
-                  image: new ExactAssetImage(image),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: ExactAssetImage(image),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -37,7 +37,7 @@ class _ProfileState extends State<Profile> {
                       color: Colors.black.withOpacity(0.1),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 70,
                   ),
                   Text(
@@ -80,20 +80,20 @@ class _ProfileState extends State<Profile> {
                               },
                             ),
                             GestureDetector(
-                              child: CircleAvatar(
+                              child: const CircleAvatar(
                                 radius: 30,
                                 backgroundImage:
-                                    ExactAssetImage('assets/dani.png'),
+                                    ExactAssetImage('assets/india.jpg'),
                               ),
                               onTap: () {
                                 setState(() {
-                                  image = 'assets/dani.png';
+                                  image = 'assets/india.jpg';
                                   // Navigator.pop(context);
                                 });
                               },
                             ),
                           ],
-                          backgroundColor: Color(0xff733B3939),
+                          backgroundColor: const Color(0xff733B3939),
                         );
                       },
                       child: CircleAvatar(
@@ -102,14 +102,14 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Text(
-                    'Dani Daniels',
+                    'Sahil Kachhap',
                     style: kTickerTextStyle.copyWith(fontSize: 30),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 70,
                   )
                 ],
@@ -135,7 +135,7 @@ class _ProfileState extends State<Profile> {
                         style: kTickerTextStyle.copyWith(fontSize: 15),
                       ),
                       Text(
-                        'dani@gmail.com',
+                        'sahil@gmail.com',
                         style: kTickerTextStyle.copyWith(fontSize: 15),
                       ),
                     ],
@@ -144,8 +144,8 @@ class _ProfileState extends State<Profile> {
 
                 divider(),
                 Container(
-                  margin: EdgeInsets.only(left: 30, right: 30),
-                  decoration: BoxDecoration(
+                  margin: const EdgeInsets.only(left: 30, right: 30),
+                  decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                   height: 70,
                   child: Row(
@@ -162,17 +162,17 @@ class _ProfileState extends State<Profile> {
                     ],
                   ),
                 ),
-                 divider(),
+                divider(),
                 //card('Password  123456'),
                 // SizedBox(height: 15,),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SignIn()));
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => const SignIn()));
                   },
                   child: Container(
-                    margin: EdgeInsets.symmetric(vertical: 5,horizontal: 30),
-                    decoration: BoxDecoration(
+                    margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
+                    decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     height: 70,
                     child: Row(
@@ -191,8 +191,8 @@ class _ProfileState extends State<Profile> {
                 // divider(),
                 //SizedBox(height: 15,),
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 5,horizontal: 30),
-                  decoration: BoxDecoration(
+                  margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
+                  decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                   height: 70,
                   child: Row(
@@ -207,7 +207,7 @@ class _ProfileState extends State<Profile> {
                     ],
                   ),
                 ),
-               // divider(),
+                // divider(),
                 // SizedBox(height: 15,),
                 GestureDetector(
                   child: card('About'),

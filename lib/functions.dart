@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:mock_tradex/Data/Models/crypto.dart';
-
 import 'package:mock_tradex/main.dart';
 
 //List<Crypto> cry=<Crypto>[];

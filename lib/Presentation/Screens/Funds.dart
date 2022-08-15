@@ -1,11 +1,15 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mock_tradex/Presentation/Screens/profile_screen.dart';
+import 'package:mock_tradex/Presentation/Widgets/fund_tile.dart';
 import 'package:mock_tradex/constants.dart';
 import 'package:mock_tradex/Presentation/Screens/deposit_screen.dart';
+import 'dart:developer';
 
 class Funds extends StatefulWidget {
-  const Funds({Key? key}) : super(key: key);
+  final dynamic wallet;
+  const Funds({Key? key, this.wallet}) : super(key: key);
 
   @override
   _FundsState createState() => _FundsState();
@@ -13,6 +17,56 @@ class Funds extends StatefulWidget {
 
 class _FundsState extends State<Funds> {
   int x = 1;
+  List<dynamic> orders = [];
+  late double averagePrice;
+
+  getOrders() async {
+    final DocumentSnapshot<Map<String, dynamic>> snapshot =
+        await FirebaseFirestore.instance
+            .collection('Users')
+            .doc("CSsWq83q2qaFrTh58qyJSFOo30w1")
+            .get();
+    final Map<String, dynamic>? data = snapshot.data();
+
+    orders = data!['orders'];
+    log(orders.toString());
+    getCurrentAveragePrice(orders);
+  }
+
+  double getCurrentAveragePrice(List<dynamic> orders) {
+    List<dynamic> btcList =
+        orders.where((element) => element['crypto'] == "Bitcoin").toList();
+    //log(btcList.toString());
+
+    double averageTotal = btcList.fold<double>(
+        0,
+        (previousValue, element) =>
+            previousValue + (double.parse(element['total'])));
+
+    double totalQuantity = btcList.fold<double>(
+        0,
+        (previousValue, element) =>
+            previousValue + (double.parse(element['amount']!)));
+    averagePrice = averageTotal / totalQuantity;
+    return averagePrice;
+  }
+
+  Future<void> fetchFunds(String userId) async {
+    final Map<String, dynamic> response = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(userId)
+        .get()
+        .then((value) => value.data()!);
+    List<dynamic> fundList = response['funds'];
+    log(fundList.toString());
+  }
+
+  @override
+  void initState() {
+    getOrders();
+    averagePrice = getCurrentAveragePrice(orders);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,23 +74,21 @@ class _FundsState extends State<Funds> {
       child: Scaffold(
         backgroundColor: kBottomBarColor,
         body: Column(
-
           children: [
+            // Container(
+            //   margin: EdgeInsets.only(top: 10),
+            //   child: Center(
+            //     child: GestureDetector(
+            //         onTap: (){
+            //           Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
+            //         },
+            //         child: Icon(Icons.account_circle_rounded,size: 70,color: Colors.white,)
+            //
+            //     ),
+            //   ),
+            // ),
 
-           // Container(
-           //   margin: EdgeInsets.only(top: 10),
-           //   child: Center(
-           //     child: GestureDetector(
-           //         onTap: (){
-           //           Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
-           //         },
-           //         child: Icon(Icons.account_circle_rounded,size: 70,color: Colors.white,)
-           //
-           //     ),
-           //   ),
-           // ),
-
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
 
@@ -56,29 +108,31 @@ class _FundsState extends State<Funds> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Profile()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Profile()));
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(10.0),
                     child: CircleAvatar(
                       radius: 20,
-                      backgroundImage: ExactAssetImage('assets/friends.png'),
+                      backgroundImage: ExactAssetImage('assets/india.jpg'),
                     ),
                   ),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Container(
-              padding: EdgeInsets.only(right: 10),
+              padding: const EdgeInsets.only(right: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(left: 15, top: 2),
+                    padding: const EdgeInsets.only(left: 15, top: 2),
                     child: Text(
                       '\$ 33008.98',
                       style: kTickerTextStyle.copyWith(
@@ -89,14 +143,14 @@ class _FundsState extends State<Funds> {
                   Container(
                     width: 72.0,
                     height: 35,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Color(0xFF60D79D),
                       borderRadius: BorderRadius.all(Radius.circular(3)),
                     ),
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: const [
                         Icon(
                           //make it center align.
                           Icons.arrow_downward,
@@ -104,8 +158,8 @@ class _FundsState extends State<Funds> {
                           size: 14,
                         ),
                         Text(
-                          '2.5 ' + '%',
-                          style: const TextStyle(
+                          '2.5 %',
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 13.5,
                             color: Colors.black,
@@ -119,7 +173,7 @@ class _FundsState extends State<Funds> {
               ),
             ),
             //color: Color(0xff1A1E29),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Row(
@@ -128,28 +182,32 @@ class _FundsState extends State<Funds> {
                 Row(
                   children: [
                     Container(
-                      padding: EdgeInsets.only(left: 10),
-                      child: Icon(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: const Icon(
                         Icons.animation,
                         size: 22.0,
                         color: kBottomBarTextActive,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
-                    Text('Wallet Balance',
-                        style: kTickerTextStyle.copyWith(fontSize: 16)),
+                    Text(
+                      'Wallet Balance',
+                      style: kTickerTextStyle.copyWith(fontSize: 16),
+                    ),
                   ],
                 ),
                 Container(
-                  padding: EdgeInsets.only(right: 14),
-                  child: Text('2300.00',
-                      style: kTickerTextStyle.copyWith(fontSize: 16)),
+                  padding: const EdgeInsets.only(right: 14),
+                  child: Text(
+                    "200.0",
+                    style: kTickerTextStyle.copyWith(fontSize: 16),
+                  ),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
@@ -169,21 +227,23 @@ class _FundsState extends State<Funds> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Deposit_Screen()));
+                                builder: (context) => const Deposit_Screen()));
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.add_box,
                             color: Color(0xFF596777),
                           ),
-                          SizedBox(width: 5,),
+                          const SizedBox(
+                            width: 5,
+                          ),
                           Text(
                             'Deposit',
                             style: kTickerTextStyle.copyWith(
-                                fontSize: 14, color:  Color(0xffefba08)),
+                                fontSize: 14, color: const Color(0xffefba08)),
                           ),
                         ],
                       ),
@@ -192,12 +252,12 @@ class _FundsState extends State<Funds> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
             //  color: Color(0xff191D28),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -238,188 +298,98 @@ class _FundsState extends State<Funds> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Expanded(
-              child: ListView(
-                children: [
-                  Container(
-                    height: 80,
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 6,
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: Colors.black,
-                                radius: 18.0,
-                                child: Icon(
-                                  CupertinoIcons.bitcoin,
-                                  size: 26,
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  'Bitcoinnnnnnnnnnnnn',
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style:
-                                      kTickerTextStyle.copyWith(fontSize: 15),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+              child: FutureBuilder<Map<String, dynamic>>(
+                  future: FirebaseFirestore.instance
+                      .collection('Users')
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
+                      .get()
+                      .then((value) => value.data()!),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const CircularProgressIndicator();
+                    }
 
-                        // box percentage
-                        Expanded(
-                          flex: 6,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '\$ 92788888',
-                                style: kTickerTextStyle.copyWith(fontSize: 18),
-                                maxLines: 1,
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 4.0),
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xFF5CD096),
-                                    //backgroundBlendMode: BlendMode.luminosity,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(3)),
-                                  ),
-                                  width: 60.0,
-                                  height: 27,
-                                  child: Center(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.baseline,
-                                      textBaseline: TextBaseline.ideographic,
-                                      verticalDirection: VerticalDirection.down,
-                                      children: [
-                                        Icon(
-                                          Icons.arrow_downward_outlined,
-                                          color: Color(0xff58a700),
-                                          size: 10,
-                                        ),
-                                        Text(
-                                          '12.55 ' + '%',
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 10.5,
-                                              color: Colors.black),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              //box percentage
-                            ],
+                    if (snapshot.hasData) {
+                      List<dynamic> funds = snapshot.data!['funds'];
+                      funds.sort(
+                        (b, a) => double.parse(a['quantity']).compareTo(
+                          double.parse(
+                            b['quantity'],
                           ),
                         ),
-
-                        Expanded(
-                          flex: 6,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '\$ 1203999',
-                                  style:
-                                      kTickerTextStyle.copyWith(fontSize: 18),
-                                ),
-                                Text(
-                                  '2999999 BTC',
-                                  style: kTickerTextStyle.copyWith(),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      //color: Color(0xff191D28),
-                      color: Colors.black,
-                      border: Border(
-                        bottom: Divider.createBorderSide(context,
-                            color: kbackgroundColor, width: 1.5),
-                      ),
-                    ),
-                  ),
-                  // Container(
-                  //   height: 80,
-                  //   child: Text('Bitcoin'),
-                  //   width: double.infinity,
-                  //   decoration: BoxDecoration(
-                  //     color: kFundTileColor,
-                  //     border: Border(
-                  //       bottom: Divider.createBorderSide(context,
-                  //           color: kbackgroundColor, width: 1.5),
-                  //     ),
-                  //   ),
-                  // ),
-                  // Container(
-                  //   height: 80,
-                  //   //color: Color(0xff191D28),
-                  //   child: Text('Bitcoin'),
-                  //   width: double.infinity,
-                  //   decoration: BoxDecoration(
-                  //     // color: Color(0xff191D28),
-                  //     color: kFundTileColor,
-                  //     border: Border(
-                  //       bottom: Divider.createBorderSide(context,
-                  //           color: kbackgroundColor, width: 1.5),
-                  //     ),
-                  //   ),
-                  // ),
-                  // Container(
-                  //   height: 80,
-                  //   // color: Color(0xff191D28),
-                  //   child: Text('Bitcoin'),
-                  //   width: double.infinity,
-                  //   decoration: BoxDecoration(
-                  //     // color: Color(0xff191D28),
-                  //     color: kFundTileColor,
-                  //     border: Border(
-                  //       bottom: Divider.createBorderSide(context,
-                  //           color: kbackgroundColor, width: 1.5),
-                  //     ),
-                  //   ),
-                  // ),
-                  // Container(
-                  //   height: 80,
-                  //   //color: Color(0xff191D28),
-                  //   child: Text('Bitcoin'),
-                  //   width: double.infinity,
-                  //   decoration: BoxDecoration(
-                  //     // color: Color(0xff191D28),
-                  //     color: kFundTileColor,
-                  //     border: Border(
-                  //       bottom: Divider.createBorderSide(context,
-                  //           color: kbackgroundColor, width: 1.5),
-                  //     ),
-                  //   ),
-                  // )
-                ],
-              ),
+                      );
+                      return ListView.builder(
+                          itemCount: funds.length,
+                          itemBuilder: (context, index) {
+                            return FundTile(
+                              averagePrice: funds[index]['price'],
+                              index: index,
+                              cryptoName: funds[index]['name']!,
+                              quantity: funds[index]['quantity'],
+                              symbol: funds[index]['symbol'],
+                            );
+                            // Container(
+                            //   height: 80,
+                            //   child: Text('Bitcoin'),
+                            //   width: double.infinity,
+                            //   decoration: BoxDecoration(
+                            //     color: kFundTileColor,
+                            //     border: Border(
+                            //       bottom: Divider.createBorderSide(context,
+                            //           color: kbackgroundColor, width: 1.5),
+                            //     ),
+                            //   ),
+                            // ),
+                            // Container(
+                            //   height: 80,
+                            //   //color: Color(0xff191D28),
+                            //   child: Text('Bitcoin'),
+                            //   width: double.infinity,
+                            //   decoration: BoxDecoration(
+                            //     // color: Color(0xff191D28),
+                            //     color: kFundTileColor,
+                            //     border: Border(
+                            //       bottom: Divider.createBorderSide(context,
+                            //           color: kbackgroundColor, width: 1.5),
+                            //     ),
+                            //   ),
+                            // ),
+                            // Container(
+                            //   height: 80,
+                            //   // color: Color(0xff191D28),
+                            //   child: Text('Bitcoin'),
+                            //   width: double.infinity,
+                            //   decoration: BoxDecoration(
+                            //     // color: Color(0xff191D28),
+                            //     color: kFundTileColor,
+                            //     border: Border(
+                            //       bottom: Divider.createBorderSide(context,
+                            //           color: kbackgroundColor, width: 1.5),
+                            //     ),
+                            //   ),
+                            // ),
+                            // Container(
+                            //   height: 80,
+                            //   //color: Color(0xff191D28),
+                            //   child: Text('Bitcoin'),
+                            //   width: double.infinity,
+                            //   decoration: BoxDecoration(
+                            //     // color: Color(0xff191D28),
+                            //     color: kFundTileColor,
+                            //     border: Border(
+                            //       bottom: Divider.createBorderSide(context,
+                            //           color: kbackgroundColor, width: 1.5),
+                            //     ),
+                            //   ),
+                            // )
+                          });
+                    }
+                    return Container();
+                  }),
             ),
           ],
         ),
@@ -427,4 +397,3 @@ class _FundsState extends State<Funds> {
     );
   }
 }
-

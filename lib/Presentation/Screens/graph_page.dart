@@ -53,7 +53,7 @@ class GraphPage extends StatefulWidget {
 class _GraphPageState extends State<GraphPage>
     with AutomaticKeepAliveClientMixin {
   double currentPrice = 0;
-  StreamController<double> _streamController = StreamController();
+  final StreamController<double> _streamController = StreamController();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final Favorites _favorites = Favorites();
 
@@ -64,7 +64,7 @@ class _GraphPageState extends State<GraphPage>
     super.initState();
 
     currentPrice = double.tryParse(widget.cryptoPrice!)!;
-    timer = Timer.periodic(Duration(seconds: 2), (Timer t) {
+    timer = Timer.periodic(const Duration(seconds: 2), (Timer t) {
       priceUpdate();
     });
   }
@@ -280,7 +280,7 @@ class _GraphPageState extends State<GraphPage>
                               children: [
                                 Text(
                                   '≈\$${widget.cryptoPrice!}',
-                                  style: TextStyle(color: kTickerWhite),
+                                  style: const TextStyle(color: kTickerWhite),
                                 ),
                                 Text(
                                   ' ${widget.priceChange!.toStringAsPrecision(2)}%',
@@ -313,7 +313,7 @@ class _GraphPageState extends State<GraphPage>
                             '${widget.high_24h}',
                             style: kGraphPageStatsSubTextStyle,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           const Text(
@@ -326,7 +326,7 @@ class _GraphPageState extends State<GraphPage>
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       Column(
@@ -341,7 +341,7 @@ class _GraphPageState extends State<GraphPage>
                             'Volume',
                             style: kGraphPageStatsSubTextStyle,
                           ), //add against vol here
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Text(
@@ -354,7 +354,7 @@ class _GraphPageState extends State<GraphPage>
                           ), //add the against here
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                     ],
@@ -412,11 +412,12 @@ class _GraphPageState extends State<GraphPage>
                               cryptoName: widget.cryptoName,
                               orderSide: 'BUY',
                               tradePair: widget.tradePair,
+                              symbol: widget.cryptoSymbol,
                             ),
                           ),
                         );
                       },
-                      child: BuySellBox(
+                      child: const BuySellBox(
                         boxText: 'BUY',
                         boxColor: kBuyButtonGreen,
                       ),

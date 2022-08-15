@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mock_tradex/Buisness_logic/auth/bloc/auth_bloc.dart';
@@ -21,19 +25,35 @@ class _SignInState extends State<SignIn> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  Future<String> fetchBalance() async {
+    String balance = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((value) => value.data()!['wallet_balance']);
+    return balance;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthBloc(
-          authRepository: RepositoryProvider.of<AuthRepository>(context)),
+          authRepository: RepositoryProvider.of<AuthRepository>(context),),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.black,
         body: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is Authenticated) {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const Frontpage()));
+              log(state.balance.toString());
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Frontpage(
+                    balance: state.balance,
+                  ),
+                ),
+              );
             }
 
             if (state is AuthError) {
