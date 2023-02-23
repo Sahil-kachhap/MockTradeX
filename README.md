@@ -2,6 +2,26 @@
 
 A new Flutter project.
 
+## App Screens
+
+### Graph Screen
+<img src="https://user-images.githubusercontent.com/54017876/220966746-329e1bd9-7087-4059-b653-164f600477c7.jpg" width="200" height="400" />
+
+### Exchange Screen
+<img src="https://user-images.githubusercontent.com/54017876/220969052-28ae4e29-7b48-4e86-926f-320f94f1ee03.jpg" width="200" height="400" />
+
+### News
+<img src="https://user-images.githubusercontent.com/54017876/220969994-2be2dcdb-bc3f-4467-9e4e-e60bc1ad86d8.jpg" width="200" height="400" />
+
+### Trade
+<img src="https://user-images.githubusercontent.com/54017876/220970522-f8024010-85a1-4d74-934f-948379847f16.jpg" width="200" height="400" />
+
+### Index
+<img src="https://user-images.githubusercontent.com/54017876/220971042-29998ac5-ebdb-4a0d-8c48-154164da3feb.jpg" width="200" height="400" />
+
+### Login
+<img src="https://user-images.githubusercontent.com/54017876/220971370-d0fe5020-08a7-4cbc-b2a2-814b860ff9e8.jpg" width="200" height="400" />
+
 ## Get Your Copy 
 
 - Fork this repo
