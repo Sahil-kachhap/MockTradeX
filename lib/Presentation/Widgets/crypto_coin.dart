@@ -1,4 +1,3 @@
-import 'package:mock_tradex/Presentation/Widgets/favorites.dart';
 
 class CryptoCoin{
   final String? cryptoSymbol;

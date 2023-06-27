@@ -9,7 +9,7 @@ Future<void> getSentiment() async {
 
   // Await the HTTP GET response, then decode the
   // JSON data it contains.
-  final BaseUrl = "https://api.alternative.me/fng/?limit=1";
+  const BaseUrl = "https://api.alternative.me/fng/?limit=1";
 
   final url = Uri.parse(BaseUrl);
   Response response = await http.get(url);

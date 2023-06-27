@@ -20,7 +20,8 @@ class _OrderScreenState extends State<OrderScreen> {
     return DefaultTabController(
       length: 2,
       child: BlocProvider(
-        create: (context) => AuthBloc(authRepository: RepositoryProvider.of<AuthRepository>(context)),
+        create: (context) => AuthBloc(
+            authRepository: RepositoryProvider.of<AuthRepository>(context)),
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: kAppBackgroundColour,
@@ -90,7 +91,7 @@ ListView _buildOrderHistoryListView() {
                         color: Colors.white, fontSize: 15.0),
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 7),
+                    padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 7),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(2.0),
                         border: Border.all(color: Colors.white)),
@@ -126,7 +127,7 @@ ListView _buildOrderHistoryListView() {
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8.0,
               ),
               Row(
@@ -146,7 +147,7 @@ ListView _buildOrderHistoryListView() {
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8.0,
               ),
               // Row(

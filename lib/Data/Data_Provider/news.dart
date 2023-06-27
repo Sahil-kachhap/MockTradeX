@@ -44,7 +44,7 @@ class NewsForCategory{
   List<ArticleModel> news =[];
 
   Future<void> getNewsForCategory(String category) async{
-      String BaseUrl="https://newsapi.org/v2/everything?apiKey=9c03c83979df4c3b8ca1baf53ed28483&sortBy=publishedAt&language=en&q=${category}";
+      String BaseUrl="https://newsapi.org/v2/everything?apiKey=9c03c83979df4c3b8ca1baf53ed28483&sortBy=publishedAt&language=en&q=$category";
 
     final url=Uri.parse(BaseUrl);
 

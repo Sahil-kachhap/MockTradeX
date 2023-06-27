@@ -2,11 +2,11 @@ import 'dart:convert' as convert;
 
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-var tickerName =Map();
+var tickerName ={};
 class CryptoNameResolver{
 
    static Future<Map<dynamic,dynamic>> getTickerNames()async{
-    final BaseUrl = "https://api.alternative.me/v2/listings/";
+    const BaseUrl = "https://api.alternative.me/v2/listings/";
 
     final url = Uri.parse(BaseUrl);
     Response response = await http.get(url);

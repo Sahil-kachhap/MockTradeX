@@ -9,13 +9,13 @@ class AdPage {
   Future<void> loadAd() async {
     await RewardedAd.load(
       adUnitId: adUnitId,
-      request: AdRequest(),
+      request: const AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (RewardedAd ad) {
           isAdLoaded = true;
           print('$ad loaded.');
           // Keep a reference to the ad so you can show it later.
-          this._rewardedAd = ad;
+          _rewardedAd = ad;
         },
         onAdFailedToLoad: (LoadAdError error) {
           isAdLoaded = false;
@@ -27,10 +27,11 @@ class AdPage {
 
   void showAd(context) {
     _rewardedAd!.show(
-      onUserEarnedReward: (AdWithoutView adWithoutView, RewardItem rewardItem) async{
+      onUserEarnedReward:
+          (AdWithoutView adWithoutView, RewardItem rewardItem) async {
         // Reward the user for watching an ad.
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text("You earned 500\$!"),
             backgroundColor: Colors.green,
           ),
@@ -89,14 +90,13 @@ class _Deposit_ScreenState extends State<Deposit_Screen> {
         body: Center(
           child: OutlinedButton(
             style: OutlinedButton.styleFrom(
-              primary: Colors.white,
-              backgroundColor: Colors.teal,
+              foregroundColor: Colors.white, backgroundColor: Colors.teal,
             ),
             onPressed: () async {
               adPage.loadAd();
               adPage.showAd(context);
             },
-            child: Text("VIEW AD"),
+            child: const Text("VIEW AD"),
           ),
         ),
       ),

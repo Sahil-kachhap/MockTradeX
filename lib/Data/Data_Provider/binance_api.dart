@@ -1,10 +1,8 @@
-import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:mock_tradex/Data/Models/crypto.dart';
 
 class CryptoDataProvider{
  
-  static final BaseUrl = "https://api.binance.com/api/v3/ticker/24hr";
+  static const BaseUrl = "https://api.binance.com/api/v3/ticker/24hr";
 
   static Future<http.Response> fetchCoins() async{
      final url = Uri.parse(BaseUrl);

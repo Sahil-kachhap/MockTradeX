@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mock_tradex/Data/Models/crypto.dart';
-import 'package:mock_tradex/Presentation/Screens/quick_buy.dart';
-import 'package:mock_tradex/Presentation/Widgets/crypto_tile.dart';
 import 'package:mock_tradex/main.dart';
 
 

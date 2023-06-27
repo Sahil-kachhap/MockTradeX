@@ -1,16 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mock_tradex/Data/Data_Provider/news.dart';
 import 'package:mock_tradex/Data/Models/article.dart';
 import 'package:mock_tradex/Data/Models/newsCategory.dart';
-import 'package:mock_tradex/Presentation/Screens/article_view.dart';
 import 'package:mock_tradex/Presentation/Screens/category_news.dart';
 import 'package:mock_tradex/Presentation/Widgets/news_card.dart';
 import 'package:mock_tradex/constants.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../../Data/Data_Provider/sentiment_api.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../Data/Repositories/news_category_repo.dart';
 
 class NEWSPage extends StatefulWidget {
@@ -20,7 +17,8 @@ class NEWSPage extends StatefulWidget {
   State<NEWSPage> createState() => _NEWSPageState();
 }
 
-class _NEWSPageState extends State<NEWSPage>  with AutomaticKeepAliveClientMixin{
+class _NEWSPageState extends State<NEWSPage>
+    with AutomaticKeepAliveClientMixin {
   List<CategoryModel> category = [];
   List<ArticleModel> articles = [];
   bool _loading = true;
@@ -44,44 +42,44 @@ class _NEWSPageState extends State<NEWSPage>  with AutomaticKeepAliveClientMixin
   void sentimentUpdater() async {
     await getSentiment();
   }
+
   @override
   bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      backgroundColor: Color(0xff080c10),
+      backgroundColor: const Color(0xff080c10),
       appBar: AppBar(
-        title: Text('Market News'),
+        title: const Text('Market News'),
         actions: [
           IconButton(
-            icon: Icon(Icons.cloud_circle),
+            icon: const Icon(Icons.cloud_circle),
             onPressed: () {
               showFloatingModalBottomSheet(
                   context: context,
                   builder: (context) {
-                    return SentimentMeter();
+                    return const SentimentMeter();
                   });
             },
           ),
         ],
-        backgroundColor: Color(0xff080c10),
+        backgroundColor: const Color(0xff080c10),
         elevation: 0,
       ),
       body: _loading
           ? Container(
-              child: Center(child: CircularProgressIndicator()),
+              child: const Center(child: CircularProgressIndicator()),
             )
           : SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               child: Container(
-
                 child: Column(
                   children: [
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
                         height: 70,
                         child: ListView.builder(
                             shrinkWrap: true,
@@ -96,10 +94,9 @@ class _NEWSPageState extends State<NEWSPage>  with AutomaticKeepAliveClientMixin
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(top: 16,left: 16,right: 16),
+                      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
                       child: ListView.builder(
-                       physics: ClampingScrollPhysics(),
-
+                          physics: const ClampingScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: articles.length,
                           itemBuilder: (context, index) {
@@ -128,10 +125,15 @@ class CategoryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>CategoryNews(category: categoryName!.toLowerCase(),)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => CategoryNews(
+                      category: categoryName!.toLowerCase(),
+                    )));
       },
       child: Container(
-        margin: EdgeInsets.only(right: 16),
+        margin: const EdgeInsets.only(right: 16),
         child: Stack(
           children: [
             ClipRRect(
@@ -148,7 +150,7 @@ class CategoryTile extends StatelessWidget {
               ),
               child: Text(
                 categoryName!,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -162,8 +164,6 @@ class CategoryTile extends StatelessWidget {
   }
 }
 
-
-
 class SentimentMeter extends StatefulWidget {
   const SentimentMeter({Key? key}) : super(key: key);
 
@@ -174,23 +174,23 @@ class SentimentMeter extends StatefulWidget {
 class _SentimentMeterState extends State<SentimentMeter> {
   double emotionNum = double.tryParse(emotionValue)!;
   Set<Color> sentimentColor = {
-    Color(0xffff0000),
-    Color(0xffff0000),
-    Color(0xfff96600),
-    Color(0xfff08100),
-    Color(0xffe39a00),
-    Color(0xffd2b100),
-    Color(0xffbdc700),
-    Color(0xffa3da00),
-    Color(0xff81ed00),
-    Color(0xff48ff00),
+    const Color(0xffff0000),
+    const Color(0xffff0000),
+    const Color(0xfff96600),
+    const Color(0xfff08100),
+    const Color(0xffe39a00),
+    const Color(0xffd2b100),
+    const Color(0xffbdc700),
+    const Color(0xffa3da00),
+    const Color(0xff81ed00),
+    const Color(0xff48ff00),
   };
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: kGraphPageBackground,
-        border: Border.all(color: Color(0xFF272D31)),
+        border: Border.all(color: const Color(0xFF272D31)),
         borderRadius: BorderRadius.circular(10),
       ),
       height: MediaQuery.of(context).size.height / 3,
@@ -198,7 +198,7 @@ class _SentimentMeterState extends State<SentimentMeter> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           child: Column(
             children: [
               const Padding(
@@ -231,8 +231,8 @@ class _SentimentMeterState extends State<SentimentMeter> {
                           Text(
                             emotion,
                             style: TextStyle(
-                              color: Color.lerp(Color(0xffff0000),
-                                  Color(0xff48ff00), emotionNum / 100),
+                              color: Color.lerp(const Color(0xffff0000),
+                                  const Color(0xff48ff00), emotionNum / 100),
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             ),
@@ -242,15 +242,15 @@ class _SentimentMeterState extends State<SentimentMeter> {
                       Text(
                         '${emotionNum.toInt()}',
                         style: TextStyle(
-                          color: Color.lerp(Color(0xffff0000),
-                              Color(0xff48ff00), emotionNum / 100),
+                          color: Color.lerp(const Color(0xffff0000),
+                              const Color(0xff48ff00), emotionNum / 100),
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
                         ),
                       ),
                     ]),
               ),
-              Container(
+              SizedBox(
                 height: 260,
                 width: 260,
                 child: SfRadialGauge(
@@ -261,18 +261,18 @@ class _SentimentMeterState extends State<SentimentMeter> {
                       endAngle: 0,
                       showLabels: false,
                       showTicks: false,
-                      axisLineStyle: AxisLineStyle(
+                      axisLineStyle: const AxisLineStyle(
                         // cornerStyle: CornerStyle.bothCurve,
                         color: Colors.red,
                         thickness: 22,
                         gradient: SweepGradient(
-                          colors: const [
+                          colors: [
                             Colors.red,
                             Colors.orange,
                             Colors.yellow,
                             Colors.green,
                           ],
-                          stops: const [0, 0.25, 0.55, 1],
+                          stops: [0, 0.25, 0.55, 1],
                         ),
                       ),
                       // ranges: <GaugeRange>[
@@ -282,7 +282,7 @@ class _SentimentMeterState extends State<SentimentMeter> {
                       // ],
                       pointers: <GaugePointer>[
                         NeedlePointer(
-                            knobStyle: KnobStyle(
+                            knobStyle: const KnobStyle(
                                 knobRadius: 0.1,
                                 sizeUnit: GaugeSizeUnit.factor,
                                 color: Colors.black),
@@ -310,8 +310,8 @@ class _SentimentMeterState extends State<SentimentMeter> {
                           widget: Container(
                             width: 40.00,
                             height: 40.00,
-                            decoration: new BoxDecoration(
-                              image: new DecorationImage(
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
                                 image:
                                     ExactAssetImage('assets/bitcoin-logo.png'),
                                 fit: BoxFit.fitHeight,
@@ -343,7 +343,7 @@ class FloatingModal extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 70),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 70),
         child: Material(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(10),

@@ -28,34 +28,33 @@ class NewsCard extends StatelessWidget {
                     )));
       },
       child: Container(
-        margin: EdgeInsets.only(bottom: 10),
+        margin: const EdgeInsets.only(bottom: 10),
         child: Column(
           children: [
             ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: CachedNetworkImage(
-                  imageUrl: imageUrl!,
-                  placeholderFadeInDuration: Duration(milliseconds: 0),
-                  errorWidget: (context,url,x)=> Image.asset('assets/dark-placeholder.png'),
-                  placeholder: (context, url) =>
-                      Container(
-                        height: (MediaQuery.of(context).size.width-32)*0.66,
-                          width: double.infinity,
-
-                          child: Image.asset('assets/dark-placeholder.png')),
-                ),
+              borderRadius: BorderRadius.circular(8),
+              child: CachedNetworkImage(
+                imageUrl: imageUrl!,
+                placeholderFadeInDuration: const Duration(milliseconds: 0),
+                errorWidget: (context, url, x) =>
+                    Image.asset('assets/dark-placeholder.png'),
+                placeholder: (context, url) => SizedBox(
+                    height: (MediaQuery.of(context).size.width - 32) * 0.66,
+                    width: double.infinity,
+                    child: Image.asset('assets/dark-placeholder.png')),
+              ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
             Text(
               title!,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 17,
                   color: Colors.white70,
                   fontWeight: FontWeight.w500),
             ),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
             Container(
@@ -68,7 +67,7 @@ class NewsCard extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
             // Text(

@@ -9,7 +9,6 @@ import 'package:mock_tradex/Presentation/Widgets/search_bar.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../constants.dart';
 
-
 class ExchangeScreen extends StatefulWidget {
   const ExchangeScreen({Key? key}) : super(key: key);
 
@@ -25,7 +24,8 @@ class _ExchangeScreenState extends State<ExchangeScreen>
   void initState() {
     super.initState();
     tabController = TabController(
-        vsync: this, length: 2,
+      vsync: this,
+      length: 2,
     );
   }
 
@@ -40,12 +40,12 @@ class _ExchangeScreenState extends State<ExchangeScreen>
             ..add(LoadApiDataEvent()),
       child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Color(0xff080c10),
-            title: Text('Exchange'),
+            backgroundColor: const Color(0xff080c10),
+            title: const Text('Exchange'),
             actions: [
               IconButton(
-                icon: Icon(Icons.search),
-                onPressed: (){
+                icon: const Icon(Icons.search),
+                onPressed: () {
                   showSearch(context: context, delegate: SearchUser());
                 },
               )
@@ -54,9 +54,9 @@ class _ExchangeScreenState extends State<ExchangeScreen>
               preferredSize: Size(MediaQuery.of(context).size.width, 30),
               child: Container(
                 child: TabBar(
-                  labelPadding: EdgeInsets.all(0),
+                  labelPadding: const EdgeInsets.all(0),
                   indicatorSize: TabBarIndicatorSize.label,
-                  indicatorColor: Color(0xff125fcb),
+                  indicatorColor: const Color(0xff125fcb),
                   indicatorWeight: 4,
                   controller: tabController,
                   tabs: const [
@@ -77,11 +77,19 @@ class _ExchangeScreenState extends State<ExchangeScreen>
               ),
             ),
           ),
-          backgroundColor: Color(0xff080c10),
+          backgroundColor: const Color(0xff080c10),
           body: Column(
             children: [
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
+                height: 36,
+                width: MediaQuery.of(context).size.width,
+                decoration: const BoxDecoration(
+                    color: Color(0xff0a1628),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(5.0),
+                      bottomRight: Radius.circular(5),
+                    )),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -119,14 +127,6 @@ class _ExchangeScreenState extends State<ExchangeScreen>
                     ),
                   ],
                 ),
-                height: 36,
-                width: MediaQuery.of(context).size.width,
-                decoration: const BoxDecoration(
-                    color: Color(0xff0a1628),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(5.0),
-                      bottomRight: Radius.circular(5),
-                    )),
               ),
               Expanded(
                 child: BlocBuilder<ExchangeBloc, ExchangeState>(
@@ -160,20 +160,19 @@ class _ExchangeScreenState extends State<ExchangeScreen>
 }
 
 Widget _buildCryptoTiles(List<Crypto>? cryptos) {
-  RefreshController _refreshController =
-  RefreshController(initialRefresh: false);
+  RefreshController refreshController =
+      RefreshController(initialRefresh: false);
   // necessary hai ye?
   // @override
   // void dispose() {
   //   _refreshController.dispose();
   // }
 
-
-  void _onRefresh() async{
+  void _onRefresh() async {
     // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     // if failed,use refreshFailed()
-    _refreshController.refreshCompleted();
+    refreshController.refreshCompleted();
   }
 
   // void _onLoading() async{
@@ -183,11 +182,9 @@ Widget _buildCryptoTiles(List<Crypto>? cryptos) {
   //   _refreshController.loadComplete();
   // }
 
-
-
   return SmartRefresher(
     enablePullDown: true,
-    controller: _refreshController,
+    controller: refreshController,
     header: const MaterialClassicHeader(
       color: Color(0xff056cf3),
       backgroundColor: Color(0xff0a1628),
@@ -208,8 +205,8 @@ Widget _buildCryptoTiles(List<Crypto>? cryptos) {
           priceChange: coin.priceChangePercentage24h,
           imageUrl: coin.image,
           index: index,
-           low_24h: coin.low_24h,
-            high_24h: coin.high_24h,
+          low_24h: coin.low_24h,
+          high_24h: coin.high_24h,
           totalVolume: coin.totalVolume,
         );
       },

@@ -20,23 +20,24 @@ class _FundsState extends State<Funds> {
       child: Scaffold(
         backgroundColor: kBottomBarColor,
         body: Column(
-
           children: [
+            Container(
+              margin: const EdgeInsets.only(top: 10),
+              child: Center(
+                child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => const Profile()));
+                    },
+                    child: const Icon(
+                      Icons.account_circle_rounded,
+                      size: 70,
+                      color: Colors.white,
+                    )),
+              ),
+            ),
 
-           Container(
-             margin: EdgeInsets.only(top: 10),
-             child: Center(
-               child: GestureDetector(
-                   onTap: (){
-                     Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
-                   },
-                   child: Icon(Icons.account_circle_rounded,size: 70,color: Colors.white,)
-
-               ),
-             ),
-           ),
-
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
 
@@ -57,10 +58,10 @@ class _FundsState extends State<Funds> {
                 GestureDetector(
                   onTap: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Profile()));
+                        MaterialPageRoute(builder: (context) => const Profile()));
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(10.0),
                     child: CircleAvatar(
                       radius: 20,
                       backgroundImage: ExactAssetImage('assets/friends.png'),
@@ -69,16 +70,16 @@ class _FundsState extends State<Funds> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Container(
-              padding: EdgeInsets.only(right: 10),
+              padding: const EdgeInsets.only(right: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(left: 15, top: 2),
+                    padding: const EdgeInsets.only(left: 15, top: 2),
                     child: Text(
                       '\$ 33008.98',
                       style: kTickerTextStyle.copyWith(
@@ -89,12 +90,12 @@ class _FundsState extends State<Funds> {
                   Container(
                     width: 72.0,
                     height: 35,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Color(0xFF60D79D),
                       borderRadius: BorderRadius.all(Radius.circular(3)),
                     ),
                     padding: const EdgeInsets.all(8.0),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
@@ -104,8 +105,8 @@ class _FundsState extends State<Funds> {
                           size: 14,
                         ),
                         Text(
-                          '2.5 ' + '%',
-                          style: const TextStyle(
+                          '2.5 ' '%',
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 13.5,
                             color: Colors.black,
@@ -119,7 +120,7 @@ class _FundsState extends State<Funds> {
               ),
             ),
             //color: Color(0xff1A1E29),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Row(
@@ -128,14 +129,14 @@ class _FundsState extends State<Funds> {
                 Row(
                   children: [
                     Container(
-                      padding: EdgeInsets.only(left: 10),
-                      child: Icon(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: const Icon(
                         Icons.animation,
                         size: 22.0,
                         color: kBottomBarTextActive,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     Text('Total Assets in INR',
@@ -143,13 +144,13 @@ class _FundsState extends State<Funds> {
                   ],
                 ),
                 Container(
-                  padding: EdgeInsets.only(right: 14),
+                  padding: const EdgeInsets.only(right: 14),
                   child: Text('2300.00',
                       style: kTickerTextStyle.copyWith(fontSize: 16)),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
@@ -169,21 +170,23 @@ class _FundsState extends State<Funds> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Deposit_Screen()));
+                                builder: (context) => const Deposit_Screen()));
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.add_box,
                             color: Color(0xFF596777),
                           ),
-                          SizedBox(width: 5,),
+                          const SizedBox(
+                            width: 5,
+                          ),
                           Text(
                             'Deposit',
                             style: kTickerTextStyle.copyWith(
-                                fontSize: 14, color:  Color(0xffefba08)),
+                                fontSize: 14, color: const Color(0xffefba08)),
                           ),
                         ],
                       ),
@@ -192,12 +195,12 @@ class _FundsState extends State<Funds> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
             //  color: Color(0xff191D28),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -238,7 +241,7 @@ class _FundsState extends State<Funds> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Expanded(
@@ -246,14 +249,23 @@ class _FundsState extends State<Funds> {
                 children: [
                   Container(
                     height: 80,
-                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      //color: Color(0xff191D28),
+                      color: Colors.black,
+                      border: Border(
+                        bottom: Divider.createBorderSide(context,
+                            color: kbackgroundColor, width: 1.5),
+                      ),
+                    ),
                     child: Row(
                       children: [
                         Expanded(
                           flex: 6,
                           child: Row(
                             children: [
-                              CircleAvatar(
+                              const CircleAvatar(
                                 backgroundColor: Colors.black,
                                 radius: 18.0,
                                 child: Icon(
@@ -298,7 +310,7 @@ class _FundsState extends State<Funds> {
                                   ),
                                   width: 60.0,
                                   height: 27,
-                                  child: Center(
+                                  child: const Center(
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -313,8 +325,8 @@ class _FundsState extends State<Funds> {
                                           size: 10,
                                         ),
                                         Text(
-                                          '12.55 ' + '%',
-                                          style: const TextStyle(
+                                          '12.55 ' '%',
+                                          style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 10.5,
                                               color: Colors.black),
@@ -353,15 +365,6 @@ class _FundsState extends State<Funds> {
                           ),
                         ),
                       ],
-                    ),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      //color: Color(0xff191D28),
-                      color: Colors.black,
-                      border: Border(
-                        bottom: Divider.createBorderSide(context,
-                            color: kbackgroundColor, width: 1.5),
-                      ),
                     ),
                   ),
                   // Container(

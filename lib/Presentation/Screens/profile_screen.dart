@@ -23,9 +23,9 @@ class _ProfileState extends State<Profile> {
         child: Column(
           children: [
             Container(
-              decoration: new BoxDecoration(
-                image: new DecorationImage(
-                  image: new ExactAssetImage(image),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: ExactAssetImage(image),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -37,14 +37,14 @@ class _ProfileState extends State<Profile> {
                       color: Colors.black.withOpacity(0.1),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 70,
                   ),
                   Text(
                     'Profile',
                     style: kTickerTextStyle.copyWith(fontSize: 40),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Center(
@@ -54,10 +54,10 @@ class _ProfileState extends State<Profile> {
                           context,
                           items: [
                             GestureDetector(
-                              child: CircleAvatar(
+                              child: const CircleAvatar(
                                 radius: 30,
                                 backgroundImage:
-                                ExactAssetImage('assets/anime_avatar.png'),
+                                    ExactAssetImage('assets/anime_avatar.png'),
                               ),
                               onTap: () {
                                 setState(() {
@@ -70,7 +70,7 @@ class _ProfileState extends State<Profile> {
                               child: const CircleAvatar(
                                 radius: 30,
                                 backgroundImage:
-                                ExactAssetImage('assets/friends.png'),
+                                    ExactAssetImage('assets/friends.png'),
                               ),
                               onTap: () {
                                 setState(() {
@@ -83,7 +83,7 @@ class _ProfileState extends State<Profile> {
                               child: const CircleAvatar(
                                 radius: 30,
                                 backgroundImage:
-                                ExactAssetImage('assets/dani.png'),
+                                    ExactAssetImage('assets/dani.png'),
                               ),
                               onTap: () {
                                 setState(() {
@@ -93,7 +93,7 @@ class _ProfileState extends State<Profile> {
                               },
                             ),
                           ],
-                          backgroundColor:  Color(0xff733B3939),
+                          backgroundColor: const Color(0xff733b3939),
                         );
                       },
                       child: CircleAvatar(
@@ -102,34 +102,35 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Text(
                     'Dani Daniels',
                     style: kTickerTextStyle.copyWith(fontSize: 30),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 70,
                   )
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             ListView(
               shrinkWrap: true,
               children: [
-                card('E mail  -  dani@gmail.com'),
-                divider(),
-                card('Password  -  123456'),
-                divider(),
+                const card('E mail  -  dani@gmail.com'),
+                const divider(),
+                const card('Password  -  123456'),
+                const divider(),
                 //card('Password  123456'),
                 // SizedBox(height: 15,),
                 GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const SignIn()));
                   },
                   child: Container(
                     margin: const EdgeInsets.only(left: 30, right: 30),
@@ -144,18 +145,17 @@ class _ProfileState extends State<Profile> {
                     ),
                   ),
                 ),
-                divider(),
+                const divider(),
                 //SizedBox(height: 15,),
-                card('Log Out'),
-                divider(),
+                const card('Log Out'),
+                const divider(),
                 // SizedBox(height: 15,),
-                GestureDetector(child: card('About'),
-    onTap: () {
-    Navigator.push(
-    context,
-    MaterialPageRoute(
-    builder: (context) => const About()));
-    },
+                GestureDetector(
+                  child: const card('About'),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const About()));
+                  },
                 ),
               ],
             )
@@ -167,6 +167,8 @@ class _ProfileState extends State<Profile> {
 }
 
 class divider extends StatelessWidget {
+  const divider({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -184,14 +186,14 @@ class divider extends StatelessWidget {
 
 class card extends StatelessWidget {
   final String text;
-  card(@required this.text);
+  const card(@required this.text, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 30, right: 30),
+      margin: const EdgeInsets.only(left: 30, right: 30),
       decoration:
-      BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20))),
+          const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20))),
       height: 70,
       child: Center(
         child: Text(

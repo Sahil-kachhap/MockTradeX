@@ -22,11 +22,11 @@ class AuthRepository{
 
   Future<void> createUser({required String? name, required String? email}) async{
     final docUser = FirebaseFirestore.instance.collection('Users').doc();
-    CryptoUser _user = CryptoUser(name: name, email: email, uid: docUser.id); 
+    CryptoUser user = CryptoUser(name: name, email: email, uid: docUser.id); 
     final json = {
-      'id': _user.uid,
-      'name': _user.name,
-      'email': _user.email
+      'id': user.uid,
+      'name': user.name,
+      'email': user.email
     };
 
     await docUser.set(json);

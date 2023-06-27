@@ -85,6 +85,7 @@ class _SignInState extends State<SignIn> {
                           if (email!.isEmpty) {
                             return "Please enter valid email id";
                           }
+                          return null;
                         },
                         autofillHints: const [AutofillHints.email],
                         controller: emailController,

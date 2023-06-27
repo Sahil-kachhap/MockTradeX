@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mock_tradex/Presentation/Screens/graph_page.dart';
 import 'package:mock_tradex/constants.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
-
-
 
 // name too long or price too long overlow issue
 class CryptoTile extends StatefulWidget {
@@ -42,8 +39,9 @@ class CryptoTile extends StatefulWidget {
 class _CryptoTileState extends State<CryptoTile> {
   @override
   Widget build(BuildContext context) {
-    String cryptoImageLink=widget.cryptoSymbol!.toLowerCase();
-    String cryptoNameLink=widget.cryptoName!.toLowerCase().replaceAll(" ", "-");
+    String cryptoImageLink = widget.cryptoSymbol!.toLowerCase();
+    String cryptoNameLink =
+        widget.cryptoName!.toLowerCase().replaceAll(" ", "-");
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -67,7 +65,7 @@ class _CryptoTileState extends State<CryptoTile> {
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: 80,
-        color:Color(0xff080c10),
+        color: const Color(0xff080c10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -93,14 +91,15 @@ class _CryptoTileState extends State<CryptoTile> {
                         radius: 20.0,
                         backgroundColor: Colors.black,
                         child: CachedNetworkImage(
-                         // imageUrl: imageUrl!,
-                          imageUrl: "https://assets.coincap.io/assets/icons/${cryptoImageLink}@2x.png",
-                         //imageUrl: "https://cryptologos.cc/logos/${cryptoNameLink}-${cryptoImageLink}-logo.png?v=022",
+                          // imageUrl: imageUrl!,
+                          imageUrl:
+                              "https://assets.coincap.io/assets/icons/$cryptoImageLink@2x.png",
+                          //imageUrl: "https://cryptologos.cc/logos/${cryptoNameLink}-${cryptoImageLink}-logo.png?v=022",
                           //imageUrl: "https://cryptocurrencyliveprices.com/img/${cryptoImageLink}-$cryptoNameLink.png",
                           placeholder: (context, url) =>
                               const CircularProgressIndicator(),
                           errorWidget: (context, url, error) =>
-                               Image.asset('assets/generic.png'),
+                              Image.asset('assets/generic.png'),
                         ),
                       ),
                     ),
@@ -126,7 +125,7 @@ class _CryptoTileState extends State<CryptoTile> {
                           Text(
                             widget.cryptoName!,
                             style: kTickerTextStyle.copyWith(
-                                fontSize: 12, color: Color(0xFF596777)),
+                                fontSize: 12, color: const Color(0xFF596777)),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                             softWrap: false,
@@ -144,7 +143,7 @@ class _CryptoTileState extends State<CryptoTile> {
                   children: [
                     Flexible(
                       child: Text(
-                        '\$' + widget.currentPrice.toString(),
+                        '\$${widget.currentPrice}',
                         maxLines: 1,
                         textAlign: TextAlign.end,
                         style: const TextStyle(
@@ -153,15 +152,15 @@ class _CryptoTileState extends State<CryptoTile> {
                             fontSize: 15),
                       ),
                     ),
-
                     const SizedBox(
                       width: 10,
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color:
-                            (widget.priceChange! > 0) ? Color(0xff139b4d) : Colors.red,
-                        borderRadius: BorderRadius.all(Radius.circular(3)),
+                        color: (widget.priceChange! > 0)
+                            ? const Color(0xff139b4d)
+                            : Colors.red,
+                        borderRadius: const BorderRadius.all(Radius.circular(3)),
                       ),
                       width: 72.0,
                       height: 32,
@@ -177,7 +176,7 @@ class _CryptoTileState extends State<CryptoTile> {
                             size: 12,
                           ),
                           Text(
-                            ' ' + widget.priceChange!.toStringAsFixed(2) + '%',
+                            ' ${widget.priceChange!.toStringAsFixed(2)}%',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(

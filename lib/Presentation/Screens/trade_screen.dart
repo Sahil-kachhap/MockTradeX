@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mock_tradex/Data/Data_Provider/binance_current.dart';
 import 'package:mock_tradex/Data/Data_Provider/binance_socket.dart';
 import 'package:mock_tradex/Data/Models/order.dart';
 import 'package:mock_tradex/Data/Models/socketResponse.dart';
@@ -17,7 +15,7 @@ class OrderPage extends StatefulWidget {
   final String? orderSide;
   final String? tradePair;
 
-  OrderPage({Key? key, this.orderSide, this.tradePair}) : super(key: key);
+  const OrderPage({Key? key, this.orderSide, this.tradePair}) : super(key: key);
 
   @override
   _OrderPageState createState() => _OrderPageState();
@@ -30,7 +28,7 @@ class _OrderPageState extends State<OrderPage> {
   void initState() {
     super.initState();
     pageThemeColor =
-        widget.orderSide == 'BUY' ? Color(0xff286bdb) : Color(0xffef4006);
+        widget.orderSide == 'BUY' ? const Color(0xff286bdb) : const Color(0xffef4006);
   }
 
   @override
@@ -39,6 +37,7 @@ class _OrderPageState extends State<OrderPage> {
   double total = 0;
   final myPriceController = TextEditingController();
   final myAmountController = TextEditingController();
+  @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
     myPriceController.dispose();
@@ -47,8 +46,9 @@ class _OrderPageState extends State<OrderPage> {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
-    final GlobalKey<SlideActionState> _key = GlobalKey();
+    final GlobalKey<SlideActionState> key = GlobalKey();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -69,8 +69,8 @@ class _OrderPageState extends State<OrderPage> {
                         horizontal: 15.0, vertical: 15),
                     child: Container(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 5, vertical: 12),
-                      decoration: BoxDecoration(
+                          const EdgeInsets.symmetric(horizontal: 5, vertical: 12),
+                      decoration: const BoxDecoration(
                         color: kTradeScreenGreyBoxColor,
                         borderRadius: BorderRadius.all(Radius.circular(5)),
                       ),
@@ -97,10 +97,11 @@ class _OrderPageState extends State<OrderPage> {
                                         vertical: 10),
                                     child: TextFormField(
                                       onChanged: ((val) {
-                                        if (double.tryParse(val) != null)
+                                        if (double.tryParse(val) != null) {
                                           setState(() {
                                             price = double.parse(val);
                                           });
+                                        }
                                       }),
                                       controller: myPriceController,
                                       textAlignVertical:
@@ -111,7 +112,7 @@ class _OrderPageState extends State<OrderPage> {
                                         color: kTickerWhite,
                                       ),
                                       keyboardType:
-                                          TextInputType.numberWithOptions(
+                                          const TextInputType.numberWithOptions(
                                               decimal: true),
                                       inputFormatters: [
                                         LengthLimitingTextInputFormatter(12),
@@ -184,7 +185,11 @@ class _OrderPageState extends State<OrderPage> {
                                               total = amount * price;
                                             },
                                           );
-                                          Order order = Order(cryptoName: "BitCoin",price: myPriceController.text, amount: myAmountController.text, type: OrderType.limitOrder);
+                                          Order order = Order(
+                                              cryptoName: "BitCoin",
+                                              price: myPriceController.text,
+                                              amount: myAmountController.text,
+                                              type: OrderType.limitOrder);
                                           order.addOrder(order);
                                         }
                                       }),
@@ -245,7 +250,7 @@ class _OrderPageState extends State<OrderPage> {
                         horizontal: 20, vertical: 10),
                     child: Column(
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
@@ -256,13 +261,13 @@ class _OrderPageState extends State<OrderPage> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Container(
                           child: Column(
                             children: [
-                              Row(
+                              const Row(
                                 children: [
                                   Expanded(
                                     child: Row(
@@ -309,7 +314,7 @@ class _OrderPageState extends State<OrderPage> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
                               OrderRows(
@@ -369,7 +374,7 @@ class _OrderPageState extends State<OrderPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Type',
                           style: TextStyle(
                             color: Color(0xfffeffff),
@@ -448,7 +453,7 @@ class _OrderPageState extends State<OrderPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           'Total',
                           style: TextStyle(
                             color: Color(0xfffeffff),
@@ -460,22 +465,22 @@ class _OrderPageState extends State<OrderPage> {
                           padding: const EdgeInsets.symmetric(vertical: 20.0),
                           child: Container(
                             width: double.infinity,
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 12),
-                            child: Text(
-                              '${total.truncateToDouble()}',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: kTickerWhite,
-                              ),
-                            ),
                             decoration: BoxDecoration(
                               color: Colors.black,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(4)),
+                                  const BorderRadius.all(Radius.circular(4)),
                               border: Border.all(
                                   color:
                                       kTradeScreenGreyBoxColorTextFieldBorder),
+                            ),
+                            child: Text(
+                              '${total.truncateToDouble()}',
+                              style: const TextStyle(
+                                fontSize: 20,
+                                color: kTickerWhite,
+                              ),
                             ),
                           ),
                         ),
@@ -533,10 +538,10 @@ class _OrderPageState extends State<OrderPage> {
             child: Column(
               children: [
                 Container(
-                  color: Color(0xcd13161b),
-                  child: Padding(
+                  color: const Color(0xcd13161b),
+                  child: const Padding(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                        EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -564,18 +569,18 @@ class _OrderPageState extends State<OrderPage> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: SlideAction(
-                    key: _key,
+                    key: key,
                     sliderButtonYOffset: 0,
                     text: 'SWIPE TO BUY',
-                    textStyle: TextStyle(fontSize: 14, color: Colors.white),
+                    textStyle: const TextStyle(fontSize: 14, color: Colors.white),
                     outerColor: pageThemeColor,
-                    innerColor: Color(0xffffffff),
+                    innerColor: const Color(0xffffffff),
                     sliderButtonIconPadding: 11,
                     sliderRotate: false,
                     height: 65,
@@ -586,10 +591,9 @@ class _OrderPageState extends State<OrderPage> {
                     ),
                     onSubmit: () {
                       Future.delayed(
-                        Duration(seconds: 1),
-                        () => _key.currentState!.reset(),
+                        const Duration(seconds: 1),
+                        () => key.currentState!.reset(),
                       );
-
                     },
                   ),
                 ),
@@ -627,7 +631,7 @@ class OrderRows extends StatefulWidget {
 }
 
 class _OrderRowsState extends State<OrderRows> {
-  StreamController<BinanceOrderBook> _streamController =
+  final StreamController<BinanceOrderBook> _streamController =
       StreamController<BinanceOrderBook>();
   BinanceSocket? binanceSocket;
   BinanceOrderBook? orderbook;
@@ -654,7 +658,7 @@ class _OrderRowsState extends State<OrderRows> {
             stream: binanceSocket!.getOrders(widget.symbol!),
             builder: (context, snapshot) {
               return ListView.builder(
-                  physics: ClampingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: 5,
                   itemBuilder: (context, index) {
@@ -664,7 +668,7 @@ class _OrderRowsState extends State<OrderRows> {
                     //     color: Colors.white,
                     //   ),
                     // );
-                    return Container(
+                    return SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: 20,
                       child: Row(
@@ -675,15 +679,15 @@ class _OrderRowsState extends State<OrderRows> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  '${snapshot.connectionState == ConnectionState.active ? '${double.tryParse(snapshot.data!.bid![index])!.toStringAsPrecision(7)}' : '0.0'}',
-                                  style: TextStyle(
+                                  snapshot.connectionState == ConnectionState.active ? double.tryParse(snapshot.data!.bid![index])!.toStringAsPrecision(7) : '0.0',
+                                  style: const TextStyle(
                                     color: Color(0xff286bdb),
                                     fontSize: 12,
                                   ),
                                 ),
                                 Text(
-                                  '${snapshot.connectionState == ConnectionState.active ? '${double.tryParse(snapshot.data!.bidQuantity![index])!.toStringAsPrecision(5)}' : '0.0'}',
-                                  style: TextStyle(
+                                  snapshot.connectionState == ConnectionState.active ? double.tryParse(snapshot.data!.bidQuantity![index])!.toStringAsPrecision(5) : '0.0',
+                                  style: const TextStyle(
                                     color: Color(0xff286bdb),
                                     fontSize: 12,
                                   ),
@@ -691,7 +695,7 @@ class _OrderRowsState extends State<OrderRows> {
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Expanded(
@@ -700,15 +704,15 @@ class _OrderRowsState extends State<OrderRows> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  '${snapshot.connectionState == ConnectionState.active ? '${double.tryParse(snapshot.data!.ask![index])!.toStringAsPrecision(7)}' : '0.0'}',
-                                  style: TextStyle(
+                                  snapshot.connectionState == ConnectionState.active ? double.tryParse(snapshot.data!.ask![index])!.toStringAsPrecision(7) : '0.0',
+                                  style: const TextStyle(
                                     color: Color(0xffef4006),
                                     fontSize: 12,
                                   ),
                                 ),
                                 Text(
-                                  '${snapshot.connectionState == ConnectionState.active ? '${double.tryParse(snapshot.data!.askQuantity![index])!.toStringAsPrecision(5)}' : '0.0'}',
-                                  style: TextStyle(
+                                  snapshot.connectionState == ConnectionState.active ? double.tryParse(snapshot.data!.askQuantity![index])!.toStringAsPrecision(5) : '0.0',
+                                  style: const TextStyle(
                                     color: Color(0xffef4006),
                                     fontSize: 12,
                                   ),
@@ -743,24 +747,24 @@ class _ToggleContainerState extends State<ToggleContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: const BorderRadius.all(Radius.circular(3)),
+          border: Border.all(
+            color: orderSelected[widget.index!]
+                ? widget.colorTheme!
+                : const Color(0xff1f1f1f),
+          )),
       child: Text(
         '${widget.text}',
         style: TextStyle(
           color: orderSelected[widget.index!]
               ? widget.colorTheme!
-              : Color(0xffd9d9d7),
+              : const Color(0xffd9d9d7),
           fontSize: widget.fontSize,
         ),
       ),
-      decoration: BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.all(Radius.circular(3)),
-          border: Border.all(
-            color: orderSelected[widget.index!]
-                ? widget.colorTheme!
-                : Color(0xff1f1f1f),
-          )),
     );
   }
 }

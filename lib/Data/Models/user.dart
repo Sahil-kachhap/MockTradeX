@@ -44,9 +44,9 @@ List<Map<String, dynamic>>? _favoritesList(List<CryptoFavorites>? favorites){
 
   final favMap = <Map<String, dynamic>>[];
 
-  favorites.forEach((favorite){
+  for (var favorite in favorites) {
      favMap.add(favorite.toJson());
-   });
+   }
   
   return favMap;
 }

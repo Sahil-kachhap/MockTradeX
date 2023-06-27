@@ -18,7 +18,7 @@ class _CategoryNewsState extends State<CategoryNews> {
   @override
   void initState() {
     super.initState();
-  getCategoryNews();
+    getCategoryNews();
   }
 
   void getCategoryNews() async {
@@ -33,32 +33,32 @@ class _CategoryNewsState extends State<CategoryNews> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff080c10),
+      backgroundColor: const Color(0xff080c10),
       appBar: AppBar(
-        title: Text('Market News'),
+        title: const Text('Market News'),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: Icon(Icons.close),
+            icon: const Icon(Icons.close),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
         ],
-        backgroundColor: Color(0xff080c10),
+        backgroundColor: const Color(0xff080c10),
         elevation: 0,
       ),
       body: _loading
           ? Container(
-              child: Center(child: CircularProgressIndicator()),
+              child: const Center(child: CircularProgressIndicator()),
             )
           : SingleChildScrollView(
-            child: Container(
+              child: Container(
                 child: Column(children: [
                   Container(
-                    padding: EdgeInsets.only(top: 16, left: 16, right: 16),
+                    padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
                     child: ListView.builder(
-                        physics: ClampingScrollPhysics(),
+                        physics: const ClampingScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: articles.length,
                         itemBuilder: (context, index) {
@@ -72,7 +72,7 @@ class _CategoryNewsState extends State<CategoryNews> {
                   ),
                 ]),
               ),
-          ),
+            ),
     );
   }
 }

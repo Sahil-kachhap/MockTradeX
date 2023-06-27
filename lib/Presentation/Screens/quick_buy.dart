@@ -5,8 +5,6 @@ import 'package:mock_tradex/Presentation/Widgets/search_bar.dart';
 import 'package:mock_tradex/constants.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-
-
 //late final List<String> n;
 
 class Quickbuy extends StatefulWidget {
@@ -21,36 +19,34 @@ class _QuickbuyState extends State<Quickbuy> {
 
   @override
   Widget build(BuildContext context) {
-
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
 
-    RefreshController _refreshController =
-    RefreshController(initialRefresh: false);
-    void _onRefresh() async{
+    RefreshController refreshController =
+        RefreshController(initialRefresh: false);
+    void _onRefresh() async {
       // monitor network fetch
-      await Future.delayed(Duration(milliseconds: 1000));
+      await Future.delayed(const Duration(milliseconds: 1000));
       // if failed,use refreshFailed()
-      _refreshController.refreshCompleted();
+      refreshController.refreshCompleted();
     }
 
     return DefaultTabController(
       length: 1,
       child: Scaffold(
-          backgroundColor: Color(0xff1a202c),
+          backgroundColor: const Color(0xff1a202c),
           appBar: AppBar(
-
               backgroundColor: Colors.black,
-              title: Text('Search and Add'),
+              title: const Text('Search and Add'),
               actions: [
                 IconButton(
-                  icon: Icon(Icons.search),
+                  icon: const Icon(Icons.search),
                   onPressed: () {
                     showSearch(context: context, delegate: SearchUser());
                   },
                 )
               ],
-              bottom: PreferredSize(
+              bottom: const PreferredSize(
                   preferredSize: Size(50.0, 50.0),
                   child: TabBar(
                       indicatorColor: kBottomBarTextActive,
@@ -64,35 +60,30 @@ class _QuickbuyState extends State<Quickbuy> {
                       ]))),
           body: TabBarView(
             children: [
-
-
               SmartRefresher(
-                enablePullDown: true,
-                controller: _refreshController,
-                header: const MaterialClassicHeader(
-                  color: Color(0xff056cf3),
-                  backgroundColor: Color(0xff0a1628),
-                ),
-                onRefresh: _onRefresh,
-                child: ListView.builder(
-                  itemCount: n!.length,
-                  itemBuilder: (context, index) {
-                    return CryptoTile(
-                      cryptoName: n?[index],
-                      cryptoSymbol: sy?[index],
-                      currentPrice: price?[index],
-                      priceChange: pr?[index],
-                      imageUrl: image?[index],
-                      index: index,
-                      // low_24h: coin.low_24h,
-                      //  high_24h: coin.high_24h,
-                      // totalVolume: coin.totalVolume,
-                    );
-                  },
-                )
-
-              ),
-
+                  enablePullDown: true,
+                  controller: refreshController,
+                  header: const MaterialClassicHeader(
+                    color: Color(0xff056cf3),
+                    backgroundColor: Color(0xff0a1628),
+                  ),
+                  onRefresh: _onRefresh,
+                  child: ListView.builder(
+                    itemCount: n!.length,
+                    itemBuilder: (context, index) {
+                      return CryptoTile(
+                        cryptoName: n?[index],
+                        cryptoSymbol: sy?[index],
+                        currentPrice: price?[index],
+                        priceChange: pr?[index],
+                        imageUrl: image?[index],
+                        index: index,
+                        // low_24h: coin.low_24h,
+                        //  high_24h: coin.high_24h,
+                        // totalVolume: coin.totalVolume,
+                      );
+                    },
+                  )),
             ],
           )),
     );

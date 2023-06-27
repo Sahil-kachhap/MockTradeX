@@ -4,7 +4,7 @@ import 'package:http/http.dart';
 
 Future<double> getLatestPrice(String symbol) async {
   final BaseUrl =
-      "https://api.binance.com/api/v3/ticker/price?symbol=${symbol}";
+      "https://api.binance.com/api/v3/ticker/price?symbol=$symbol";
   double price = 0;
   final url = Uri.parse(BaseUrl);
 

@@ -12,12 +12,13 @@ class GraphData extends StatefulWidget {
   _GraphDataState createState() => _GraphDataState();
 }
 
-class _GraphDataState extends State<GraphData> with AutomaticKeepAliveClientMixin{
+class _GraphDataState extends State<GraphData>
+    with AutomaticKeepAliveClientMixin {
   late WebViewController controller;
- // InAppWebViewController? _webViewController;
+  // InAppWebViewController? _webViewController;
   //CookieManager _cookieManager = CookieManager.instance();
 
-  late String graphURL="""
+  late String graphURL = """
    <html>
    <head>
        <meta name="viewport" content="width=360, initial-scale=0.9">
@@ -26,11 +27,12 @@ class _GraphDataState extends State<GraphData> with AutomaticKeepAliveClientMixi
    <div class="tradingview-widget-container">
    <div id="tradingview_7a395"></div>
    <div class="tradingview-widget-copyright"><a href="https://in.tradingview.com/symbols/ETHUSDT/?exchange=BINANCE" rel="noopener" target="_blank"></a></div>
-   ${script}
+   $script
    </div>
    </body>
    </html>""";
-  late String script ="""<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  late String script =
+      """<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
    <script type="text/javascript">
    new TradingView.widget(
        {
@@ -49,12 +51,7 @@ class _GraphDataState extends State<GraphData> with AutomaticKeepAliveClientMixi
    );
    </script>""";
 
-  bool isLoading=false;
-  @override
-  void initState() {
-    super.initState();
-    WebView.platform = SurfaceAndroidWebView();
-  }
+  bool isLoading = false;
 
   void _loadLocalHtml() async {
     final url = Uri.dataFromString(
@@ -63,8 +60,9 @@ class _GraphDataState extends State<GraphData> with AutomaticKeepAliveClientMixi
       base64: true,
       encoding: Encoding.getByName('utf-8'),
     ).toString();
-     controller.loadUrl(url);
+    //controller.loadUrl(url);
   }
+
   @override
   bool get wantKeepAlive => true;
   @override
@@ -79,18 +77,24 @@ class _GraphDataState extends State<GraphData> with AutomaticKeepAliveClientMixi
       //     _webViewController = controller;
       //   },
       // ),
-     child: WebView(
-        backgroundColor: kGraphPageBackground,
+      child: WebViewWidget(
+        controller: WebViewController()
+          ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..setBackgroundColor(kGraphPageBackground)
+          ..enableZoom(false)
+          ..loadRequest(
+            Uri.dataFromString(
+              graphURL,
+              mimeType: 'text/html',
+              base64: true,
+              encoding: Encoding.getByName('utf-8'),
+            ),
+          ),
 
-        javascriptMode: JavascriptMode.unrestricted,
-
-        onWebViewCreated: (controller) {
-          this.controller = controller;
-          _loadLocalHtml();
-        },
-
-
-        zoomEnabled:false ,
+        // onWebViewCreated: (controller) {
+        //   this.controller = controller;
+        //   _loadLocalHtml();
+        // },
       ),
     );
   }
