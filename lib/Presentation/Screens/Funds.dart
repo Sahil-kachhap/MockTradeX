@@ -8,10 +8,10 @@ class Funds extends StatefulWidget {
   const Funds({Key? key}) : super(key: key);
 
   @override
-  _FundsState createState() => _FundsState();
+  FundsState createState() => FundsState();
 }
 
-class _FundsState extends State<Funds> {
+class FundsState extends State<Funds> {
   int x = 1;
 
   @override
